@@ -433,6 +433,18 @@
     .quant-copy p { font-size: 16px; }
     .quant-copy code { font-family: var(--mono); font-size: 13px; color: var(--fg); }
 
+    .card-stat {
+      font-size: 28px;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 14px;
+      text-shadow: 0 0 18px rgba(0, 240, 255, 0.3);
+    }
+
+    .open.pending { color: var(--faint); }
+
     /* Reveal-on-scroll */
     .reveal {
       opacity: 0;
@@ -498,6 +510,7 @@
     <nav class="nav mono">
       <a href="#quant">Quant</a>
       <a href="#systems">Systems</a>
+      <a href="#research">Research</a>
       <a href="#finance">Finance</a>
       <a href="#ventures">Ventures</a>
       <a href="#code">Code</a>
@@ -516,27 +529,27 @@
         <div class="tags mono">
           <span class="tag">AI</span>
           <span class="tag">Computer Vision</span>
+          <span class="tag">Quantitative Finance</span>
           <span class="tag">Sustainability</span>
           <span class="tag">Forecasting</span>
-          <span class="tag">Finance</span>
         </div>
         <p class="intro">
-          I build data-driven systems that combine machine learning, sustainability modelling,
+          I build data-driven systems that combine machine learning, quantitative modelling,
           and financial reasoning to address real-world operational and strategic problems.
         </p>
       </div>
       <aside class="hero-side">
         <div class="stat">
-          <div class="stat-value" data-scramble="08">08</div>
+          <div class="stat-value" data-scramble="19">19</div>
           <div class="stat-label mono">Projects</div>
         </div>
         <div class="stat">
-          <div class="stat-value" data-scramble="05">05</div>
-          <div class="stat-label mono">AI &amp; Systems builds</div>
+          <div class="stat-value" data-scramble="04">04</div>
+          <div class="stat-label mono">Quant competitions</div>
         </div>
         <div class="stat">
-          <div class="stat-value" data-scramble="02">02</div>
-          <div class="stat-label mono">Equity research pitches</div>
+          <div class="stat-value" data-scramble="2.21">2.21</div>
+          <div class="stat-label mono">Top IQC alpha Sharpe</div>
         </div>
       </aside>
     </div>
@@ -547,29 +560,29 @@
     <div class="wrap">
       <div class="section-head">
         <span class="section-index mono">01 /</span>
-        <h2>Alpha &amp; Quantitative Modeling</h2>
-        <span class="section-count mono">IQC 2026</span>
+        <h2>Quantitative Finance</h2>
+        <span class="section-count mono">04 entries</span>
       </div>
 
       <div class="bento">
         <div class="card quant-copy span-3 reveal">
-          <div class="card-meta mono"><span>QNT.01</span><span>WorldQuant BRAIN</span></div>
-          <h3>WorldQuant International Quant Championship</h3>
-          <p>As part of WorldQuant's IQC 2026, I developed and submitted alpha signals on the
-            BRAIN platform, an institutional-grade quantitative research environment.</p>
+          <div class="card-meta mono"><span>QNT.01</span><span>IQC 2026 · Stage 2</span></div>
+          <h3><span class="glitch" data-text="WorldQuant International Quant Championship">WorldQuant International Quant Championship</span></h3>
+          <p>Developed and submitted alpha signals on WorldQuant's BRAIN platform with a partner
+            (team ZS79329), reaching Stage 2.</p>
           <p><strong>Volume–Sentiment Alpha</strong> — a <code>delay-0</code> signal combining trading
             volume dynamics with news sentiment data.</p>
           <p><strong>GARP-Style Valuation Alpha</strong> — a <code>delay-1</code> signal built on a
             growth-at-a-reasonable-price framework.</p>
           <p>Both signals passed BRAIN's full in-sample validation suite (Sharpe, Fitness, turnover,
-            and sub-universe stability checks), qualifying them for submission under IQC rules.</p>
+            and sub-universe stability checks).</p>
           <div class="card-foot">
             <div class="card-tags mono"><span class="tag">Alpha Research</span><span class="tag">Signals</span><span class="tag">Backtesting</span></div>
           </div>
         </div>
 
         <div class="card terminal span-3 reveal">
-          <div class="term-bar"><i></i><i></i><i></i><span>iqc_2026 — in-sample</span></div>
+          <div class="term-bar"><i></i><i></i><i></i><span>iqc_2026 / stage_2 — in-sample</span></div>
           <p class="prompt"><b>$</b> summary --alphas</p>
 
           <div class="alpha-row">
@@ -590,6 +603,44 @@
 
           <p class="term-status">STATUS: <b>IS VALIDATION PASSED · SUBMITTED</b> <span class="cursor"></span></p>
         </div>
+
+        <div class="card span-2 reveal">
+          <div class="card-meta mono"><span>QNT.02</span><span>Aug–Oct 2026</span></div>
+          <div class="card-stat mono" data-scramble="#140">#140</div>
+          <h3><span class="glitch" data-text="AlphaNova Competition 5">AlphaNova Competition 5</span></h3>
+          <p>Walk-forward signals ranking 20 assets per timestamp from anonymized features. Two Ridge-based
+            signals (own-history z-score and rank-velocity variants) made the prize-eligible “Quality set” —
+            Q140 quality badge in a $50K prize pool competition.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Cross-Sectional</span><span class="tag">Ridge</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-2 reveal">
+          <div class="card-meta mono"><span>QNT.03</span><span>Kaggle · 2026</span></div>
+          <div class="card-stat mono" data-scramble="1.145">1.145</div>
+          <h3><span class="glitch" data-text="Analytics Edge Data Competition">Analytics Edge Data Competition</span></h3>
+          <p>Discrete-choice model of car safety-feature bundle selection: conditional and mixed logit in R,
+            price-factor identification, task-fatigue effects, and an XGBoost blend. Resolved a design-matrix
+            rank deficiency. CV 1.145 / public LB 1.202.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Mixed Logit</span><span class="tag">R</span><span class="tag">XGBoost</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-2 reveal">
+          <div class="card-meta mono"><span>QNT.04</span><span>IMC Prosperity 4</span></div>
+          <div class="card-stat mono" data-scramble="TOP 10 SG">TOP 10 SG</div>
+          <h3><span class="glitch" data-text="Algorithmic Trading Competition">Algorithmic Trading Competition</span></h3>
+          <p>Market-making, pair-trading, and options strategies across a multi-round trading simulation.
+            Finished Top 10 in Singapore, #474 globally.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Market Making</span><span class="tag">Options</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -600,7 +651,7 @@
       <div class="section-head">
         <span class="section-index mono">02 /</span>
         <h2>AI &amp; Systems</h2>
-        <span class="section-count mono">05 entries</span>
+        <span class="section-count mono">07 entries</span>
       </div>
 
       <div class="bento">
@@ -626,8 +677,31 @@
           </div>
         </a>
 
+        <div class="card span-3 reveal">
+          <div class="card-meta mono"><span>SYS.03</span><span>GEXP Kyoto · 2026</span></div>
+          <h3><span class="glitch" data-text="Mayumaro">Mayumaro</span></h3>
+          <p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) built on the
+            Claude API and Google Maps in Python/Streamlit, with a 4-person international team.
+            Final showcase July 2026.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">RAG</span><span class="tag">LLM</span><span class="tag">Streamlit</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-3 reveal">
+          <div class="card-meta mono"><span>SYS.04</span><span>UROP</span></div>
+          <h3><span class="glitch" data-text="Neuromorphic Computing for Artificial Vision">Neuromorphic Computing for Artificial Vision</span></h3>
+          <p>Research under Prof. Desmond Loke on memristive spiking neural networks (SNNs) for artificial vision,
+            spanning computer vision, robotic control, and biosignal (EEG/ECG/EMG) processing.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">SNN</span><span class="tag">Memristors</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
         <a class="card span-2 reveal" href="slides/dti_cv_bird_deterrent.pdf">
-          <div class="card-meta mono"><span>SYS.03</span><span>DTI 2025</span></div>
+          <div class="card-meta mono"><span>SYS.05</span><span>DTI 2025</span></div>
           <h3><span class="glitch" data-text="CV Bird Deterrent">CV Bird Deterrent</span></h3>
           <p>Computer vision-triggered mechanical bird-scaring system for the SUTD canteen,
             integrating detection logic with physical actuation.</p>
@@ -638,7 +712,7 @@
         </a>
 
         <a class="card span-2 reveal" href="slides/pcu_threadahead_logistics.pdf">
-          <div class="card-meta mono"><span>SYS.04</span><span>PCU</span></div>
+          <div class="card-meta mono"><span>SYS.06</span><span>PCU</span></div>
           <h3><span class="glitch" data-text="ThreadAhead">ThreadAhead</span></h3>
           <p>Forecasting-informed workflow optimisation for a cooperative in Indonesia,
             addressing demand volatility and operational bottlenecks.</p>
@@ -649,7 +723,7 @@
         </a>
 
         <a class="card span-2 reveal" href="slides/molarData_china_cv_internship.pdf">
-          <div class="card-meta mono"><span>SYS.05</span><span>Internship · CN</span></div>
+          <div class="card-meta mono"><span>SYS.07</span><span>Internship · CN</span></div>
           <h3><span class="glitch" data-text="MolarData">MolarData</span></h3>
           <p>Object identification model training workflows, dataset preparation,
             and standard computer vision model development processes.</p>
@@ -662,11 +736,58 @@
     </div>
   </section>
 
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">03 /</span>
+        <h2>Research</h2>
+        <span class="section-count mono">03 entries</span>
+      </div>
+
+      <div class="bento">
+        <div class="card span-6 reveal">
+          <div class="card-meta mono"><span>RES.01</span><span>Credit Bureau Singapore</span></div>
+          <h3><span class="glitch" data-text="Synthetic Credit Data Generation">Synthetic Credit Data Generation</span></h3>
+          <p>Industry-partner project (reporting to DBS/OCBC/UOB). Led development of a CTGAN synthetic data
+            pipeline benchmarked against real credit data distributions, and designed the team's interactive
+            dual-view (Customer/Agency) dashboard with fidelity scoring.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">CTGAN</span><span class="tag">Synthetic Data</span><span class="tag">Dashboard</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-3 reveal">
+          <div class="card-meta mono"><span>RES.02</span><span>40.018 HST</span></div>
+          <h3><span class="glitch" data-text="Nonlinear Bubble Stabilization">Nonlinear Bubble Stabilization</span></h3>
+          <p>Extended a heterogeneous-beliefs asset-pricing model to design state-feedback and observer-based
+            controllers (Ackermann's formula) for stabilizing nonlinear price bubbles, with MATLAB simulation.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Control Theory</span><span class="tag">MATLAB</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-3 reveal">
+          <div class="card-meta mono"><span>RES.03</span><span>Psychology</span></div>
+          <h3><span class="glitch" data-text="Algorithm Aversion in Finance">Algorithm Aversion in Finance</span></h3>
+          <p>Designed a within-subjects experiment (AI vs. human advisor × stake level) testing how stakes,
+            self-perceived experience, and trust shape reliance on algorithmic financial advice.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Experiment Design</span><span class="tag">Behavioural</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FINANCE -->
   <section id="finance">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">03 /</span>
+        <span class="section-index mono">04 /</span>
         <h2>Finance &amp; Markets</h2>
         <span class="section-count mono">02 entries</span>
       </div>
@@ -701,22 +822,44 @@
   <section id="ventures">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">04 /</span>
+        <span class="section-index mono">05 /</span>
         <h2>Entrepreneurship</h2>
-        <span class="section-count mono">01 entry</span>
+        <span class="section-count mono">03 entries</span>
       </div>
 
       <div class="bento">
-        <a class="card span-6 reveal" href="slides/vinuni_workforce_saas_pitch.pdf">
+        <a class="card span-2 reveal" href="slides/vinuni_workforce_saas_pitch.pdf">
           <div class="card-meta mono"><span>VEN.01</span><span>VinUniversity</span></div>
           <h3><span class="glitch" data-text="Workforce SaaS Platform">Workforce SaaS Platform</span></h3>
           <p>Designed a scalable workforce “sandbox” platform addressing skills mismatch,
             including revenue model and market expansion strategy.</p>
           <div class="card-foot">
             <div class="card-tags mono"><span class="tag">SaaS</span><span class="tag">GTM</span></div>
-            <span class="open mono">Open PDF <b>→</b></span>
+            <span class="open mono">Open <b>→</b></span>
           </div>
         </a>
+
+        <div class="card span-2 reveal">
+          <div class="card-meta mono"><span>VEN.02</span><span>TalentGeist WSP</span></div>
+          <h3><span class="glitch" data-text="Shopee Pickup Points">Shopee Pickup Points</span></h3>
+          <p>Thailand market-entry strategy deck for Shopee pickup points; recognized as a
+            top-performing submission.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Market Entry</span><span class="tag">Strategy</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
+
+        <div class="card span-2 reveal">
+          <div class="card-meta mono"><span>VEN.03</span><span>BabyShark Fund</span></div>
+          <h3><span class="glitch" data-text="MakanPrint">MakanPrint</span></h3>
+          <p>Pitched a venture addressing dysphagia-safe meals for elderly patients via 3D-printed
+            texture modification.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">HealthTech</span><span class="tag">3D Printing</span></div>
+            <span class="open pending mono">Slides soon</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -725,7 +868,7 @@
   <section id="code">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">05 /</span>
+        <span class="section-index mono">06 /</span>
         <h2>Code &amp; Repositories</h2>
         <span class="section-count mono">github</span>
       </div>
