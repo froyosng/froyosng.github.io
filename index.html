@@ -1,167 +1,801 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zhenhao Sng</title>
+  <meta name="description" content="Zhenhao Sng — AI, computer vision, forecasting and finance projects.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 70px auto;
-      max-width: 900px;
-      line-height: 1.6;
-      color: #111;
-      padding: 0 20px;
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: rgba(255, 255, 255, 0.55);
+      --faint: rgba(255, 255, 255, 0.35);
+      --line: rgba(255, 255, 255, 0.10);
+      --line-strong: rgba(255, 255, 255, 0.22);
+      --glass: rgba(255, 255, 255, 0.035);
+      --glass-hover: rgba(255, 255, 255, 0.06);
+      --accent: #00F0FF;
+      --accent-dim: rgba(0, 240, 255, 0.14);
+      --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --gutter: 40px;
+      --max: 1200px;
     }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Exposed blueprint grid + ambient glow behind the glass */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 85%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: 900px;
+      height: 900px;
+      top: -300px;
+      right: -300px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.10), transparent 60%);
+      pointer-events: none;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .brand { color: var(--fg); }
+    .brand span { color: var(--accent); }
+
+    .nav { display: flex; gap: 28px; }
+    .nav a { color: var(--muted); transition: color 0.15s; }
+    .nav a:hover { color: var(--fg); }
+
+    /* ---------- Hero ---------- */
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      border-bottom: 1px solid var(--line);
+      padding: 0;
+    }
+
+    .hero-main {
+      padding: 96px var(--gutter) 72px;
+      border-right: 1px solid var(--line);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .status i {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: 0.3; } }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 6px;
+      font-size: clamp(56px, 10vw, 136px);
+      line-height: 0.88;
+      letter-spacing: -0.055em;
+      font-weight: 800;
+      margin: 0 0 36px;
     }
 
-    .tagline {
-      color: #666;
-      margin-bottom: 40px;
+    h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
     }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+
+    .tag {
+      border: 1px solid var(--line-strong);
+      padding: 6px 10px;
+      color: var(--muted);
+    }
+
+    .intro {
+      max-width: 560px;
+      font-size: 19px;
+      color: rgba(255, 255, 255, 0.78);
+      margin: 0;
+    }
+
+    .hero-side { display: flex; flex-direction: column; }
+
+    .stat {
+      flex: 1;
+      padding: 28px var(--gutter);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .stat:last-child { border-bottom: 0; }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--fg);
+      margin-bottom: 10px;
+    }
+
+    .stat-label { color: var(--faint); }
+
+    /* ---------- Sections ---------- */
+    section { border-bottom: 1px solid var(--line); }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      align-items: end;
+      gap: 24px;
+      padding: 72px 0 28px;
+    }
+
+    .section-index { color: var(--accent); }
 
     h2 {
-      margin-top: 55px;
-      font-size: 22px;
+      font-size: clamp(32px, 4.5vw, 56px);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-weight: 600;
+      margin: 0;
     }
+
+    .section-count { color: var(--faint); }
+
+    /* Bento grid */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-bottom: 72px;
+    }
+
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
 
     .card {
-      border: 1px solid #eee;
-      padding: 20px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      transition: 0.2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+      padding: 28px;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background 0.25s ease;
+      overflow: hidden;
     }
 
-    .card:hover {
-      border-color: #111;
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--glass);
+      pointer-events: none;
     }
 
-    .meta {
-      font-size: 14px;
-      color: #666;
-      margin-top: 6px;
+    /* Corner ticks — blueprint registration marks */
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid var(--line-strong);
+      border-right: 1px solid var(--line-strong);
+      transition: border-color 0.25s, width 0.25s, height 0.25s;
     }
 
-    a {
-      text-decoration: none;
-      color: #111;
+    .card:hover { background: rgba(8, 12, 14, 0.8); }
+    .card:hover::before { background: var(--glass-hover); }
+    .card:hover::after { border-color: var(--accent); width: 18px; height: 18px; }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--faint);
+      margin-bottom: auto;
+      padding-bottom: 40px;
+    }
+
+    .card h3 {
+      position: relative;
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
       font-weight: 600;
+      margin: 0 0 12px;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .span-4 h3, .span-6 h3 { font-size: 30px; }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0 0 20px;
+      max-width: 560px;
     }
 
-    .footer {
-      margin-top: 70px;
-      font-size: 14px;
-      color: #666;
+    .card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .card-tags .tag { font-size: 11px; padding: 4px 8px; }
+
+    .open {
+      color: var(--accent);
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .open b {
+      font-weight: 400;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover .open b { transform: translateX(4px); }
+
+    /* ---------- Glitch ---------- */
+    .glitch { position: relative; display: inline-block; }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .glitch::before { color: var(--accent); }
+    .glitch::after { color: #ff2bd6; }
+
+    .card:hover .glitch::before,
+    .glitch-hover:hover .glitch::before {
+      animation: glitch-a 0.38s steps(2, end) 1;
+    }
+
+    .card:hover .glitch::after,
+    .glitch-hover:hover .glitch::after {
+      animation: glitch-b 0.38s steps(2, end) 1;
+    }
+
+    @keyframes glitch-a {
+      0%   { opacity: 0.9; transform: translate(-3px, 0); clip-path: inset(10% 0 60% 0); }
+      25%  { opacity: 0.9; transform: translate(3px, 0);  clip-path: inset(55% 0 20% 0); }
+      50%  { opacity: 0.9; transform: translate(-2px, 0); clip-path: inset(30% 0 45% 0); }
+      75%  { opacity: 0.9; transform: translate(2px, 0);  clip-path: inset(75% 0 5% 0); }
+      100% { opacity: 0;   transform: none;               clip-path: inset(0); }
+    }
+
+    @keyframes glitch-b {
+      0%   { opacity: 0.7; transform: translate(3px, 0);  clip-path: inset(65% 0 10% 0); }
+      25%  { opacity: 0.7; transform: translate(-3px, 0); clip-path: inset(15% 0 70% 0); }
+      50%  { opacity: 0.7; transform: translate(2px, 0);  clip-path: inset(45% 0 30% 0); }
+      75%  { opacity: 0.7; transform: translate(-2px, 0); clip-path: inset(5% 0 80% 0); }
+      100% { opacity: 0;   transform: none;               clip-path: inset(0); }
+    }
+
+    /* ---------- Quant terminal ---------- */
+    .terminal {
+      font-family: var(--mono);
+      font-size: 13px;
+      background: rgba(0, 20, 24, 0.55);
+    }
+
+    .terminal::before { background: linear-gradient(180deg, var(--accent-dim), transparent 40%); }
+
+    .term-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--faint);
+    }
+
+    .term-bar i { width: 8px; height: 8px; border: 1px solid var(--line-strong); }
+    .term-bar span { margin-left: 8px; }
+
+    .prompt { color: var(--muted); margin: 0 0 18px; }
+    .prompt b { color: var(--accent); font-weight: 400; }
+
+    .alpha-row {
+      position: relative;
+      padding: 16px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .alpha-name {
+      display: flex;
+      justify-content: space-between;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+
+    .alpha-name span { color: var(--faint); }
+
+    .metrics { display: flex; gap: 32px; }
+
+    .metric-label { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .metric-value {
+      font-size: 30px;
+      color: var(--accent);
+      line-height: 1.2;
+      text-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+    }
+
+    .metric-value.na { color: var(--faint); text-shadow: none; }
+
+    .term-status { color: var(--muted); margin-top: 18px; }
+    .term-status b { color: var(--accent); font-weight: 400; }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--accent);
+      vertical-align: -2px;
+      animation: pulse 1s steps(1) infinite;
+    }
+
+    .quant-copy h3 { font-size: 30px; }
+    .quant-copy p { font-size: 16px; }
+    .quant-copy code { font-family: var(--mono); font-size: 13px; color: var(--fg); }
+
+    /* Reveal-on-scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Footer ---------- */
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 28px;
+      padding-bottom: 28px;
+      color: var(--faint);
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .hero .wrap { grid-template-columns: 1fr; }
+      .hero-main { border-right: 0; border-bottom: 1px solid var(--line); padding-top: 64px; }
+      .hero-side { flex-direction: row; }
+      .stat { border-bottom: 0; border-right: 1px solid var(--line); padding: 24px var(--gutter); }
+      .stat:last-child { border-right: 0; }
+      .span-2, .span-3, .span-4 { grid-column: span 3; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --gutter: 16px; }
+      body::before { background-size: 48px 48px; }
+      .nav { display: none; }
+      .hero-side { flex-direction: column; }
+      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .stat-value { font-size: 36px; }
+      .section-head { grid-template-columns: 1fr; gap: 8px; padding-top: 56px; }
+      .bento { grid-template-columns: 1fr; margin-bottom: 56px; }
+      .span-2, .span-3, .span-4, .span-6 { grid-column: auto; }
+      .card { min-height: 0; padding: 22px; }
+      .card-meta { padding-bottom: 28px; }
+      .span-4 h3, .span-6 h3 { font-size: 24px; }
+      .intro { font-size: 17px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 
 <body>
 
-<h1>Zhenhao Sng</h1>
-<p class="tagline">AI • Computer Vision • Sustainability • Forecasting • Finance</p>
-
-<p>
-I build data-driven systems that combine machine learning, sustainability modelling,
-and financial reasoning to address real-world operational and strategic problems.
-</p>
-
-<!-- AI / SYSTEMS -->
-<h2>AI & Systems Projects</h2>
-
-<div class="card">
-  <a href="slides/cqu_pandabot_ai_mobility.pdf">AI Mobility Robotics (CQU x SUTD)</a>
-  <div class="meta">
-    Designed a computer vision-assisted mobility concept (“PandaBot”) for elderly users.
-    Focused on detection logic, safety integration, and scalable deployment thinking.
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand mono" href="#top">ZS<span>/</span>PORTFOLIO</a>
+    <nav class="nav mono">
+      <a href="#quant">Quant</a>
+      <a href="#systems">Systems</a>
+      <a href="#finance">Finance</a>
+      <a href="#ventures">Ventures</a>
+      <a href="#code">Code</a>
+    </nav>
   </div>
-</div>
+</header>
 
-<div class="card">
-  <a href="slides/ddw_llm_carbon_calculator.pdf">LLM Carbon Emissions Calculator (DDW)</a>
-  <div class="meta">
-    Built a multi-linear regression model to estimate carbon emissions of LLM training configurations.
-    Selected for further development under the Science for a Sustainable World module.
+<main id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-main">
+        <div class="status mono"><i></i>Portfolio · 2026</div>
+        <h1>Zhenhao<br><span class="outline">Sng</span></h1>
+        <div class="tags mono">
+          <span class="tag">AI</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Sustainability</span>
+          <span class="tag">Forecasting</span>
+          <span class="tag">Finance</span>
+        </div>
+        <p class="intro">
+          I build data-driven systems that combine machine learning, sustainability modelling,
+          and financial reasoning to address real-world operational and strategic problems.
+        </p>
+      </div>
+      <aside class="hero-side">
+        <div class="stat">
+          <div class="stat-value" data-scramble="08">08</div>
+          <div class="stat-label mono">Projects</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" data-scramble="05">05</div>
+          <div class="stat-label mono">AI &amp; Systems builds</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" data-scramble="02">02</div>
+          <div class="stat-label mono">Equity research pitches</div>
+        </div>
+      </aside>
+    </div>
   </div>
-</div>
 
-<div class="card">
-  <a href="slides/dti_cv_bird_deterrent.pdf">DTI 2025 – Computer Vision Bird Deterrent</a>
-  <div class="meta">
-    Developed a CV-triggered mechanical bird-scaring system for SUTD canteen.
-    Integrated detection logic with physical actuation.
+  <!-- QUANT -->
+  <section id="quant">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">01 /</span>
+        <h2>Alpha &amp; Quantitative Modeling</h2>
+        <span class="section-count mono">IQC 2026</span>
+      </div>
+
+      <div class="bento">
+        <div class="card quant-copy span-3 reveal">
+          <div class="card-meta mono"><span>QNT.01</span><span>WorldQuant BRAIN</span></div>
+          <h3>WorldQuant International Quant Championship</h3>
+          <p>As part of WorldQuant's IQC 2026, I developed and submitted alpha signals on the
+            BRAIN platform, an institutional-grade quantitative research environment.</p>
+          <p><strong>Volume–Sentiment Alpha</strong> — a <code>delay-0</code> signal combining trading
+            volume dynamics with news sentiment data.</p>
+          <p><strong>GARP-Style Valuation Alpha</strong> — a <code>delay-1</code> signal built on a
+            growth-at-a-reasonable-price framework.</p>
+          <p>Both signals passed BRAIN's full in-sample validation suite (Sharpe, Fitness, turnover,
+            and sub-universe stability checks), qualifying them for submission under IQC rules.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Alpha Research</span><span class="tag">Signals</span><span class="tag">Backtesting</span></div>
+          </div>
+        </div>
+
+        <div class="card terminal span-3 reveal">
+          <div class="term-bar"><i></i><i></i><i></i><span>iqc_2026 — in-sample</span></div>
+          <p class="prompt"><b>$</b> summary --alphas</p>
+
+          <div class="alpha-row">
+            <div class="alpha-name"><span class="glitch" data-text="VOLUME × SENTIMENT">VOLUME × SENTIMENT</span><span>D0</span></div>
+            <div class="metrics">
+              <div><div class="metric-label">Sharpe</div><div class="metric-value" data-scramble="2.21+">2.21+</div></div>
+              <div><div class="metric-label">Fitness</div><div class="metric-value na">—</div></div>
+            </div>
+          </div>
+
+          <div class="alpha-row">
+            <div class="alpha-name"><span class="glitch" data-text="GARP VALUATION">GARP VALUATION</span><span>D1</span></div>
+            <div class="metrics">
+              <div><div class="metric-label">Sharpe</div><div class="metric-value" data-scramble="2.00">2.00</div></div>
+              <div><div class="metric-label">Fitness</div><div class="metric-value" data-scramble="2.30">2.30</div></div>
+            </div>
+          </div>
+
+          <p class="term-status">STATUS: <b>IS VALIDATION PASSED · SUBMITTED</b> <span class="cursor"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI / SYSTEMS -->
+  <section id="systems">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">02 /</span>
+        <h2>AI &amp; Systems</h2>
+        <span class="section-count mono">05 entries</span>
+      </div>
+
+      <div class="bento">
+        <a class="card span-4 reveal" href="slides/cqu_pandabot_ai_mobility.pdf">
+          <div class="card-meta mono"><span>SYS.01</span><span>CQU × SUTD</span></div>
+          <h3><span class="glitch" data-text="AI Mobility Robotics">AI Mobility Robotics</span></h3>
+          <p>Designed a computer vision-assisted mobility concept (“PandaBot”) for elderly users.
+            Focused on detection logic, safety integration, and scalable deployment thinking.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Computer Vision</span><span class="tag">Robotics</span></div>
+            <span class="open mono">Open PDF <b>→</b></span>
+          </div>
+        </a>
+
+        <a class="card span-2 reveal" href="slides/ddw_llm_carbon_calculator.pdf">
+          <div class="card-meta mono"><span>SYS.02</span><span>DDW</span></div>
+          <h3><span class="glitch" data-text="LLM Carbon Emissions Calculator">LLM Carbon Emissions Calculator</span></h3>
+          <p>Multi-linear regression model estimating carbon emissions of LLM training configurations.
+            Selected for further development under Science for a Sustainable World.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Regression</span></div>
+            <span class="open mono">Open <b>→</b></span>
+          </div>
+        </a>
+
+        <a class="card span-2 reveal" href="slides/dti_cv_bird_deterrent.pdf">
+          <div class="card-meta mono"><span>SYS.03</span><span>DTI 2025</span></div>
+          <h3><span class="glitch" data-text="CV Bird Deterrent">CV Bird Deterrent</span></h3>
+          <p>Computer vision-triggered mechanical bird-scaring system for the SUTD canteen,
+            integrating detection logic with physical actuation.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">CV</span><span class="tag">Hardware</span></div>
+            <span class="open mono">Open <b>→</b></span>
+          </div>
+        </a>
+
+        <a class="card span-2 reveal" href="slides/pcu_threadahead_logistics.pdf">
+          <div class="card-meta mono"><span>SYS.04</span><span>PCU</span></div>
+          <h3><span class="glitch" data-text="ThreadAhead">ThreadAhead</span></h3>
+          <p>Forecasting-informed workflow optimisation for a cooperative in Indonesia,
+            addressing demand volatility and operational bottlenecks.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Forecasting</span><span class="tag">Logistics</span></div>
+            <span class="open mono">Open <b>→</b></span>
+          </div>
+        </a>
+
+        <a class="card span-2 reveal" href="slides/molarData_china_cv_internship.pdf">
+          <div class="card-meta mono"><span>SYS.05</span><span>Internship · CN</span></div>
+          <h3><span class="glitch" data-text="MolarData">MolarData</span></h3>
+          <p>Object identification model training workflows, dataset preparation,
+            and standard computer vision model development processes.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">CV</span><span class="tag">Data</span></div>
+            <span class="open mono">Open <b>→</b></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCE -->
+  <section id="finance">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">03 /</span>
+        <h2>Finance &amp; Markets</h2>
+        <span class="section-count mono">02 entries</span>
+      </div>
+
+      <div class="bento">
+        <a class="card span-3 reveal" href="slides/cfa_research_challenge_internal_2024.pdf">
+          <div class="card-meta mono"><span>FIN.01</span><span>2024</span></div>
+          <h3><span class="glitch" data-text="CFA Research Challenge">CFA Research Challenge</span></h3>
+          <p>Equity research, valuation modelling, and investment thesis development
+            for school-level CFA Research Challenge selection.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Valuation</span><span class="tag">Equity Research</span></div>
+            <span class="open mono">Open PDF <b>→</b></span>
+          </div>
+        </a>
+
+        <a class="card span-3 reveal" href="slides/ntu_stock_pitch_2025.pdf">
+          <div class="card-meta mono"><span>FIN.02</span><span>NTU · 2025</span></div>
+          <h3><span class="glitch" data-text="Nanyang Capital Stock Pitch">Nanyang Capital Stock Pitch</span></h3>
+          <p>Developed and presented an investment thesis including valuation,
+            catalysts, and risk analysis.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">Thesis</span><span class="tag">Risk</span></div>
+            <span class="open mono">Open PDF <b>→</b></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTREPRENEURSHIP -->
+  <section id="ventures">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">04 /</span>
+        <h2>Entrepreneurship</h2>
+        <span class="section-count mono">01 entry</span>
+      </div>
+
+      <div class="bento">
+        <a class="card span-6 reveal" href="slides/vinuni_workforce_saas_pitch.pdf">
+          <div class="card-meta mono"><span>VEN.01</span><span>VinUniversity</span></div>
+          <h3><span class="glitch" data-text="Workforce SaaS Platform">Workforce SaaS Platform</span></h3>
+          <p>Designed a scalable workforce “sandbox” platform addressing skills mismatch,
+            including revenue model and market expansion strategy.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">SaaS</span><span class="tag">GTM</span></div>
+            <span class="open mono">Open PDF <b>→</b></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GITHUB -->
+  <section id="code">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-index mono">05 /</span>
+        <h2>Code &amp; Repositories</h2>
+        <span class="section-count mono">github</span>
+      </div>
+
+      <div class="bento">
+        <a class="card span-6 reveal" href="https://github.com/froyosng">
+          <div class="card-meta mono"><span>SRC.01</span><span>github.com/froyosng</span></div>
+          <h3><span class="glitch" data-text="View GitHub Profile">View GitHub Profile</span></h3>
+          <p>Machine learning experiments, forecasting models, analytics tools, and prototypes.</p>
+          <div class="card-foot">
+            <div class="card-tags mono"><span class="tag">ML</span><span class="tag">Forecasting</span><span class="tag">Analytics</span></div>
+            <span class="open mono">Visit <b>→</b></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>© 2026 Zhenhao Sng</span>
+    <span>Built with GitHub Pages</span>
+    <a href="#top">Back to top ↑</a>
   </div>
-</div>
+</footer>
 
-<div class="card">
-  <a href="slides/pcu_threadahead_logistics.pdf">ThreadAhead – Logistics & Workflow System</a>
-  <div class="meta">
-    Proposed forecasting-informed workflow optimisation for a cooperative in Indonesia,
-    addressing demand volatility and operational bottlenecks.
-  </div>
-</div>
+<script>
+  (function () {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var glyphs = '0123456789#%&$@!?/<>';
 
-<div class="card">
-  <a href="slides/molarData_china_cv_internship.pdf">MolarData – Computer Vision Internship (China)</a>
-  <div class="meta">
-    Contributed to object identification model training workflows, dataset preparation,
-    and standard computer vision model development processes.
-  </div>
-</div>
+    // Decode effect: random characters resolve into the real value
+    function scramble(el) {
+      var target = el.getAttribute('data-scramble');
+      if (reduced || el._running) { el.textContent = target; return; }
+      el._running = true;
+      var frame = 0, total = 18;
+      var timer = setInterval(function () {
+        var out = '';
+        for (var i = 0; i < target.length; i++) {
+          out += frame > total * (i + 1) / target.length
+            ? target[i]
+            : glyphs[Math.floor(Math.random() * glyphs.length)];
+        }
+        el.textContent = out;
+        if (++frame > total) { clearInterval(timer); el.textContent = target; el._running = false; }
+      }, 40);
+    }
 
-<!-- FINANCE -->
-<h2>Finance & Markets</h2>
+    document.querySelectorAll('[data-scramble]').forEach(function (el) {
+      scramble(el);
+      el.parentElement.addEventListener('mouseenter', function () { scramble(el); });
+    });
 
-<div class="card">
-  <a href="slides/cfa_research_challenge_internal_2024.pdf">CFA Research Challenge – Internal Selection (2024)</a>
-  <div class="meta">
-    Conducted equity research, valuation modelling, and investment thesis development
-    for school-level CFA Research Challenge selection.
-  </div>
-</div>
-
-<div class="card">
-  <a href="slides/ntu_stock_pitch_2025.pdf">Nanyang Capital Stock Pitch Challenge (NTU 2025)</a>
-  <div class="meta">
-    Developed and presented an investment thesis including valuation,
-    catalysts, and risk analysis.
-  </div>
-</div>
-
-<!-- ENTREPRENEURSHIP -->
-<h2>Entrepreneurship</h2>
-
-<div class="card">
-  <a href="slides/vinuni_workforce_saas_pitch.pdf">VinUniversity – Workforce SaaS Platform</a>
-  <div class="meta">
-    Designed a scalable workforce “sandbox” platform addressing skills mismatch,
-    including revenue model and market expansion strategy.
-  </div>
-</div>
-
-<!-- GITHUB -->
-<h2>Code & Repositories</h2>
-
-<div class="card">
-  <a href="https://github.com/froyosng">View GitHub Profile →</a>
-  <div class="meta">
-    Machine learning experiments, forecasting models, analytics tools, and prototypes.
-  </div>
-</div>
-
-<p class="footer">
-Built with GitHub Pages • 2026
-</p>
+    // Reveal cards as they scroll into view
+    var cards = document.querySelectorAll('.reveal');
+    if (reduced || !('IntersectionObserver' in window)) {
+      cards.forEach(function (c) { c.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    cards.forEach(function (c) { io.observe(c); });
+  })();
+</script>
 
 </body>
 </html>
