@@ -740,7 +740,70 @@
     .stop p { margin: 0; color: #3d3a45; }
 
     /* ---------- About + contact ---------- */
-    .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+    .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+    .about-col { display: grid; gap: 24px; }
+
+    /* Purikura panel: the one place allowed to get dense */
+    .purikura {
+      position: relative;
+      padding: 22px;
+      border-radius: var(--radius-md);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255, 119, 183, 0.18), transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(147, 232, 255, 0.3), transparent 45%),
+        var(--paper);
+      border: 1px solid var(--line-strong);
+    }
+
+    .member-card {
+      position: relative;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--ink);
+      background: linear-gradient(115deg, #F3EEFF 0%, #E3F8FF 35%, #FFFFFF 50%, #FFE6F2 70%, #EDE8FF 100%);
+      box-shadow: 0 0 0 4px #fff, 0 14px 30px -18px rgba(34, 26, 74, 0.5);
+      transform: rotate(-1.5deg);
+      margin-bottom: 26px;
+    }
+
+    .mc-top { display: flex; justify-content: space-between; font-size: 10px; color: var(--violet-deep); }
+    .mc-name { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin: 14px 0 4px; }
+    .mc-meta { color: #3d3a45; line-height: 1.6; }
+    .mc-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; }
+    .mc-foot .star-ico { width: 26px; height: 26px; color: var(--violet); }
+
+    .barcode {
+      width: 120px;
+      height: 26px;
+      background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 3px, var(--ink) 3px 4px, transparent 4px 7px, var(--ink) 7px 10px, transparent 10px 11px);
+    }
+
+    .cur-block { margin-bottom: 18px; }
+    .cur-block:last-child { margin-bottom: 0; }
+    .cur-label { display: block; font-size: 10px; color: var(--violet); margin-bottom: 6px; }
+    .cur-big { font-family: var(--serif); font-style: italic; font-size: 30px; line-height: 1.05; margin: 0; }
+    .star-bit { font-style: normal; color: var(--pink); }
+    .cur-small { margin: 4px 0 0; font-size: 14px; color: var(--graphite); }
+
+    .stick-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .stk {
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      box-shadow: 0 0 0 2px #fff;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .stk:nth-child(3n+1) { transform: rotate(-1.5deg); }
+    .stk:nth-child(3n+2) { transform: rotate(1deg); }
+    .stk em { font-family: var(--serif); font-size: 13px; color: var(--graphite); margin-left: 4px; }
+    .stk-lemon { background: var(--lemon); border-color: var(--ink); }
+    .stk-lemon em { color: #3d3a45; }
+    .stk-ink { background: var(--ink); color: var(--pearl); border-color: var(--ink); }
+    .stk-pink { background: var(--pink); border-color: var(--ink); }
     .about-body { padding: 24px; font-size: 18px; }
     .about-body p { margin: 0 0 12px; }
 
@@ -877,7 +940,7 @@
     <div class="wrap">
       <div class="hero-meta mono">
         <span class="pixel">FROYO SYSTEM / 2026</span>
-        <span class="hide-sm">SUTD · Engineering Systems &amp; Design</span>
+        <span class="hide-sm">SUTD × NTU · Singapore ↔ Taipei</span>
         <span>Mode: <b data-mode-status>Quick view</b></span>
       </div>
 
@@ -1311,6 +1374,7 @@
         </div>
       </div>
       <ol class="transit">
+        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">Exchange · College of EECS · Sep–Dec 2026</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML and stochastic calculus for finance. Also a course on edible insects.</p></li>
         <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
         <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
         <li class="stop"><div><h3>GEXP Kyoto</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
@@ -1329,22 +1393,65 @@
         </div>
       </div>
       <div class="about-grid">
-        <div class="window">
-          <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">README.TXT</span></div>
-          <div class="about-body">
-            <p>I study Engineering Systems &amp; Design at SUTD. Most of my work sits where quantitative finance,
-              data analysis and software engineering meet.</p>
-            <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
-              that need a model before they need an opinion.</p>
+        <div class="about-col">
+          <div class="window">
+            <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">README.TXT</span></div>
+            <div class="about-body">
+              <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Sep–Dec 2026 on exchange at
+                National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
+                and software engineering meet.</p>
+              <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
+                that need a model before they need an opinion.</p>
+            </div>
+          </div>
+          <div class="window" id="contact">
+            <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">CONTACT.EXE</span></div>
+            <ul class="contact-links">
+              <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
+              <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
+              <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
+            </ul>
           </div>
         </div>
-        <div class="window" id="contact">
-          <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">CONTACT.EXE</span></div>
-          <ul class="contact-links">
-            <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
-            <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
-            <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
-          </ul>
+
+        <div class="purikura">
+          <div class="member-card">
+            <div class="mc-top pixel"><span>FROYO SIGNAL CLUB</span><span>MEMBER 001</span></div>
+            <div class="mc-name">Zhenhao Sng</div>
+            <div class="mc-meta mono">Singapore ↔ Taipei<br>Systems + data + markets</div>
+            <div class="mc-foot">
+              <span class="barcode" aria-hidden="true"></span>
+              <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
+            </div>
+          </div>
+
+          <div class="currently">
+            <div class="cur-block">
+              <span class="cur-label pixel">CURRENTLY</span>
+              <p class="cur-big">taipei <span class="star-bit">✦</span> exchange mode</p>
+              <p class="cur-small">National Taiwan University · Sep–Dec 2026</p>
+            </div>
+            <div class="cur-block">
+              <span class="cur-label pixel">TAKING</span>
+              <div class="stick-row">
+                <span class="stk">Algorithms</span>
+                <span class="stk">Machine learning</span>
+                <span class="stk">Econometric theory I(a)</span>
+                <span class="stk">Econometric theory I(b)</span>
+                <span class="stk">Causal ML in econ &amp; poli-sci</span>
+                <span class="stk">Stochastic calculus for finance</span>
+                <span class="stk stk-lemon">Edible insects <em>yes, really</em></span>
+              </div>
+            </div>
+            <div class="cur-block">
+              <span class="cur-label pixel">CLUBS</span>
+              <div class="stick-row">
+                <span class="stk stk-ink">Fencing</span>
+                <span class="stk stk-pink">Cocktail club</span>
+                <span class="stk">International Companions for Learning</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
