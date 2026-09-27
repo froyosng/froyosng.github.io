@@ -1011,8 +1011,8 @@
     .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 10px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
     .radio .titlebar button:first-of-type { margin-left: auto; }
     .radio .titlebar button:hover { color: var(--ink); }
-    .radio-screen { aspect-ratio: 16 / 9; background: var(--ink); }
-    .radio-screen iframe, .radio-screen > div { width: 100%; height: 100%; display: block; border: 0; }
+    .radio-screen { min-height: 152px; background: #121212; }
+    .radio-screen iframe { display: block; width: 100%; height: 152px; border: 0; }
 
     /* Reveal-on-scroll */
     .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
@@ -1727,10 +1727,10 @@
   <div class="titlebar">
     <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="pixel">♫ FROYO RADIO</span>
-    <button type="button" data-radio-mute aria-pressed="false">MUTE</button>
+    <button type="button" data-radio-pause aria-pressed="false">PAUSE</button>
     <button type="button" data-radio-close aria-label="Close player">✕</button>
   </div>
-  <div class="radio-screen"><div id="yt-player"></div></div>
+  <div class="radio-screen"><div id="spotify-player"></div></div>
 </div>
 
 <div class="toast" role="status" aria-live="polite">
@@ -1827,18 +1827,12 @@
       a.addEventListener('click', function () { applyFilter(a.getAttribute('data-filter')); });
     });
 
-    // ----- FROYO RADIO: YouTube embed, loaded only when a visitor asks for it -----
-    var VIDEO = '9qkpcLK422o', LIST = 'RD9qkpcLK422o';
+    // ----- FROYO RADIO: Spotify embed, loaded only when a visitor asks for it -----
+    var PLAYLIST = 'spotify:playlist:37i9dQZF1E39w56LsRsLNi';
     var radio = document.querySelector('.radio');
     var cd = document.querySelector('.cd');
-    var player = null, playing = false, triedList = false, radioToast = false;
-    var RADIO_ON = false;  // the YouTube mix won't embed; switch back on with a working playlist
-    if (!RADIO_ON) {
-      document.querySelectorAll('.radio-btn').forEach(function (b) { b.hidden = true; });
-      cd.disabled = true;
-      cd.setAttribute('aria-hidden', 'true');
-      cd.classList.add('playing');
-    }
+    var pauseBtn = document.querySelector('[data-radio-pause]');
+    var controller = null, playing = false, loading = false, radioToast = false;
 
     function setPlaying(on) {
       playing = on;
@@ -1846,51 +1840,49 @@
       cd.setAttribute('aria-label', on ? 'Pause FROYO RADIO' : 'Play FROYO RADIO');
       document.querySelectorAll('.radio-btn').forEach(function (b) { b.setAttribute('aria-pressed', on); });
       document.querySelectorAll('[data-radio-state]').forEach(function (s) { s.textContent = on ? 'PAUSE' : 'PLAY'; });
+      pauseBtn.textContent = on ? 'PAUSE' : 'PLAY';
+      pauseBtn.setAttribute('aria-pressed', !on);
     }
 
     function loadAPI(cb) {
-      if (window.YT && window.YT.Player) return cb();
-      window.onYouTubeIframeAPIReady = cb;
+      if (window.__spotifyApi) return cb(window.__spotifyApi);
+      window.onSpotifyIframeApiReady = function (api) { window.__spotifyApi = api; cb(api); };
       var s = document.createElement('script');
-      s.src = 'https://www.youtube.com/iframe_api';
+      s.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      s.async = true;
       document.head.appendChild(s);
     }
 
     function startRadio() {
       radio.hidden = false;
-      if (player) { player.playVideo(); return; }
-      loadAPI(function () {
-        player = new YT.Player('yt-player', {
-          host: 'https://www.youtube-nocookie.com',
-          videoId: VIDEO,
-          playerVars: { list: LIST, autoplay: 1, playsinline: 1, rel: 0 },
-          events: {
-            onStateChange: function (e) { setPlaying(e.data === YT.PlayerState.PLAYING); },
-            // Auto-generated mixes don't always embed; fall back to the first song
-            onError: function () { if (!triedList) { triedList = true; player.loadVideoById(VIDEO); } }
-          }
+      if (controller) { controller.resume(); return; }
+      if (loading) return;
+      loading = true;
+      loadAPI(function (api) {
+        api.createController(document.getElementById('spotify-player'), { uri: PLAYLIST, width: '100%', height: 152 }, function (c) {
+          controller = c;
+          c.addListener('playback_update', function (e) { setPlaying(!e.data.isPaused); });
+          // Browsers may still ask for one tap on the player itself
+          c.addListener('ready', function () { c.play(); });
         });
       });
       if (!radioToast) {
         radioToast = true;
-        window.froyoToast('♫ FROYO RADIO', 'Now playing. Mute or close it any time.');
+        window.froyoToast('♫ FROYO RADIO', 'Tuning in. Pause or close it any time.');
       }
     }
 
     document.querySelectorAll('[data-radio-toggle]').forEach(function (b) {
       b.addEventListener('click', function () {
-        if (playing && player) player.pauseVideo(); else startRadio();
+        if (playing && controller) controller.pause(); else startRadio();
       });
     });
-    document.querySelector('[data-radio-mute]').addEventListener('click', function () {
-      if (!player) return;
-      var btn = this, muted = player.isMuted();
-      if (muted) player.unMute(); else player.mute();
-      btn.textContent = muted ? 'MUTE' : 'UNMUTE';
-      btn.setAttribute('aria-pressed', !muted);
+    pauseBtn.addEventListener('click', function () {
+      if (!controller) return;
+      if (playing) controller.pause(); else controller.resume();
     });
     document.querySelector('[data-radio-close]').addEventListener('click', function () {
-      if (player) player.pauseVideo();
+      if (controller) controller.pause();
       radio.hidden = true;
       setPlaying(false);
     });
