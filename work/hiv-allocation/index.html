@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HIV funding allocation — Zhenhao Sng</title>
+  <meta name="description" content="Multi-objective optimisation of US$200M of HIV funding across 46 African countries: NSGA-II vs greedy vs simulated annealing.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect width='14' height='24'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg fill='%237657FF'%3E%3Cpath clip-path='url(%23c)' d='M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z'/%3E%3Crect x='13' y='9.5' width='3' height='5'/%3E%3Crect x='16' y='10.5' width='3' height='3'/%3E%3Crect x='19' y='11' width='3' height='2'/%3E%3Crect x='22' y='11.5' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/case.css?v=1">
+</head>
+
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="ss-clip"><rect width="14" height="24"/></clipPath>
+    <symbol id="signal-star" viewBox="0 0 24 24">
+      <path clip-path="url(#ss-clip)" d="M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z"/>
+      <rect x="13" y="9.5" width="3" height="5"/>
+      <rect x="16" y="10.5" width="3" height="3"/>
+      <rect x="19" y="11" width="3" height="2"/>
+      <rect x="22" y="11.5" width="2" height="1"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="nav-shell">
+    <a class="brand" href="../../"><svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>ZS <span>/ FROYO</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="keep" href="../../#work">Work</a>
+      <a href="../../#archive">Archive</a>
+      <a href="../../#about">About</a>
+      <a class="keep" href="../../slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="crumb" href="../../#hiv">← Selected work</a>
+      <div class="case-label pixel"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>OPT-001 / CASE STUDY</div>
+      <h1 class="case-title">$200M.<br>46 countries.<br><span class="serif">One trade-off.</span></h1>
+      <p class="case-sub">Multi-objective optimisation of HIV funding across four intervention types, when impact and fairness disagree.</p>
+      <dl class="meta">
+        <div><dt>My role</dt><dd>Built the NSGA-II pipeline, benchmark comparison and all plots</dd></div>
+        <div><dt>Team</dt><dd>Ho Jun Lin, Sng Zhenhao, Woon Zee Ning</dd></div>
+        <div><dt>When</dt><dd>May – Jul 2026 · 40.018 Heuristics &amp; Systems Theory, SUTD</dd></div>
+        <div><dt>Tools</dt><dd>Python, NumPy, pandas, matplotlib, Gurobi</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- The data is the page -->
+  <section class="stage" aria-labelledby="stage-title">
+    <div class="wrap">
+      <h2 id="stage-title" class="mono" style="font-weight:400;color:var(--graphite);margin-bottom:18px">Nine allocations, one budget. Select a point.</h2>
+      <div class="chart-grid">
+        <div class="chart-box">
+          <svg id="front" viewBox="0 0 900 470" role="group" aria-label="Scatter of nine allocation solutions by net DALYs averted and inequity"></svg>
+          <div class="legend">
+            <span><i style="background:#7657FF"></i>NSGA-II front (3 of 60 points shown)</span>
+            <span><i style="background:#69666F"></i>Greedy baseline</span>
+            <span><i style="background:#FF77B7"></i>Simulated annealing (5 weights)</span>
+          </div>
+        </div>
+        <aside class="readout" aria-live="polite">
+          <span class="hint pixel">SELECTED SOLUTION</span>
+          <h3 data-r="name">—</h3>
+          <dl>
+            <div><dt>Net DALYs averted</dt><dd data-r="dalys">—</dd></div>
+            <div><dt>Inequity (std of per-capita impact)</dt><dd data-r="ineq">—</dd></div>
+            <div><dt>ARV shortfall</dt><dd data-r="short">—</dd></div>
+          </dl>
+          <p data-r="note"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="case-sec" aria-labelledby="s1">
+      <div class="sec-num"><b aria-hidden="true">01</b><span>Problem</span></div>
+      <div class="prose">
+        <h2 id="s1">Too little money, and two ways to be right</h2>
+        <p>After reductions in US foreign assistance, including PEPFAR-supported activities, HIV programmes across
+          high-burden African countries were left with gaps. Our scenario assumes one funder commits a fixed
+          <strong>US$200M</strong> to help close them, split across four interventions: <strong>ARV drug
+          procurement, supply chains, workforce training and HIV drug-resistance (HIVDR) surveillance</strong>.</p>
+        <p>The budget should do two things at once: avert as many disability-adjusted life years (DALYs) as possible
+          over five years, and spread that impact fairly between countries. Those goals conflict. Maximising
+          impact concentrates money where each dollar goes furthest; fairness asks for it to be spread out.</p>
+        <p>And the scenario is <strong>structurally underfunded</strong> on purpose. The minimum ARV need across the
+          46 countries adds up to <strong>US$872M</strong>, more than four times the budget, so every allocation leaves a
+          large shortfall. The real question becomes where to concentrate scarce drug supply.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s2">
+      <div class="sec-num"><b aria-hidden="true">02</b><span>Model</span></div>
+      <div class="prose">
+        <h2 id="s2">184 decisions, two objectives</h2>
+        <p>Each solution is a 46 × 4 matrix of funding amounts: one cell per country and intervention. Impact
+          saturates as spending per person living with HIV rises, so extra dollars help less and less:</p>
+        <div class="formula">DALY<sub>c,i</sub>(x) = B<sub>c,i</sub> · (1 − exp(−κ<sub>i</sub> · x · 10⁶ / N<sub>c</sub>))<br>
+          maximise&nbsp; Σ<sub>c</sub> Impact<sub>c</sub>(X)&nbsp;&nbsp;&nbsp;&nbsp;minimise&nbsp; std<sub>c</sub>( Impact<sub>c</sub>(X) per 100k PLHIV )</div>
+        <ul>
+          <li><strong>Budget:</strong> total spend ≤ US$200M.</li>
+          <li><strong>Absorption:</strong> each cell is capped by what a country can use, scaled by its PLHIV count.</li>
+          <li><strong>Workforce needs supply chains:</strong> workforce spend ≤ 0.5 × (supply spend + US$1M).</li>
+          <li><strong>ARV shortfall:</strong> a soft penalty of 1,000 DALYs per US$1M below each country's minimum ARV threshold.</li>
+        </ul>
+        <p>Data came from the UNAIDS 2025 databook (2024 PLHIV counts), IHME Global Burden of Disease 2023 HIV DALYs,
+          and 2026 GHSC-PSM pricing for first-line TLD therapy (US$33.24 per patient per year). With saturation,
+          a bilinear ARV–supply synergy term and the penalty, the full problem is a non-convex nonlinear program.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s3">
+      <div class="sec-num"><b aria-hidden="true">03</b><span>System · my part</span></div>
+      <div class="prose">
+        <h2 id="s3">An NSGA-II that never breaks the budget</h2>
+        <p>Instead of collapsing the two goals into one weighted score, NSGA-II evolves a population of allocations
+          and keeps the ones no other allocation beats on both objectives, producing the whole trade-off frontier in
+          one run. I implemented the pipeline:</p>
+        <ul>
+          <li><strong>Seeding:</strong> 60 allocations, including the full greedy solution, an impact-ranked greedy variant,
+            a needs-proportional seed and 57 feasible random ones.</li>
+          <li><strong>Sorting:</strong> fast non-dominated sorting into Pareto fronts, with crowding distance to keep the front spread out.</li>
+          <li><strong>Arithmetic crossover</strong> (p = 0.9) mixing parents country by country, so children inherit whole
+            country allocations without inventing or losing money.</li>
+          <li><strong>Budget-shift mutation</strong> (p = 0.25) moving 5–25% of one funded cell to another.</li>
+          <li><strong>Repair:</strong> clip to capacity, enforce the workforce rule, rescale or refill to exactly US$200M.</li>
+          <li><strong>Knee-point selection:</strong> the frontier solution closest to the ideal corner after normalising both objectives.</li>
+        </ul>
+        <p>For comparison: a greedy heuristic that spends US$1M at a time on the best marginal gain, simulated annealing at five
+          weightings, and a Gurobi LP on a linearised five-country instance as an exact sanity check.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s4">
+      <div class="sec-num"><b aria-hidden="true">04</b><span>Results</span></div>
+      <div class="prose">
+        <h2 id="s4">Most of the impact, a third less inequity</h2>
+        <span class="patch-sticker">PARETO CERTIFIED™</span>
+        <div class="stats">
+          <div><strong>98.6%</strong>of greedy's DALYs kept at the knee point</div>
+          <div><strong>−33%</strong>inequity versus greedy (60,159 vs 89,949)</div>
+          <div><strong>+16.4%</strong>hypervolume; converged by about generation 100</div>
+        </div>
+        <p>Every simulated-annealing solution is dominated by some point on the NSGA-II frontier. The equity-weighted SA run
+          matches the knee's inequity with <strong>53% fewer DALYs</strong>. NSGA-II's best-impact endpoint also slightly beats
+          greedy on DALYs alone (4.313M vs 4.299M).</p>
+        <p>Moving along the frontier from the knee shows why it's the sensible pick: gaining <strong>1.7%</strong> more DALYs
+          costs <strong>67%</strong> more inequity, while cutting inequity a further <strong>21%</strong> costs <strong>6.7%</strong> of DALYs.</p>
+        <table class="data">
+          <thead><tr><th>Method</th><th>Net DALYs</th><th>Inequity</th><th>ARV shortfall</th></tr></thead>
+          <tbody>
+            <tr><td>Greedy marginal-DALY</td><td>4,298,745</td><td>89,949</td><td>$708M</td></tr>
+            <tr><td>SA, λ = 0 (equity)</td><td>1,998,629</td><td>60,164</td><td>$818M</td></tr>
+            <tr><td>SA, λ = 1 (impact)</td><td>4,100,415</td><td>128,745</td><td>$687M</td></tr>
+            <tr><td>NSGA-II best-DALYs</td><td>4,313,203</td><td>100,700</td><td>$709M</td></tr>
+            <tr class="hl"><td>NSGA-II knee point</td><td>4,240,734</td><td>60,159</td><td>$710M</td></tr>
+            <tr><td>NSGA-II best-equity</td><td>3,956,995</td><td>47,634</td><td>$713M</td></tr>
+          </tbody>
+        </table>
+        <p>Runtime: NSGA-II took about 3–4 minutes (60 × 300 generations) on a laptop, against about 8 seconds for greedy.
+          That is roughly 30× slower, but for 60 solutions instead of one.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s5">
+      <div class="sec-num"><b aria-hidden="true">05</b><span>What it says</span></div>
+      <div class="prose">
+        <h2 id="s5">Money follows marginal return, not burden</h2>
+        <p>ARV procurement takes <strong>82–87%</strong> of the budget in every method, because the shortfall penalty makes
+          drugs the highest-value dollar while supply is this scarce.</p>
+        <p>The counter-intuitive part: South Africa has the most people living with HIV (7.8M) and the highest total
+          DALY potential, yet greedy gives it <strong>US$0</strong> and Nigeria US$75M. With saturating impact, each dollar
+          covers a much smaller share of a very large population, so South Africa's marginal return is about a third of Nigeria's.
+          The equity objective nudges some money back (US$1.48M at the knee), but only a little.</p>
+        <div class="bars" role="img" aria-label="Approximate marginal DALYs averted per additional US$1M of ARV funding: Cameroon about 33,000, Nigeria about 31,000, Ethiopia about 28,000, South Africa about 10,000.">
+          <h4>Marginal DALYs per extra US$1M of ARVs</h4>
+          <p>Approximate, representative countries from the report</p>
+          <div class="bar-row"><span>Cameroon</span><div class="bar-track"><div class="bar" style="--w:100%"></div><span class="bar-val">~33,000</span></div></div>
+          <div class="bar-row"><span>Nigeria</span><div class="bar-track"><div class="bar" style="--w:93.9%"></div><span class="bar-val">~31,000</span></div></div>
+          <div class="bar-row"><span>Ethiopia</span><div class="bar-track"><div class="bar" style="--w:84.8%"></div><span class="bar-val">~28,000</span></div></div>
+          <div class="bar-row"><span>South Africa</span><div class="bar-track"><div class="bar" style="--w:30.3%"></div><span class="bar-val">~10,000</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s6">
+      <div class="sec-num"><b aria-hidden="true">06</b><span>Limits</span></div>
+      <div class="prose">
+        <h2 id="s6">What this model can't tell you</h2>
+        <ul>
+          <li><strong>The knee doesn't strictly beat greedy.</strong> Greedy has more DALYs, the knee less inequity; they are mutually
+            non-dominated. The knee is the better balance, not a free lunch.</li>
+          <li><strong>Near-zero HIVDR funding is a model artefact, not advice.</strong> A static one-period model can't see how
+            resistance surveillance protects future treatment; a multi-period model would likely fund it more.</li>
+          <li><strong>Two countries get nothing because of missing data.</strong> Equatorial Guinea and São Tomé and Príncipe have
+            suppressed PLHIV figures, so the model effectively covers 44 countries.</li>
+          <li><strong>Point estimates only.</strong> Parameters are treated as certain, and the 65/15/15/5 split of burden across
+            interventions is reasoned, not measured.</li>
+          <li><strong>The Gurobi benchmark is linearised.</strong> It lands on sparse corner solutions, so it checks patterns on
+            five countries rather than setting a target for the full problem.</li>
+        </ul>
+        <div class="callout"><b>ON ETHICS</b>Ranking by impact per dollar can underweight absolute need and rights-based access to
+          treatment. The frontier makes that cost visible instead of hiding it inside one weighted score, and the allocations
+          are illustrations, not policy recommendations.</div>
+      </div>
+    </section>
+  </div>
+
+  <section class="evidence" aria-labelledby="ev">
+    <div class="wrap">
+      <h2 id="ev">Evidence</h2>
+      <div class="ev-links">
+        <a class="btn btn-ink" href="../../slides/hiv_funding_allocation_report.pdf">Read the full report (PDF) ↗</a>
+        <a class="btn btn-ghost" href="../../#work">← Back to selected work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="still-online">FROYO SYSTEM<span>still online ✦</span></div>
+    <span class="frog"><canvas data-icon="frog" aria-hidden="true"></canvas></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Table 3 of the report; inequity and shortfall as reported
+    var PTS = [
+      { g: 'NSGA-II', n: 'knee point', x: 60159, y: 4240734, s: 710, c: '#7657FF',
+        note: 'Closest to the ideal corner once both objectives are normalised: 98.6% of greedy’s DALYs with 33% less inequity.' },
+      { g: 'NSGA-II', n: 'best-DALYs endpoint', x: 100700, y: 4313203, s: 709, c: '#7657FF',
+        note: 'Slightly beats greedy on impact, found by mutating around the greedy seed, but 1.7% more DALYs than the knee costs 67% more inequity.' },
+      { g: 'NSGA-II', n: 'best-equity endpoint', x: 47634, y: 3956995, s: 713, c: '#7657FF',
+        note: 'Lowest inequity of any method: 21% below the knee, for 6.7% fewer DALYs.' },
+      { g: 'Greedy', n: 'marginal-DALY baseline', x: 89949, y: 4298745, s: 708, c: '#69666F',
+        note: 'Spends US$1M at a time wherever the next dollar does most. Strong on impact, but concentrates funding in few countries.' },
+      { g: 'Simulated annealing', n: 'λ = 0 (equity)', x: 60164, y: 1998629, s: 818, c: '#FF77B7',
+        note: 'About the knee’s inequity with 53% fewer DALYs. Dominated by the NSGA-II frontier.' },
+      { g: 'Simulated annealing', n: 'λ = 0.25', x: 64941, y: 2362897, s: 740, c: '#FF77B7',
+        note: 'Weighted-sum annealing, one run per weight. Dominated by the NSGA-II frontier.' },
+      { g: 'Simulated annealing', n: 'λ = 0.5', x: 110552, y: 4025437, s: 693, c: '#FF77B7',
+        note: 'Weighted-sum annealing, one run per weight. Dominated by the NSGA-II frontier.' },
+      { g: 'Simulated annealing', n: 'λ = 0.75', x: 125507, y: 4071999, s: 690, c: '#FF77B7',
+        note: 'Weighted-sum annealing, one run per weight. Dominated by the NSGA-II frontier.' },
+      { g: 'Simulated annealing', n: 'λ = 1 (impact)', x: 128745, y: 4100415, s: 687, c: '#FF77B7',
+        note: 'Impact-weighted annealing: high DALYs, the highest inequity of all nine.' }
+    ];
+
+    var W = 900, H = 470, L = 70, R = 24, T = 30, B = 56;
+    var X0 = 40000, X1 = 135000, Y0 = 1.8e6, Y1 = 4.5e6;
+    var sx = function (v) { return L + (v - X0) / (X1 - X0) * (W - L - R); };
+    var sy = function (v) { return T + (Y1 - v) / (Y1 - Y0) * (H - T - B); };
+    var fmt = function (v) { return v.toLocaleString('en-US'); };
+
+    var svg = document.getElementById('front'), o = [];
+    [2, 2.5, 3, 3.5, 4, 4.5].forEach(function (m) {
+      var y = sy(m * 1e6);
+      o.push('<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="#E7E4EA"/>');
+      o.push('<text x="' + (L - 10) + '" y="' + (y + 4) + '" text-anchor="end" class="tick">' + m.toFixed(1) + 'M</text>');
+    });
+    [50000, 75000, 100000, 125000].forEach(function (v) {
+      o.push('<text x="' + sx(v) + '" y="' + (H - B + 22) + '" text-anchor="middle" class="tick">' + (v / 1000) + 'k</text>');
+    });
+    o.push('<line x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="#B9B6C2"/>');
+    o.push('<text x="' + (W - R) + '" y="' + (H - 8) + '" text-anchor="end" class="axis">inequity: std of per-capita impact →</text>');
+    o.push('<text x="' + L + '" y="' + (T - 12) + '" class="axis">net DALYs averted</text>');
+    o.push('<text x="' + (L + 10) + '" y="' + (T + 16) + '" class="axis">↖ better</text>');
+    o.push('<text x="' + (sx(60159) + 14) + '" y="' + (sy(4240734) + 34) + '" class="note">knee point</text>');
+    o.push('<text x="' + (sx(89949) + 12) + '" y="' + (sy(4298745) + 22) + '" class="note">greedy</text>');
+    o.push('<circle class="sel-ring" r="12"/>');
+    PTS.forEach(function (p, i) {
+      o.push('<g class="pt" data-i="' + i + '" tabindex="0" role="button" aria-label="' + p.g + ' ' + p.n + ': ' +
+        fmt(p.y) + ' DALYs, inequity ' + fmt(p.x) + '"><circle cx="' + sx(p.x) + '" cy="' + sy(p.y) +
+        '" r="7" fill="' + p.c + '" stroke="#F7F5F2" stroke-width="2"/><circle cx="' + sx(p.x) + '" cy="' + sy(p.y) +
+        '" r="18" fill="transparent"/></g>');
+    });
+    svg.innerHTML = o.join('');
+
+    var ring = svg.querySelector('.sel-ring');
+    var r = {};
+    document.querySelectorAll('[data-r]').forEach(function (el) { r[el.getAttribute('data-r')] = el; });
+
+    function select(i) {
+      var p = PTS[i];
+      svg.querySelectorAll('.pt').forEach(function (g) { g.classList.toggle('sel', +g.getAttribute('data-i') === i); });
+      ring.setAttribute('cx', sx(p.x));
+      ring.setAttribute('cy', sy(p.y));
+      r.name.textContent = p.g + ' · ' + p.n;
+      r.dalys.textContent = fmt(p.y);
+      r.ineq.textContent = fmt(p.x);
+      r.short.textContent = 'US$' + p.s + 'M';
+      r.note.textContent = p.note;
+    }
+
+    svg.querySelectorAll('.pt').forEach(function (g) {
+      var i = +g.getAttribute('data-i');
+      g.addEventListener('click', function () { select(i); });
+      g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(i); }
+      });
+    });
+    select(0);
+  })();
+</script>
+<script src="../../pixel.js?v=5"></script>
+
+</body>
+</html>
