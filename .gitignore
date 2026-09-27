@@ -1,3 +1,9 @@
 .DS_Store
 .Rhistory
 sim.js
+# Source files kept locally, not for publishing
+slides/resume_templates*.pdf
+slides/final_final.pdf
+slides/HST*
+slides/hst_*
+slides/HASS*

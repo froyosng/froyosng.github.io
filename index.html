@@ -771,6 +771,60 @@
     .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
     .about-col { display: grid; gap: 24px; }
 
+    /* Résumé vending machine */
+    .dispenser {
+      position: relative;
+      padding: 16px 18px 14px;
+      border-radius: 18px 18px 10px 10px;
+      background: linear-gradient(180deg, #2a2733 0%, var(--ink) 100%);
+      color: var(--pearl);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 16px 30px -18px rgba(23, 21, 29, 0.6);
+    }
+
+    .disp-head { font-size: 12px; color: var(--lemon); letter-spacing: 0.06em; }
+
+    .disp-window {
+      position: relative;
+      height: 92px;
+      margin: 12px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(201, 185, 255, 0.35), rgba(147, 232, 255, 0.25));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+      display: grid;
+      place-items: center;
+    }
+
+    .disp-item {
+      padding: 14px 12px;
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 4px;
+      font-size: 11px;
+      box-shadow: 3px 3px 0 var(--pink);
+    }
+
+    .dispenser.thunk .disp-item { animation: drop var(--motion-toy) cubic-bezier(.5, 0, 1, .5) forwards; }
+    @keyframes drop { to { transform: translateY(90px) rotate(8deg); opacity: 0; } }
+
+    .disp-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .disp-row .mono { color: var(--chrome); }
+
+    .disp-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--red);
+      color: var(--sports-white);
+      font-size: 11px;
+      text-decoration: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 0 var(--wine);
+      transition: transform var(--motion-system), box-shadow var(--motion-system);
+    }
+
+    .disp-btn:active { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 var(--wine); }
+    .disp-slot { height: 10px; margin-top: 12px; border-radius: 4px; background: #000; box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8); }
+    .disp-note { margin: 8px 0 0; font-size: 12px; color: var(--chrome); font-family: var(--serif); font-style: italic; }
+
     /* Purikura panel: the one place allowed to get dense */
     .purikura {
       position: relative;
@@ -1037,6 +1091,7 @@
       <a href="#work">Work</a>
       <a href="#archive">Archive</a>
       <a href="#about">About</a>
+      <a href="slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
       <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn ↗</a>
       <button class="btn btn-explore" type="button" data-mode-toggle aria-pressed="false">
         <span data-mode-label>Explore</span> <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
@@ -1157,7 +1212,7 @@
           <div class="ed-stat"><strong>−33%</strong><span>inequity at the knee point, keeping 98.6% of greedy's DALYs averted</span></div>
           <div class="ed-foot">
             <p class="tools mono">Python · NSGA-II · Simulated annealing · Gurobi</p>
-            <span class="soon mono">Report · soon</span>
+            <a class="ed-link" href="slides/hiv_funding_allocation_report.pdf">Read the report <span class="arr">↗</span></a>
           </div>
         </div>
         <div class="visual v-violet">
@@ -1527,7 +1582,7 @@
         <li class="stop"><div><h3>SUTD MarketWatch Club</h3><span class="role">Treasurer · Feb 2025 – Mar 2026</span></div><p>Managed S$10,000+ in club funds (budgeting, claims, event allocation) for fortnightly trading and macro workshops.</p></li>
         <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
         <li class="stop"><div><h3>Kyoto sustainability trip</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
-        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Computer vision intern · Oct – Dec 2025</span></div><p>Annotated and classified 2,000+ images in a 10-person team, producing training datasets for in-house CNN models.</p></li>
+        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Computer vision intern · via SUTD DGIT at Zhejiang University · Oct – Dec 2025</span></div><p>Annotated and classified 2,000+ images in a 10-person team, producing training datasets for in-house CNN models.</p></li>
       </ol>
 
       <div class="stamp-head">
@@ -1538,7 +1593,7 @@
         <div class="stamp" style="--r:-2deg"><span class="st-no pixel">01 · VIETNAM</span><span class="st-city">HCMC</span><span class="st-date mono">Jan 2025</span><span class="st-prog">EntreConference (Reactor School)</span><span class="st-what">Exposure trip: pitching, networking, city tours. No build, just a stamp.</span></div>
         <a class="stamp" href="#row-pandabot" data-filter="all" style="--r:1.5deg"><span class="st-no pixel">02 · CHINA</span><span class="st-city">Chongqing</span><span class="st-date mono">Aug 2025</span><span class="st-prog">Design AI × CQU</span><span class="st-what">→ PandaBot: CV-assisted mobility for elderly users</span></a>
         <a class="stamp" href="#row-vinuni" data-filter="all" style="--r:-1deg"><span class="st-no pixel">03 · VIETNAM</span><span class="st-city">Hanoi</span><span class="st-date mono">Sep 2025</span><span class="st-prog">GEO Experiential Learning × VinUni</span><span class="st-what">→ Workforce SaaS: a “sandbox” for skills mismatch</span></a>
-        <a class="stamp" href="#row-molardata" data-filter="all" style="--r:2deg"><span class="st-no pixel">04 · CHINA</span><span class="st-city">Hangzhou</span><span class="st-date mono">Sep 2025 – Jan 2026</span><span class="st-prog">TIIDE × Zhejiang University</span><span class="st-what">→ MolarData: object-ID dataset annotation</span></a>
+        <a class="stamp" href="#row-molardata" data-filter="all" style="--r:2deg"><span class="st-no pixel">04 · CHINA</span><span class="st-city">Hangzhou</span><span class="st-date mono">Sep 2025 – Jan 2026</span><span class="st-prog">DGIT (formerly TIIDE) × Zhejiang University</span><span class="st-what">→ MolarData: object-ID dataset annotation</span></a>
         <a class="stamp" href="#row-threadahead" data-filter="all" style="--r:-1.5deg"><span class="st-no pixel">05 · INDONESIA</span><span class="st-city">Surabaya</span><span class="st-date mono">Jan 2026</span><span class="st-prog">Design AI × PCU</span><span class="st-what">→ ThreadAhead: forecasting-informed workflow optimisation</span></a>
         <a class="stamp" href="#row-mayumaro" data-filter="all" style="--r:1deg"><span class="st-no pixel">06 · JAPAN</span><span class="st-city">Kyoto</span><span class="st-date mono">May 2026</span><span class="st-prog">Kyoto sustainability trip</span><span class="st-what">→ Mayumaro: sustainable route companion, “DO YOU 京途?”</span></a>
         <a class="stamp" href="#about" style="--r:-0.5deg"><span class="st-no pixel">07 · TAIWAN</span><span class="st-city">Taipei</span><span class="st-date mono">Aug 2026 – Jan 2027</span><span class="st-prog">NTU exchange (GEXP)</span><span class="st-what">→ Now: algorithms, ML, econometrics, causal ML, game theory, stochastic calculus, and edible insects</span></a>
@@ -1563,7 +1618,7 @@
               <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Aug 2026 – Jan 2027 on exchange at
                 National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
                 and software engineering meet.</p>
-              <p>GPA 4.14/5.00, specialising in Financial Services and Business Analytics &amp; Operations Research.
+              <p>GPA 4.16/5.00, specialising in Financial Services and Business Analytics &amp; Operations Research.
                 CFA Level I candidate (May 2027).</p>
               <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
                 that need a model before they need an opinion.</p>
@@ -1575,7 +1630,19 @@
               <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
               <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
               <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
+              <li><span class="mono">Résumé</span><a href="slides/zhenhao_sng_resume.pdf">zhenhao_sng_resume.pdf ↗</a></li>
             </ul>
+          </div>
+
+          <div class="dispenser" aria-label="Career dispenser">
+            <div class="disp-head pixel">CAREER DISPENSER™</div>
+            <div class="disp-window"><span class="disp-item pixel">CV.PDF</span></div>
+            <div class="disp-row">
+              <span class="mono">Price $0.00</span>
+              <a class="disp-btn pixel" href="slides/zhenhao_sng_resume.pdf" target="_blank" rel="noopener" data-dispense>DISPENSE</a>
+            </div>
+            <div class="disp-slot" aria-hidden="true"></div>
+            <p class="disp-note">cv.pdf, still one page, somehow</p>
           </div>
         </div>
 
@@ -1641,6 +1708,7 @@
       <a href="mailto:froyosng@gmail.com">Email</a>
       <a href="https://github.com/froyosng">GitHub</a>
       <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn</a>
+      <a href="slides/zhenhao_sng_resume.pdf">Résumé</a>
       <a href="#top">Back to top ↑</a>
     </div>
     <button class="frog" type="button" data-frog aria-label="A tiny frog"><canvas data-icon="frog" aria-hidden="true"></canvas></button>
@@ -1817,6 +1885,19 @@
       if (player) player.pauseVideo();
       radio.hidden = true;
       setPlaying(false);
+    });
+
+    // ----- Career dispenser: the PDF opens normally; the drop is just for show -----
+    var dispensed = false;
+    document.querySelectorAll('[data-dispense]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var box = a.closest('.dispenser');
+        box.classList.remove('thunk');
+        void box.offsetWidth;
+        box.classList.add('thunk');
+        setTimeout(function () { box.classList.remove('thunk'); }, 1200);
+        if (!dispensed) { dispensed = true; window.froyoToast('+1 SIGNAL', 'Career dispensed. Price: $0.00.'); }
+      });
     });
 
     // ----- Frog: five clicks is too many -----
