@@ -512,6 +512,8 @@
     .v-pink { background: var(--tint-pink); }
     .v-cyan { background: var(--tint-cyan); }
     .v-lemon { background: var(--tint-lemon); }
+    .v-mist { background: #F0EEF3; }
+    .edition.no-tilt:hover .visual { transform: none; }
 
     .visual-caption { position: absolute; top: 14px; left: 16px; font-family: var(--pixel); font-size: 10px; color: var(--graphite); }
 
@@ -530,6 +532,7 @@
       box-shadow: 0 0 0 3px #fff;
     }
 
+    .label.top { top: 12px; bottom: auto; }
     .label.red { background: var(--red); color: var(--sports-white); border-color: var(--red); }
 
     /* Quant readout */
@@ -577,6 +580,82 @@
     }
 
     .sound-toggle[aria-pressed="true"] { background: var(--pink); }
+
+    /* ---------- Bubble simulator ---------- */
+    .sim {
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+
+    .sim-controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-bottom: 8px; font-size: 13px; }
+    .ctl { display: inline-flex; align-items: center; gap: 8px; }
+    .ctl input[type="range"] { width: 120px; accent-color: var(--violet); }
+    .ctl output { font-family: var(--mono); font-size: 13px; min-width: 2.2em; }
+    .seg { display: inline-flex; align-items: center; gap: 4px; }
+    .seg button { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--paper); color: var(--ink); cursor: pointer; }
+    .seg button[aria-pressed="true"] { background: var(--ink); color: var(--pearl); border-color: var(--ink); }
+    .ctl-check { display: inline-flex; align-items: center; gap: 6px; }
+    .ctl-check input:disabled, .ctl-check input:disabled + span { opacity: 0.4; }
+
+    .sim-chart { display: block; width: 100%; height: auto; touch-action: pan-y; }
+    .sim-chart .tick, .sim-chart .axis { font-family: var(--mono); font-size: 11px; fill: var(--graphite); }
+    .sim-chart .note { font-family: var(--mono); font-size: 11px; fill: var(--ink); }
+
+    .sim-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--graphite); margin: 2px 0 10px; }
+    .sim-legend i, .sim-tip i { display: inline-block; width: 18px; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+    .key-open { border-color: #FF77B7; border-top-style: dashed !important; }
+    .key-ctrl { border-color: #7657FF; }
+
+    .sim-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .sim-stats div { border-top: 1px solid var(--line); padding-top: 8px; font-size: 12px; color: var(--graphite); line-height: 1.3; }
+    .sim-stats strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 18px; color: var(--ink); margin-bottom: 2px; }
+
+    .sim-tip {
+      position: absolute;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--pearl);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .sim-tip b, .sim-tip span { display: block; font-weight: 500; }
+    .sim-tip .u { color: var(--chrome); }
+
+    .sim details { margin-top: 10px; font-size: 13px; }
+    .sim summary { cursor: pointer; color: var(--graphite); }
+    .sim table { width: 100%; border-collapse: collapse; margin-top: 8px; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .sim th, .sim td { text-align: right; padding: 3px 6px; border-bottom: 1px solid var(--line); font-weight: 400; }
+    .sim th { color: var(--graphite); }
+    .sim th:first-child, .sim td:first-child { text-align: left; }
+
+    /* ---------- Fidelity bars (CBS) ---------- */
+    .fid {
+      width: 100%;
+      max-width: 480px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px 12px;
+    }
+
+    .fid h4 { margin: 0; font-size: 15px; font-weight: 600; }
+    .fid > p { margin: 2px 0 14px; font-size: 12px; color: var(--graphite); }
+    .fid-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; }
+    .fid-track { display: flex; align-items: center; height: 20px; }
+    .fid-bar { height: 20px; width: calc(var(--w) * 0.86); background: var(--violet); border-radius: 0 4px 4px 0; transition: background var(--motion-system); }
+    .fid-row:hover .fid-bar { background: var(--violet-deep); }
+    .fid-val { font-family: var(--mono); font-size: 12px; padding-left: 8px; }
 
     /* ---------- Signals: data stickers ---------- */
     .stickers { display: flex; flex-wrap: wrap; gap: 22px 18px; }
@@ -739,6 +818,8 @@
       section.block { padding: 64px 0; }
       .visual { padding: 44px 14px 52px; min-height: 280px; }
       .readout { grid-template-columns: 1fr; }
+      .sim-stats { grid-template-columns: 1fr; }
+      .ctl input[type="range"] { width: 100px; }
       .tile.wide { grid-column: auto; flex-direction: column; align-items: flex-start; }
       .pipeline { flex-direction: column; }
       .arrow { transform: rotate(90deg); }
@@ -780,9 +861,8 @@
     <nav class="nav" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#archive">Archive</a>
-      <a href="#experience">Experience</a>
       <a href="#about">About</a>
-      <a href="https://github.com/froyosng">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn ↗</a>
       <button class="btn btn-explore" type="button" data-mode-toggle aria-pressed="false">
         <span data-mode-label>Explore</span> <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
       </button>
@@ -877,13 +957,75 @@
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
           <h2 class="serif">selected work</h2>
         </div>
-        <p class="section-note">Four editions that show how I approach a problem. Everything else is in the archive.</p>
+        <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
       </div>
+
+      <article class="edition reveal no-tilt" id="bubbles">
+        <div class="ed-index">
+          <span class="ed-num" aria-hidden="true">01</span>
+          <span class="ed-serial mono">SYS-001<br>Summer 2026</span>
+          <span class="patch p-sys">SYS</span>
+          <span class="patch p-qnt">QNT</span>
+        </div>
+        <div class="ed-body">
+          <span class="ed-kicker mono">Nonlinear control</span>
+          <h3>Stabilising a speculative bubble</h3>
+          <p class="ed-sub">State-feedback control of a market where traders switch strategies.</p>
+          <p>For 40.018 Heuristics &amp; Systems Theory, our team of three took the Schmitt, Tramontana &amp;
+            Westerhoff (2020) market model, where traders flip between chasing trends and betting on fair value
+            depending on which paid off last period, and asked whether a regulator using full state feedback
+            could beat the paper's fixed price rules.</p>
+          <p>I led the linearisation, Lyapunov stability, controllability and observability analysis, and the
+            controller and observer design. At fair value the model is only rank-2 controllable, so we placed poles
+            on the controllable subsystem. On the true nonlinear model it held for every bubble size we tested, and
+            only failed when trader behaviour drifted, which re-tuning fixed.</p>
+          <div class="ed-stat"><strong>1.06 → 0.40</strong><span>spectral radius, open loop → closed loop</span></div>
+          <div class="ed-foot">
+            <p class="tools mono">MATLAB · Pole placement · Luenberger observer</p>
+            <span class="soon mono">Report · soon</span>
+          </div>
+        </div>
+        <div class="visual v-cyan">
+          <span class="visual-caption">SIM_01 / NONLINEAR MODEL</span>
+          <span class="label top">TRY IT</span>
+          <div class="sim" data-sim>
+            <div class="sim-controls">
+              <label class="ctl"><span class="mono">Bubble a</span>
+                <input type="range" min="0.1" max="3" step="0.1" value="0.5" data-sim-a aria-label="Initial bubble size">
+                <output data-sim-a-out>0.5</output></label>
+              <div class="seg" role="group" aria-label="Chartist strength chi">
+                <span class="mono">χ</span>
+                <button type="button" data-sim-chi="0.2" aria-pressed="true">0.2</button>
+                <button type="button" data-sim-chi="1" aria-pressed="false">1.0</button>
+              </div>
+              <label class="ctl-check"><input type="checkbox" data-sim-retune disabled><span>Re-tune gain</span></label>
+            </div>
+            <svg class="sim-chart" viewBox="0 0 560 280" role="img" aria-label="Simulated price deviation over 60 periods"></svg>
+            <div class="sim-tip" hidden></div>
+            <div class="sim-legend">
+              <span><i class="key-open"></i>No regulator</span>
+              <span><i class="key-ctrl"></i>State feedback (reduced-order)</span>
+            </div>
+            <div class="sim-stats">
+              <div><strong data-stat="peak">—</strong>peak mispricing, no regulator</div>
+              <div><strong data-stat="final">—</strong>|x₁| after 60 periods, regulated</div>
+              <div><strong data-stat="u">—</strong>peak intervention |u|</div>
+            </div>
+            <details>
+              <summary>Data table</summary>
+              <table>
+                <thead><tr><th>t</th><th>no regulator</th><th>regulated</th><th>u</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </details>
+          </div>
+        </div>
+      </article>
 
       <article class="edition reveal" id="quant">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">01</span>
-          <span class="ed-serial mono">QNT-001<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">02</span>
+          <span class="ed-serial mono">QNT-002<br>Edition 2026</span>
           <span class="patch p-qnt">QNT</span>
         </div>
         <div class="ed-body">
@@ -928,8 +1070,8 @@
 
       <article class="edition reveal" id="choice">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">02</span>
-          <span class="ed-serial mono">ML-002<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">03</span>
+          <span class="ed-serial mono">ML-003<br>Edition 2026</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
@@ -964,34 +1106,37 @@
 
       <article class="edition reveal" id="cbs">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">03</span>
-          <span class="ed-serial mono">ML-003<br>Credit Bureau SG</span>
+          <span class="ed-num" aria-hidden="true">04</span>
+          <span class="ed-serial mono">ML-004<br>Credit Bureau SG</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
           <span class="ed-kicker mono">Synthetic data</span>
           <h3>Credit data that isn't real</h3>
-          <p class="ed-sub">A CTGAN pipeline for synthetic credit data.</p>
-          <p>An industry-partner project reporting to DBS, OCBC and UOB. I led development of a CTGAN pipeline
-            benchmarked against real credit data distributions, and designed the team's interactive dual-view
-            (Customer/Agency) dashboard with fidelity scoring.</p>
+          <p class="ed-sub">A synthetic data generator for Credit Bureau Singapore.</p>
+          <p>An industry project reporting to DBS, OCBC and UOB. Real credit data can't be used for testing or
+            client demos, so our team of five built a generator that mimics it.</p>
+          <p>The tool clusters banks' time series with K-medoids (k chosen by silhouette score), synthesises each
+            cluster with seven methods (ARIMA, Holt-Winters, Prophet, Copula, Beta, Gaussian and CTGAN), scores
+            every method for fidelity and recommends the best. I led the CTGAN pipeline and designed the dual-view
+            (Customer/Agency) dashboard.</p>
+          <div class="ed-stat"><strong>80.7</strong><span>/100 best fidelity: Copula, account-balance series</span></div>
           <div class="ed-foot">
-            <p class="tools mono">CTGAN · Fidelity metrics · Dashboard design</p>
-            <span class="soon mono">Case study · soon</span>
+            <p class="tools mono">K-medoids · Copula · CTGAN · Prophet</p>
+            <a class="ed-link" href="slides/cbs_synthetic_data_poster.png">View poster <span class="arr">↗</span></a>
           </div>
         </div>
-        <div class="visual v-cyan">
-          <span class="visual-caption">PIPELINE.SYS</span>
-          <div class="pipeline" role="img" aria-label="Pipeline: real credit data into a CTGAN generator, producing synthetic data, scored for fidelity, shown in a customer and agency dashboard.">
-            <div class="node"><small>source</small>Real credit data</div>
-            <span class="arrow">→</span>
-            <div class="node hl"><small>generator</small>CTGAN</div>
-            <span class="arrow">→</span>
-            <div class="node"><small>output</small>Synthetic data</div>
-            <span class="arrow">→</span>
-            <div class="node"><small>benchmark</small>Fidelity scoring</div>
-            <span class="arrow">→</span>
-            <div class="node out-cyan"><small>interface</small>Customer / Agency dashboard</div>
+        <div class="visual v-mist">
+          <span class="visual-caption">FIDELITY_REPORT.CSV</span>
+          <div class="fid" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
+            <h4>Fidelity by synthesis method</h4>
+            <p>Account-balance series, score out of 100, from the tool's stats summary</p>
+            <div class="fid-row" title="Copula: 80.7 / 100"><span>Copula</span><div class="fid-track"><div class="fid-bar" style="--w:80.7%"></div><span class="fid-val">80.7</span></div></div>
+            <div class="fid-row" title="Gaussian: 71.7 / 100"><span>Gaussian</span><div class="fid-track"><div class="fid-bar" style="--w:71.7%"></div><span class="fid-val">71.7</span></div></div>
+            <div class="fid-row" title="Holt-Winters: 63.7 / 100"><span>Holt-Winters</span><div class="fid-track"><div class="fid-bar" style="--w:63.7%"></div><span class="fid-val">63.7</span></div></div>
+            <div class="fid-row" title="Prophet: 61.0 / 100"><span>Prophet</span><div class="fid-track"><div class="fid-bar" style="--w:61%"></div><span class="fid-val">61.0</span></div></div>
+            <div class="fid-row" title="ARIMA: 53.5 / 100"><span>ARIMA</span><div class="fid-track"><div class="fid-bar" style="--w:53.5%"></div><span class="fid-val">53.5</span></div></div>
+            <div class="fid-row" title="CTGAN: 17.6 / 100"><span>CTGAN</span><div class="fid-track"><div class="fid-bar" style="--w:17.6%"></div><span class="fid-val">17.6</span></div></div>
           </div>
           <span class="label">100% SYNTHETIC</span>
         </div>
@@ -999,8 +1144,8 @@
 
       <article class="edition reveal" id="birds">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">04</span>
-          <span class="ed-serial mono">CV-004<br>DTI 2025</span>
+          <span class="ed-num" aria-hidden="true">05</span>
+          <span class="ed-serial mono">CV-005<br>DTI 2025</span>
           <span class="patch p-cv">CV</span>
         </div>
         <div class="ed-body">
@@ -1086,12 +1231,6 @@
           <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-ml">ML</span></div>
           <span class="go muted mono">Slides soon</span>
         </li>
-        <li class="row" data-cat="research quant">
-          <span class="when mono">40.018</span>
-          <div><h3>Nonlinear bubble stabilization</h3><p>Extended a heterogeneous-beliefs asset-pricing model with state-feedback and observer-based controllers (Ackermann's formula) to stabilize price bubbles, simulated in MATLAB.</p></div>
-          <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-qnt">QNT</span></div>
-          <span class="go muted mono">Slides soon</span>
-        </li>
         <li class="row" data-cat="research finance">
           <span class="when mono">Psych</span>
           <div><h3>Algorithm aversion in financial decisions</h3><p>A within-subjects experiment (AI vs. human advisor × stake level) testing how stakes, experience and trust shape reliance on algorithmic advice.</p></div>
@@ -1109,6 +1248,12 @@
           <div><h3>LLM carbon emissions calculator</h3><p>A multi-linear regression model estimating the carbon emissions of LLM training configurations. Selected for further development.</p></div>
           <div class="cats"><span class="patch p-ml">ML</span><span class="patch p-sys">SYS</span></div>
           <a class="go" href="slides/ddw_llm_carbon_calculator.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="systems">
+          <span class="when mono">2026</span>
+          <div><h3>Aster PH43 — aggregate planning</h3><p>Workforce and capacity planning for a pumphouse at Aster's Pulau Bukom refinery: a 12-month cost-minimising LP over headcount, overtime, contractors, pre-build and backlog. Our hybrid plan kept a stable 24-person crew and came within 0.95% of the LP optimum.</p></div>
+          <div class="cats"><span class="patch p-sys">SYS</span></div>
+          <a class="go" href="slides/aster_ph43_aggregate_planning.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="systems">
           <span class="when mono">PCU</span>
@@ -1198,6 +1343,7 @@
           <ul class="contact-links">
             <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
             <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
+            <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
           </ul>
         </div>
       </div>
@@ -1212,6 +1358,7 @@
     <div class="foot-links">
       <a href="mailto:froyosng@gmail.com">Email</a>
       <a href="https://github.com/froyosng">GitHub</a>
+      <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn</a>
       <a href="#top">Back to top ↑</a>
     </div>
     <button class="frog" type="button" data-frog aria-label="A tiny frog"><canvas data-icon="frog" aria-hidden="true"></canvas></button>
@@ -1334,7 +1481,8 @@
     cards.forEach(function (c) { io.observe(c); });
   })();
 </script>
-<script src="pixel.js?v=4"></script>
+<script src="pixel.js?v=5"></script>
+<script src="sim.js?v=5"></script>
 
 </body>
 </html>
