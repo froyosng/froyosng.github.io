@@ -4,30 +4,45 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zhenhao Sng</title>
-  <meta name="description" content="Zhenhao Sng — AI, computer vision, forecasting and finance projects.">
+  <meta name="description" content="Zhenhao Sng builds models for messy decisions — machine learning, quantitative research, optimisation and systems.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #000;
-      --fg: #fff;
-      --muted: rgba(255, 255, 255, 0.55);
-      --faint: rgba(255, 255, 255, 0.35);
-      --line: rgba(255, 255, 255, 0.10);
-      --line-strong: rgba(255, 255, 255, 0.22);
-      --glass: rgba(255, 255, 255, 0.035);
-      --glass-hover: rgba(255, 255, 255, 0.06);
-      --accent: #00F0FF;
-      --accent-dim: rgba(0, 240, 255, 0.14);
+      /* Neutral foundation */
+      --milk: #F7F5F2;
+      --paper: #FFFFFF;
+      --ink: #17151D;
+      --chrome: #D6D5E3;
+      --graphite: #6B6B68;
+      --line: rgba(23, 21, 29, 0.12);
+      --line-strong: rgba(23, 21, 29, 0.22);
+
+      /* Accent family — used deliberately, not everywhere */
+      --violet: #7657FF;
+      --violet-deep: #5A3CF0;
+      --pink: #FF77B7;
+      --ice: #93E8FF;
+      --lemon: #F6EF75;
+      --galaxy: #221A4A;
+
+      /* Tints for project visuals */
+      --tint-violet: #EEEAFF;
+      --tint-pink: #FFE9F3;
+      --tint-ice: #E6F9FF;
+      --tint-lemon: #FBF8D0;
+
       --display: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
       --sans: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
-      --pixel: "Silkscreen", var(--mono);
       --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --pixel: "Silkscreen", var(--mono);
+
       --gutter: 40px;
-      --max: 1200px;
+      --max: 1160px;
+      --radius: 20px;
     }
 
     * { box-sizing: border-box; }
@@ -36,50 +51,36 @@
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--fg);
+      background: var(--milk);
+      color: var(--ink);
       font-family: var(--sans);
-      line-height: 1.55;
+      font-size: 16px;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* Exposed blueprint grid + ambient glow behind the glass */
+    /* Faint pixel-dot grid */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -2;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 85%);
-      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 85%);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
       z-index: -1;
-      width: 900px;
-      height: 900px;
-      top: -300px;
-      right: -300px;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.10), transparent 60%);
+      background-image: radial-gradient(rgba(23, 21, 29, 0.10) 1px, transparent 1px);
+      background-size: 24px 24px;
       pointer-events: none;
     }
 
-    ::selection { background: var(--accent); color: #000; }
+    ::selection { background: var(--lemon); color: var(--ink); }
 
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit; }
+
+    h1, h2, h3 { font-family: var(--display); margin: 0; }
 
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
       padding: 0 var(--gutter);
-      border-left: 1px solid var(--line);
-      border-right: 1px solid var(--line);
     }
 
     .mono {
@@ -89,12 +90,53 @@
       text-transform: uppercase;
     }
 
+    .pixel { font-family: var(--pixel); letter-spacing: 0.02em; }
+
+    :focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+
+    /* ---------- Glossy Y2K controls ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid var(--line-strong);
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      color: #fff;
+      border-color: var(--violet-deep);
+      background: linear-gradient(180deg, #9C88FF 0%, #7657FF 48%, #6445F2 52%, #7B5DFF 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 18px rgba(118, 87, 255, 0.28);
+    }
+
+    .btn-primary:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 8px 24px rgba(118, 87, 255, 0.4); }
+
+    .btn-chrome {
+      color: var(--ink);
+      background: linear-gradient(180deg, #FFFFFF 0%, #EFEEF6 48%, #D9D8E6 52%, #F4F3F9 100%);
+      box-shadow: inset 0 1px 0 #fff, 0 2px 6px rgba(23, 21, 29, 0.06);
+    }
+
+    .btn-chrome:hover { box-shadow: inset 0 1px 0 #fff, 0 4px 12px rgba(23, 21, 29, 0.1); }
+
+    .btn .pixel { font-size: 11px; }
+
     /* ---------- Top bar ---------- */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.6);
+      z-index: 20;
+      background: rgba(247, 245, 242, 0.82);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
@@ -104,369 +146,163 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 56px;
+      gap: 16px;
+      height: 64px;
     }
 
-    .brand { color: var(--fg); }
-    .brand span { color: var(--accent); }
+    .brand {
+      font-family: var(--pixel);
+      font-size: 14px;
+      text-decoration: none;
+    }
 
-    .nav { display: flex; gap: 28px; }
-    .nav a { color: var(--muted); transition: color 0.15s; }
-    .nav a:hover { color: var(--fg); }
+    .brand span { color: var(--violet); }
+
+    .nav { display: flex; align-items: center; gap: 24px; }
+
+    .nav a {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--graphite);
+      text-decoration: none;
+    }
+
+    .nav a:hover { color: var(--ink); }
+
+    .nav .btn { padding: 8px 14px; font-size: 13px; color: var(--ink); }
 
     /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 88px 0 96px; }
+
     .hero .wrap {
       display: grid;
-      grid-template-columns: 1fr 320px;
-      border-bottom: 1px solid var(--line);
-      padding: 0;
-    }
-
-    .hero-main {
-      padding: 96px var(--gutter) 72px;
-      border-right: 1px solid var(--line);
-    }
-
-    .status {
-      display: inline-flex;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 56px;
       align-items: center;
-      gap: 10px;
-      color: var(--muted);
-      margin-bottom: 36px;
     }
 
-    .status i {
-      width: 7px;
-      height: 7px;
-      background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
-      animation: pulse 2s ease-in-out infinite;
+    .status-line {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--violet);
+      margin-bottom: 28px;
     }
 
-    @keyframes pulse { 50% { opacity: 0.3; } }
-
-    h1, h2, h3 { font-family: var(--display); }
-
-    h1 {
-      font-size: clamp(56px, 10vw, 136px);
-      line-height: 0.88;
-      letter-spacing: -0.055em;
+    .hero h1 {
+      font-size: clamp(56px, 9vw, 120px);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
       font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .thesis {
+      font-family: var(--display);
+      font-size: clamp(26px, 3.4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+      margin: 0 0 20px;
+      max-width: 620px;
+    }
+
+    .grad {
+      background: linear-gradient(90deg, var(--violet) 0%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .support {
+      max-width: 540px;
+      font-size: 18px;
+      color: #3d3a45;
       margin: 0 0 36px;
     }
 
-    h1 .outline {
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
-    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-
-    .tag {
-      border: 1px solid var(--line-strong);
-      padding: 6px 10px;
-      color: var(--muted);
-    }
-
-    .intro {
-      max-width: 560px;
-      font-size: 19px;
-      color: rgba(255, 255, 255, 0.78);
-      margin: 0;
-    }
-
-    .hero-side { display: flex; flex-direction: column; }
-
-    .stat {
-      flex: 1;
-      padding: 28px var(--gutter);
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .stat:last-child { border-bottom: 0; }
-
-    .stat-value {
-      font-family: var(--mono);
-      font-size: 44px;
-      font-weight: 500;
+    .sticker {
+      position: absolute;
+      font-size: 28px;
       line-height: 1;
-      color: var(--fg);
-      margin-bottom: 10px;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .stat-label { color: var(--faint); }
+    .s1 { top: 60px; right: 8%; color: var(--pink); transform: rotate(12deg); }
+    .s2 { bottom: 70px; left: 46%; color: var(--violet); font-size: 20px; }
+    .s3 { top: 46%; left: 3%; color: #d8cf2e; font-size: 18px; }
 
-    /* ---------- Sections ---------- */
-    section { border-bottom: 1px solid var(--line); }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: 120px 1fr auto;
-      align-items: end;
-      gap: 24px;
-      padding: 72px 0 28px;
+    /* OS-style window */
+    .window {
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(23, 21, 29, 0.04), 0 18px 40px -18px rgba(34, 26, 74, 0.25);
     }
 
-    .section-index {
-      display: inline-flex;
+    .titlebar {
+      display: flex;
       align-items: center;
-      gap: 12px;
-      color: var(--accent);
-      font-family: var(--pixel);
+      gap: 8px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F1F0F7 50%, #E4E3EE 51%, #F4F3F9 100%);
+      font-size: 11px;
+    }
+
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(23, 21, 29, 0.25); }
+    .dots i:nth-child(1) { background: var(--pink); }
+    .dots i:nth-child(2) { background: var(--lemon); }
+    .dots i:nth-child(3) { background: var(--ice); }
+
+    .titlebar .pixel { margin-left: auto; color: var(--graphite); }
+
+    .status-list { list-style: none; margin: 0; padding: 8px 18px 14px; }
+
+    .status-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px dashed var(--line);
       font-size: 14px;
     }
 
-    .px-icon { height: 20px; width: auto; image-rendering: pixelated; }
+    .status-list li:last-child { border-bottom: 0; }
+    .status-list .k { color: var(--graphite); }
+    .status-list .v { font-weight: 600; text-align: right; }
 
-    h2 {
-      font-size: clamp(32px, 4.5vw, 56px);
-      letter-spacing: -0.04em;
-      line-height: 1;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .section-count { color: var(--faint); }
-
-    /* Bento grid */
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      margin-bottom: 72px;
-    }
-
-    .span-2 { grid-column: span 2; }
-    .span-3 { grid-column: span 3; }
-    .span-4 { grid-column: span 4; }
-    .span-6 { grid-column: span 6; }
-
-    .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-height: 260px;
-      padding: 28px;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: background 0.25s ease;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: var(--glass);
-      pointer-events: none;
-    }
-
-    /* Corner ticks — blueprint registration marks */
-    .card::after {
-      content: "";
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid var(--line-strong);
-      border-right: 1px solid var(--line-strong);
-      transition: border-color 0.25s, width 0.25s, height 0.25s;
-    }
-
-    .card:hover { background: rgba(8, 12, 14, 0.8); }
-    .card:hover::before { background: var(--glass-hover); }
-    .card:hover::after { border-color: var(--accent); width: 18px; height: 18px; }
-
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      color: var(--faint);
-      margin-bottom: auto;
-      padding-bottom: 40px;
-    }
-
-    .card h3 {
-      position: relative;
-      font-size: 24px;
-      line-height: 1.15;
-      letter-spacing: -0.025em;
-      font-weight: 600;
-      margin: 0 0 12px;
-    }
-
-    .span-4 h3, .span-6 h3 { font-size: 30px; }
-
-    .card p {
-      color: var(--muted);
-      font-size: 15px;
-      margin: 0 0 20px;
-      max-width: 560px;
-    }
-
-    .card-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .card-tags .tag { font-size: 11px; padding: 4px 8px; }
-
-    .open {
-      color: var(--accent);
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      white-space: nowrap;
-    }
-
-    .open b {
-      font-weight: 400;
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover .open b { transform: translateX(4px); }
-
-    /* ---------- Glitch ---------- */
-    .glitch { position: relative; display: inline-block; }
-
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .glitch::before { color: var(--accent); }
-    .glitch::after { color: #ff2bd6; }
-
-    .card:hover .glitch::before,
-    .glitch-hover:hover .glitch::before {
-      animation: glitch-a 0.38s steps(2, end) 1;
-    }
-
-    .card:hover .glitch::after,
-    .glitch-hover:hover .glitch::after {
-      animation: glitch-b 0.38s steps(2, end) 1;
-    }
-
-    @keyframes glitch-a {
-      0%   { opacity: 0.9; transform: translate(-3px, 0); clip-path: inset(10% 0 60% 0); }
-      25%  { opacity: 0.9; transform: translate(3px, 0);  clip-path: inset(55% 0 20% 0); }
-      50%  { opacity: 0.9; transform: translate(-2px, 0); clip-path: inset(30% 0 45% 0); }
-      75%  { opacity: 0.9; transform: translate(2px, 0);  clip-path: inset(75% 0 5% 0); }
-      100% { opacity: 0;   transform: none;               clip-path: inset(0); }
-    }
-
-    @keyframes glitch-b {
-      0%   { opacity: 0.7; transform: translate(3px, 0);  clip-path: inset(65% 0 10% 0); }
-      25%  { opacity: 0.7; transform: translate(-3px, 0); clip-path: inset(15% 0 70% 0); }
-      50%  { opacity: 0.7; transform: translate(2px, 0);  clip-path: inset(45% 0 30% 0); }
-      75%  { opacity: 0.7; transform: translate(-2px, 0); clip-path: inset(5% 0 80% 0); }
-      100% { opacity: 0;   transform: none;               clip-path: inset(0); }
-    }
-
-    /* ---------- Quant terminal ---------- */
-    .terminal {
-      font-family: var(--mono);
-      font-size: 13px;
-      background: rgba(0, 20, 24, 0.55);
-    }
-
-    .terminal::before { background: linear-gradient(180deg, var(--accent-dim), transparent 40%); }
-
-    .term-bar {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      padding-bottom: 18px;
-      margin-bottom: 18px;
-      border-bottom: 1px solid var(--line);
-      color: var(--faint);
-    }
-
-    .term-bar i { width: 8px; height: 8px; border: 1px solid var(--line-strong); }
-    .term-bar span { margin-left: 8px; }
-
-    .prompt { color: var(--muted); margin: 0 0 18px; }
-    .prompt b { color: var(--accent); font-weight: 400; }
-
-    .alpha-row {
-      position: relative;
-      padding: 16px 0;
-      border-bottom: 1px dashed var(--line);
-    }
-
-    .alpha-name {
-      display: flex;
-      justify-content: space-between;
-      color: var(--fg);
-      margin-bottom: 12px;
-    }
-
-    .alpha-name span { color: var(--faint); }
-
-    .metrics { display: flex; gap: 32px; }
-
-    .metric-label { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
-
-    .metric-value {
-      font-size: 30px;
-      color: var(--accent);
-      line-height: 1.2;
-      text-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
-    }
-
-    .metric-value.na { color: var(--faint); text-shadow: none; }
-
-    .term-status { color: var(--muted); margin-top: 18px; }
-    .term-status b { color: var(--accent); font-weight: 400; }
-
-    .cursor {
+    .led {
       display: inline-block;
       width: 8px;
-      height: 14px;
-      background: var(--accent);
-      vertical-align: -2px;
-      animation: pulse 1s steps(1) infinite;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--violet);
+      margin-right: 8px;
+      vertical-align: 1px;
+      box-shadow: 0 0 0 3px var(--tint-violet);
     }
 
-    .quant-copy h3 { font-size: 30px; }
-    .quant-copy p { font-size: 16px; }
-    .quant-copy code { font-family: var(--mono); font-size: 13px; color: var(--fg); }
+    /* ---------- Explore world ---------- */
+    .world { padding: 0 0 88px; }
+    .world[hidden] { display: none; }
 
-    .card-stat {
-      font-size: 28px;
-      text-transform: none;
-      letter-spacing: 0;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 14px;
-      text-shadow: 0 0 18px rgba(0, 240, 255, 0.3);
+    .world .titlebar .pixel { color: var(--ink); margin-left: 6px; }
+    .world .titlebar .close {
+      margin-left: auto;
+      border: 0;
+      background: none;
+      font: inherit;
+      font-family: var(--pixel);
+      color: var(--graphite);
+      cursor: pointer;
     }
 
-    .open.pending { color: var(--faint); }
-
-    /* ---------- Pixel desk scene ---------- */
-    .scene-band { border-bottom: 1px solid var(--line); }
-    .scene-band .wrap { padding-top: 40px; padding-bottom: 40px; }
-
-    .scene {
-      position: relative;
-      border: 1px solid var(--line);
-      background: #000;
-    }
+    .scene { position: relative; background: var(--galaxy); }
 
     .scene canvas {
       display: block;
@@ -475,22 +311,19 @@
       image-rendering: pixelated;
     }
 
-    .hot {
-      position: absolute;
-      outline-offset: 2px;
-    }
-
-    .hot:focus-visible { outline: 1px dashed var(--accent); }
+    .hot { position: absolute; }
+    .hot:focus-visible { outline: 2px dashed var(--lemon); outline-offset: 2px; }
 
     .hot-label {
       position: absolute;
       bottom: 100%;
       left: 50%;
-      transform: translate(-50%, -4px);
-      padding: 3px 8px;
-      background: #000;
-      border: 1px solid var(--accent);
-      color: var(--accent);
+      transform: translate(-50%, -6px);
+      padding: 4px 9px;
+      background: var(--lemon);
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      border-radius: 6px;
       font-family: var(--pixel);
       font-size: 11px;
       white-space: nowrap;
@@ -502,69 +335,408 @@
     .hot:hover .hot-label,
     .hot:focus-visible .hot-label { opacity: 1; }
 
-    .scene-strip {
+    .scene-legend {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px 24px;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-top: 0;
-      font-family: var(--pixel);
-      font-size: 11px;
-      color: var(--faint);
+      gap: 8px;
+      padding: 14px 16px;
+      border-top: 1px solid var(--line);
     }
 
-    .scene-strip b { color: var(--accent); font-weight: 400; }
-    .scene-strip .cursor { height: 10px; width: 6px; vertical-align: -1px; }
+    .scene-legend .hint { font-size: 11px; color: var(--graphite); margin-right: 8px; align-self: center; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--paper);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .chip b { font-family: var(--pixel); font-weight: 400; font-size: 10px; color: var(--violet); }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 88px 0; border-top: 1px solid var(--line); }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--pixel);
+      font-size: 12px;
+      color: var(--violet);
+      margin-bottom: 14px;
+    }
+
+    .px-icon { height: 18px; width: auto; image-rendering: pixelated; }
+
+    h2 {
+      font-size: clamp(34px, 4.6vw, 56px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+
+    .section-note { color: var(--graphite); max-width: 380px; margin: 0; }
+
+    /* ---------- Flagship work ---------- */
+    .work-list { display: grid; gap: 24px; }
+
+    .work {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .work:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -24px rgba(34, 26, 74, 0.35); }
+
+    .work-text { padding: 32px; display: flex; flex-direction: column; }
+
+    .work-meta { display: flex; justify-content: space-between; color: var(--graphite); margin-bottom: 22px; }
+    .work-meta span:first-child { color: var(--violet); }
+
+    .work h3 {
+      font-size: clamp(26px, 2.8vw, 34px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .work-sub { font-weight: 600; margin: 0 0 16px; }
+    .work-text p { margin: 0 0 16px; color: #3d3a45; }
+
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin: auto 0 16px;
+      padding-top: 8px;
+    }
+
+    .facts div { font-size: 13px; color: var(--graphite); }
+    .facts strong { display: block; font-family: var(--mono); font-size: 18px; color: var(--ink); font-weight: 500; }
+
+    .tools { color: var(--graphite); margin: 0 0 18px; }
+
+    .work-link {
+      align-self: flex-start;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid var(--violet);
+      padding-bottom: 2px;
+    }
+
+    .work-link .arr { display: inline-block; transition: transform 0.15s; }
+    .work-link:hover .arr { transform: translate(2px, -2px) rotate(-8deg); }
+
+    .soon { align-self: flex-start; color: var(--graphite); }
+
+    .visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      border-left: 1px solid var(--line);
+      min-height: 320px;
+    }
+
+    .v-violet { background: var(--tint-violet); }
+    .v-pink { background: var(--tint-pink); }
+    .v-ice { background: var(--tint-ice); }
+    .v-lemon { background: var(--tint-lemon); }
+
+    .visual-caption {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--graphite);
+    }
+
+    /* Quant readout */
+    .readout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .tile {
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .tile.wide { grid-column: span 2; display: flex; justify-content: space-between; align-items: end; gap: 16px; }
+    .tile .mono { color: var(--graphite); font-size: 11px; }
+
+    .tile .num {
+      font-family: var(--mono);
+      font-size: 36px;
+      line-height: 1.1;
+      color: var(--violet);
+      margin-top: 6px;
+    }
+
+    .tile .sub { font-size: 13px; color: var(--graphite); }
+
+    /* Pipeline diagrams */
+    .pipeline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 560px;
+    }
+
+    .node {
+      padding: 12px 16px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 2px 0 rgba(23, 21, 29, 0.06);
+    }
+
+    .node small { display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; color: var(--graphite); text-transform: uppercase; letter-spacing: 0.04em; }
+    .node.hl { background: var(--ink); color: var(--milk); border-color: var(--ink); }
+    .node.hl small { color: var(--chrome); }
+    .node.out-pink { background: var(--pink); border-color: var(--ink); }
+    .node.out-ice { background: var(--ice); border-color: var(--ink); }
+    .node.out-pink small, .node.out-ice small { color: var(--ink); }
+
+    .arrow { font-family: var(--pixel); color: var(--graphite); font-size: 12px; }
+
+    .sound-toggle {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .sound-toggle[aria-pressed="true"] { background: var(--pink); }
+
+    .birdcam { width: 100%; max-width: 520px; border-radius: 12px; border: 1px solid var(--line-strong); image-rendering: pixelated; display: block; }
+
+    /* ---------- Signals (achievements) ---------- */
+    .signals { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px 12px 12px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      transition: transform 0.15s;
+    }
+
+    .badge:hover { transform: rotate(-1.5deg) scale(1.02); }
+
+    .badge .star {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--ink);
+      font-size: 15px;
+    }
+
+    .badge:nth-child(4n+1) .star { background: var(--lemon); }
+    .badge:nth-child(4n+2) .star { background: var(--pink); }
+    .badge:nth-child(4n+3) .star { background: var(--ice); }
+    .badge:nth-child(4n+4) .star { background: var(--tint-violet); }
+
+    .badge strong { display: block; font-family: var(--display); font-size: 15px; line-height: 1.2; }
+    .badge span.what { font-size: 13px; color: var(--graphite); }
+
+    /* ---------- Archive ---------- */
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+
+    .filters button[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--milk);
+      border-color: var(--ink);
+    }
+
+    .archive { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-strong); }
+
+    .row {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) 200px 120px;
+      gap: 24px;
+      align-items: baseline;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .row[hidden] { display: none; }
+    .row .when { color: var(--graphite); }
+    .row h3 { font-size: 19px; letter-spacing: -0.02em; font-weight: 700; margin-bottom: 4px; }
+    .row p { margin: 0; color: #3d3a45; font-size: 15px; }
+    .row .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--tint-violet);
+      color: #3f2fa8;
+      font-size: 11px;
+    }
+
+    .row .go { justify-self: end; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .row .go:hover { color: var(--violet); }
+    .row .go.muted { color: var(--graphite); font-weight: 400; }
+
+    /* ---------- Experience (transit line) ---------- */
+    .transit { list-style: none; margin: 0; padding: 0; position: relative; }
+
+    .transit::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 14px;
+      bottom: 14px;
+      width: 4px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--violet), var(--pink), var(--ice));
+    }
+
+    .stop {
+      position: relative;
+      display: grid;
+      grid-template-columns: 26px minmax(0, 260px) minmax(0, 1fr);
+      gap: 20px;
+      padding: 16px 0;
+      align-items: baseline;
+    }
+
+    .stop::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      margin-left: 4px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      position: relative;
+      top: 3px;
+    }
+
+    .stop h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+    .stop .role { color: var(--graphite); font-size: 14px; }
+    .stop p { margin: 0; color: #3d3a45; }
+
+    /* ---------- About + contact ---------- */
+    .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+
+    .about-grid .window { padding: 0; }
+    .about-body { padding: 24px; font-size: 17px; }
+    .about-body p { margin: 0 0 12px; }
+
+    .contact-links { list-style: none; margin: 0; padding: 12px 24px 20px; }
+    .contact-links li { padding: 12px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 12px; }
+    .contact-links li:last-child { border-bottom: 0; }
+    .contact-links a { font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--pink); }
+
+    footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--graphite); }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 11px; }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 30;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--ink);
+      color: var(--milk);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -12px rgba(23, 21, 29, 0.5);
+      transform: translateY(140%);
+      transition: transform 0.35s cubic-bezier(.2, .9, .3, 1.2);
+    }
+
+    .toast.show { transform: none; }
+    .toast .star { color: var(--lemon); font-size: 20px; }
+    .toast strong { display: block; font-family: var(--pixel); font-weight: 400; font-size: 12px; color: var(--lemon); }
+    .toast span { font-size: 13px; }
 
     /* Reveal-on-scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.in { opacity: 1; transform: none; }
-
-    /* ---------- Footer ---------- */
-    footer .wrap {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      padding-top: 28px;
-      padding-bottom: 28px;
-      color: var(--faint);
-    }
-
-    footer a { color: var(--muted); }
-    footer a:hover { color: var(--accent); }
+    .work.reveal.in { transition: opacity 0.5s ease, transform 0.18s ease, box-shadow 0.18s ease; }
+    .work.reveal.in:hover { transform: translateY(-4px); }
 
     /* ---------- Responsive ---------- */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .hero .wrap { grid-template-columns: 1fr; }
-      .hero-main { border-right: 0; border-bottom: 1px solid var(--line); padding-top: 64px; }
-      .hero-side { flex-direction: row; }
-      .stat { border-bottom: 0; border-right: 1px solid var(--line); padding: 24px var(--gutter); }
-      .stat:last-child { border-right: 0; }
-      .span-2, .span-3, .span-4 { grid-column: span 3; }
+      .work { grid-template-columns: 1fr; }
+      .visual { border-left: 0; border-top: 1px solid var(--line); min-height: 260px; }
+      .row { grid-template-columns: 70px minmax(0, 1fr) 110px; }
+      .row .tags { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .nav a:not(.btn) { display: none; }
     }
 
     @media (max-width: 640px) {
       :root { --gutter: 16px; }
-      body::before { background-size: 48px 48px; }
-      .nav { display: none; }
-      .hero-side { flex-direction: column; }
-      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
-      .stat-value { font-size: 36px; }
-      .section-head { grid-template-columns: 1fr; gap: 8px; padding-top: 56px; }
-      .bento { grid-template-columns: 1fr; margin-bottom: 56px; }
-      .span-2, .span-3, .span-4, .span-6 { grid-column: auto; }
-      .card { min-height: 0; padding: 22px; }
-      .card-meta { padding-bottom: 28px; }
-      .span-4 h3, .span-6 h3 { font-size: 24px; }
-      .intro { font-size: 17px; }
+      .hero { padding: 56px 0 64px; }
+      .sticker { display: none; }
+      section.block { padding: 64px 0; }
+      .work-text { padding: 24px; }
+      .visual { padding: 44px 16px 20px; }
+      .readout { grid-template-columns: 1fr; }
+      .tile.wide { grid-column: auto; flex-direction: column; align-items: flex-start; }
+      .pipeline { flex-direction: column; }
+      .arrow { transform: rotate(90deg); }
+      .row { grid-template-columns: 1fr; gap: 6px; }
+      .row .go { justify-self: start; }
+      .stop { grid-template-columns: 26px minmax(0, 1fr); }
+      .stop p { grid-column: 2; }
+      .toast { left: 16px; right: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -579,14 +751,16 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand mono" href="#top">ZS<span>/</span>PORTFOLIO</a>
-    <nav class="nav mono">
-      <a href="#quant">Quant</a>
-      <a href="#systems">Systems</a>
-      <a href="#research">Research</a>
-      <a href="#finance">Finance</a>
-      <a href="#ventures">Ventures</a>
-      <a href="#code">Code</a>
+    <a class="brand" href="#top">FROYO<span>.</span>OS</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#archive">Archive</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/froyosng">GitHub ↗</a>
+      <button class="btn btn-chrome" type="button" data-mode-toggle aria-pressed="false">
+        <span class="pixel">▶</span> <span data-mode-label>Explore World</span>
+      </button>
     </nav>
   </div>
 </header>
@@ -595,386 +769,383 @@
 
   <!-- HERO -->
   <div class="hero">
+    <span class="sticker s1" aria-hidden="true">✦</span>
+    <span class="sticker s2" aria-hidden="true">✦</span>
+    <span class="sticker s3" aria-hidden="true">★</span>
     <div class="wrap">
-      <div class="hero-main">
-        <div class="status mono"><i></i>Portfolio · 2026</div>
-        <h1>Zhenhao<br><span class="outline">Sng</span></h1>
-        <div class="tags mono">
-          <span class="tag">AI</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">Quantitative Finance</span>
-          <span class="tag">Sustainability</span>
-          <span class="tag">Forecasting</span>
-        </div>
-        <p class="intro">
-          I build data-driven systems that combine machine learning, quantitative modelling,
-          and financial reasoning to address real-world operational and strategic problems.
+      <div>
+        <span class="status-line pixel">✦ FROYO SYSTEM ONLINE ✦</span>
+        <h1>Zhenhao Sng</h1>
+        <p class="thesis">Building models for <span class="grad">messy decisions.</span></p>
+        <p class="support">
+          I work across machine learning, optimisation and financial analysis — turning ambiguous
+          real-world problems into systems you can actually reason about.
         </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button" data-enter-world>
+            <span class="pixel">▶</span> Explore World
+          </button>
+          <a class="btn btn-chrome" href="#work" data-quick-view>Quick View ↓</a>
+        </div>
       </div>
-      <aside class="hero-side">
-        <div class="stat">
-          <div class="stat-value" data-scramble="19">19</div>
-          <div class="stat-label mono">Projects</div>
+
+      <aside class="window" aria-label="Summary">
+        <div class="titlebar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="pixel">SYSTEM STATUS</span>
         </div>
-        <div class="stat">
-          <div class="stat-value" data-scramble="04">04</div>
-          <div class="stat-label mono">Quant competitions</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" data-scramble="2.21">2.21</div>
-          <div class="stat-label mono">Top IQC alpha Sharpe</div>
-        </div>
+        <ul class="status-list">
+          <li><span class="k">Focus</span><span class="v">ML · Quant · Optimisation</span></li>
+          <li><span class="k">Study</span><span class="v">Engineering Systems &amp; Design, SUTD</span></li>
+          <li><span class="k">Signals</span><span class="v">IQC Stage 2 · IMC Top 10 SG</span></li>
+          <li><span class="k">Projects</span><span class="v mono" data-scramble="19">19</span></li>
+          <li><span class="k">Mode</span><span class="v"><span class="led"></span><span data-mode-status>Quick View</span></span></li>
+        </ul>
       </aside>
     </div>
   </div>
 
-  <!-- PIXEL DESK -->
-  <div class="scene-band">
+  <!-- EXPLORE WORLD (optional) -->
+  <section class="world" id="world" hidden aria-label="Explore world">
     <div class="wrap">
-      <div class="scene">
-        <canvas id="scene" role="img" aria-label="Pixel-art desk: a live stock chart and code on two monitors, a Singapore skyline through the window, a bookshelf, posters, a plant and a sleeping cat."></canvas>
-        <a class="hot" href="#quant" data-id="quant" aria-label="Jump to Quant" style="left:44.53%;top:37.50%;width:15.62%;height:25.00%"><span class="hot-label">QUANT →</span></a>
-        <a class="hot" href="#code" data-id="code" aria-label="Jump to Code" style="left:61.72%;top:39.58%;width:13.28%;height:22.92%"><span class="hot-label">CODE →</span></a>
-        <a class="hot" href="#research" data-id="research" aria-label="Jump to Research" style="left:29.69%;top:29.17%;width:9.38%;height:60.42%"><span class="hot-label">RESEARCH →</span></a>
-        <a class="hot" href="#finance" data-id="finance" aria-label="Jump to Finance" style="left:41.41%;top:10.42%;width:7.03%;height:22.92%"><span class="hot-label">FINANCE →</span></a>
-        <a class="hot" href="#systems" data-id="systems" aria-label="Jump to Systems" style="left:72.66%;top:68.75%;width:5.08%;height:20.83%"><span class="hot-label">SYSTEMS →</span></a>
-        <a class="hot" href="#ventures" data-id="ventures" aria-label="Jump to Ventures" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">VENTURES →</span></a>
-      </div>
-      <div class="scene-strip">
-        <span>&gt; ZHENHAO.SNG // DESK.EXE <span class="cursor"></span></span>
-        <span>Click an object: <b>chart</b> quant · <b>pc</b> systems · <b>shelf</b> research · <b>payoff</b> finance · <b>plant</b> ventures · <b>code</b> github</span>
+      <div class="window">
+        <div class="titlebar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="pixel">FROYO.OS — DESK.EXE</span>
+          <button class="close" type="button" data-quick-view>✕ QUICK VIEW</button>
+        </div>
+        <div class="scene">
+          <canvas id="scene" role="img" aria-label="Pixel-art desk: a live stock chart and code on two monitors, a Singapore skyline through the window, a bookshelf, posters, a plant and a sleeping cat."></canvas>
+          <a class="hot" href="#quant" data-id="quant" aria-label="Quant research" style="left:44.53%;top:37.50%;width:15.63%;height:25.00%"><span class="hot-label">QUANT →</span></a>
+          <a class="hot" href="https://github.com/froyosng" data-id="code" aria-label="GitHub" style="left:61.72%;top:39.58%;width:13.28%;height:22.92%"><span class="hot-label">GITHUB ↗</span></a>
+          <a class="hot" href="#archive" data-filter="research" data-id="research" aria-label="Research projects" style="left:29.69%;top:29.17%;width:9.38%;height:60.42%"><span class="hot-label">RESEARCH →</span></a>
+          <a class="hot" href="#archive" data-filter="finance" data-id="finance" aria-label="Finance projects" style="left:41.41%;top:10.42%;width:7.03%;height:22.92%"><span class="hot-label">FINANCE →</span></a>
+          <a class="hot" href="#archive" data-filter="systems" data-id="systems" aria-label="Systems projects" style="left:72.66%;top:68.75%;width:5.08%;height:20.83%"><span class="hot-label">SYSTEMS →</span></a>
+          <a class="hot" href="#archive" data-filter="strategy" data-id="ventures" aria-label="Strategy and ventures" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">VENTURES →</span></a>
+        </div>
+        <div class="scene-legend">
+          <span class="hint pixel">TAP AN OBJECT</span>
+          <a class="chip" href="#quant"><b>CHART</b> Quant</a>
+          <a class="chip" href="#archive" data-filter="systems"><b>PC</b> Systems</a>
+          <a class="chip" href="#archive" data-filter="research"><b>SHELF</b> Research</a>
+          <a class="chip" href="#archive" data-filter="finance"><b>POSTER</b> Finance</a>
+          <a class="chip" href="#archive" data-filter="strategy"><b>PLANT</b> Ventures</a>
+          <a class="chip" href="https://github.com/froyosng"><b>CODE</b> GitHub</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- QUANT -->
-  <section id="quant">
+  <!-- SELECTED WORK -->
+  <section class="block" id="work">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas>01 /</span>
-        <h2>Quantitative Finance</h2>
-        <span class="section-count mono">04 entries</span>
+        <div>
+          <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
+          <h2>Selected work</h2>
+        </div>
+        <p class="section-note">Four projects that show how I approach a problem. Everything else lives in the archive.</p>
       </div>
 
-      <div class="bento">
-        <div class="card quant-copy span-3 reveal">
-          <div class="card-meta mono"><span>QNT.01</span><span>IQC 2026 · Stage 2</span></div>
-          <h3><span class="glitch" data-text="WorldQuant International Quant Championship">WorldQuant International Quant Championship</span></h3>
-          <p>Developed and submitted alpha signals on WorldQuant's BRAIN platform with a partner
-            (team ZS79329), reaching Stage 2.</p>
-          <p><strong>Volume–Sentiment Alpha</strong> — a <code>delay-0</code> signal combining trading
-            volume dynamics with news sentiment data.</p>
-          <p><strong>GARP-Style Valuation Alpha</strong> — a <code>delay-1</code> signal built on a
-            growth-at-a-reasonable-price framework.</p>
-          <p>Both signals passed BRAIN's full in-sample validation suite (Sharpe, Fitness, turnover,
-            and sub-universe stability checks).</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Alpha Research</span><span class="tag">Signals</span><span class="tag">Backtesting</span></div>
+      <div class="work-list">
+
+        <article class="work reveal" id="quant">
+          <div class="work-text">
+            <div class="work-meta mono"><span>01 / Quant research</span><span>2026</span></div>
+            <h3>Signals that survive noise</h3>
+            <p class="work-sub">Alpha research for WorldQuant IQC and AlphaNova.</p>
+            <p>On WorldQuant's BRAIN platform, I built (with a partner) a delay-0 signal combining volume dynamics with
+              news sentiment, and a delay-1 growth-at-a-reasonable-price valuation signal. Both passed BRAIN's
+              full in-sample validation suite, reaching IQC Stage 2.</p>
+            <p>For AlphaNova, I built walk-forward, Ridge-based cross-sectional signals ranking 20 assets per
+              timestamp. Two of them made the prize-eligible “Quality set”.</p>
+            <div class="facts">
+              <div><strong>2.21+</strong>best Sharpe</div>
+              <div><strong>2.30</strong>Fitness</div>
+              <div><strong>#140</strong>AlphaNova rank</div>
+            </div>
+            <p class="tools mono">WorldQuant BRAIN · Ridge · Walk-forward</p>
+            <span class="soon mono">Case study · soon</span>
           </div>
-        </div>
-
-        <div class="card terminal span-3 reveal">
-          <div class="term-bar"><i></i><i></i><i></i><span>iqc_2026 / stage_2 — in-sample</span></div>
-          <p class="prompt"><b>$</b> summary --alphas</p>
-
-          <div class="alpha-row">
-            <div class="alpha-name"><span class="glitch" data-text="VOLUME × SENTIMENT">VOLUME × SENTIMENT</span><span>D0</span></div>
-            <div class="metrics">
-              <div><div class="metric-label">Sharpe</div><div class="metric-value" data-scramble="2.21+">2.21+</div></div>
-              <div><div class="metric-label">Fitness</div><div class="metric-value na">—</div></div>
+          <div class="visual v-violet">
+            <span class="visual-caption">IQC_2026 / IN-SAMPLE</span>
+            <div class="readout" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe above 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova rank 140 with Q140 quality badge.">
+              <div class="tile">
+                <div class="mono">Vol × sentiment · D0</div>
+                <div class="num" data-scramble="2.21+">2.21+</div>
+                <div class="sub">Sharpe</div>
+              </div>
+              <div class="tile">
+                <div class="mono">GARP valuation · D1</div>
+                <div class="num" data-scramble="2.00">2.00</div>
+                <div class="sub">Sharpe · Fitness 2.30</div>
+              </div>
+              <div class="tile wide">
+                <div>
+                  <div class="mono">AlphaNova competition 5</div>
+                  <div class="num" data-scramble="#140">#140</div>
+                </div>
+                <div class="sub">Q140 quality badge · $50K prize pool</div>
+              </div>
             </div>
           </div>
+        </article>
 
-          <div class="alpha-row">
-            <div class="alpha-name"><span class="glitch" data-text="GARP VALUATION">GARP VALUATION</span><span>D1</span></div>
-            <div class="metrics">
-              <div><div class="metric-label">Sharpe</div><div class="metric-value" data-scramble="2.00">2.00</div></div>
-              <div><div class="metric-label">Fitness</div><div class="metric-value" data-scramble="2.30">2.30</div></div>
+        <article class="work reveal" id="choice">
+          <div class="work-text">
+            <div class="work-meta mono"><span>02 / Predictive modelling</span><span>2026</span></div>
+            <h3>The discrete choice machine</h3>
+            <p class="work-sub">Predicting which car safety-feature bundle people choose.</p>
+            <p>Analytics Edge Data Competition on Kaggle. I modelled the choice with conditional and
+              mixed logit, then added price-factor identification, task-fatigue effects and an XGBoost
+              blend. Along the way I diagnosed and fixed a rank-deficient design matrix.</p>
+            <div class="facts">
+              <div><strong>1.145</strong>CV log-loss</div>
+              <div><strong>1.202</strong>public LB</div>
+            </div>
+            <p class="tools mono">R · Mixed logit · XGBoost</p>
+            <span class="soon mono">Case study · soon</span>
+          </div>
+          <div class="visual v-pink">
+            <span class="visual-caption">MODEL_FLOW.TXT</span>
+            <div class="pipeline" role="img" aria-label="Model flow: choice data, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
+              <div class="node"><small>input</small>Choice tasks</div>
+              <span class="arrow">→</span>
+              <div class="node"><small>baseline</small>Conditional logit</div>
+              <span class="arrow">→</span>
+              <div class="node"><small>+ heterogeneity</small>Mixed logit</div>
+              <span class="arrow">→</span>
+              <div class="node hl"><small>ensemble</small>XGBoost blend</div>
+              <span class="arrow">→</span>
+              <div class="node out-pink"><small>output</small>Choice probabilities · 1.145 / 1.202</div>
             </div>
           </div>
+        </article>
 
-          <p class="term-status">STATUS: <b>IS VALIDATION PASSED · SUBMITTED</b> <span class="cursor"></span></p>
-        </div>
-
-        <div class="card span-2 reveal">
-          <div class="card-meta mono"><span>QNT.02</span><span>Aug–Oct 2026</span></div>
-          <div class="card-stat mono" data-scramble="#140">#140</div>
-          <h3><span class="glitch" data-text="AlphaNova Competition 5">AlphaNova Competition 5</span></h3>
-          <p>Walk-forward signals ranking 20 assets per timestamp from anonymized features. Two Ridge-based
-            signals (own-history z-score and rank-velocity variants) made the prize-eligible “Quality set” —
-            Q140 quality badge in a $50K prize pool competition.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Cross-Sectional</span><span class="tag">Ridge</span></div>
-            <span class="open pending mono">Slides soon</span>
+        <article class="work reveal" id="cbs">
+          <div class="work-text">
+            <div class="work-meta mono"><span>03 / Synthetic data</span><span>Credit Bureau Singapore</span></div>
+            <h3>Credit data that isn't real</h3>
+            <p class="work-sub">A CTGAN pipeline for synthetic credit data.</p>
+            <p>An industry-partner project reporting to DBS, OCBC and UOB. I led development of a CTGAN pipeline,
+              benchmarked against real credit data distributions, and designed the team's interactive
+              dual-view (Customer/Agency) dashboard with fidelity scoring.</p>
+            <p class="tools mono">CTGAN · Fidelity metrics · Dashboard design</p>
+            <span class="soon mono">Case study · soon</span>
           </div>
-        </div>
-
-        <div class="card span-2 reveal">
-          <div class="card-meta mono"><span>QNT.03</span><span>Kaggle · 2026</span></div>
-          <div class="card-stat mono" data-scramble="1.145">1.145</div>
-          <h3><span class="glitch" data-text="Analytics Edge Data Competition">Analytics Edge Data Competition</span></h3>
-          <p>Discrete-choice model of car safety-feature bundle selection: conditional and mixed logit in R,
-            price-factor identification, task-fatigue effects, and an XGBoost blend. Resolved a design-matrix
-            rank deficiency. CV 1.145 / public LB 1.202.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Mixed Logit</span><span class="tag">R</span><span class="tag">XGBoost</span></div>
-            <span class="open pending mono">Slides soon</span>
+          <div class="visual v-ice">
+            <span class="visual-caption">PIPELINE.SYS</span>
+            <div class="pipeline" role="img" aria-label="Pipeline: real credit data into a CTGAN generator, producing synthetic data, scored for fidelity, shown in a customer and agency dashboard.">
+              <div class="node"><small>source</small>Real credit data</div>
+              <span class="arrow">→</span>
+              <div class="node hl"><small>generator</small>CTGAN</div>
+              <span class="arrow">→</span>
+              <div class="node"><small>output</small>Synthetic data</div>
+              <span class="arrow">→</span>
+              <div class="node"><small>benchmark</small>Fidelity scoring</div>
+              <span class="arrow">→</span>
+              <div class="node out-ice"><small>interface</small>Customer / Agency dashboard</div>
+            </div>
           </div>
-        </div>
+        </article>
 
-        <div class="card span-2 reveal">
-          <div class="card-meta mono"><span>QNT.04</span><span>IMC Prosperity 4</span></div>
-          <div class="card-stat mono" data-scramble="TOP 10 SG">TOP 10 SG</div>
-          <h3><span class="glitch" data-text="Algorithmic Trading Competition">Algorithmic Trading Competition</span></h3>
-          <p>Market-making, pair-trading, and options strategies across a multi-round trading simulation.
-            Finished Top 10 in Singapore, #474 globally.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Market Making</span><span class="tag">Options</span></div>
-            <span class="open pending mono">Slides soon</span>
+        <article class="work reveal" id="birds">
+          <div class="work-text">
+            <div class="work-meta mono"><span>04 / Computer vision</span><span>DTI 2025</span></div>
+            <h3>A camera that scares birds</h3>
+            <p class="work-sub">CV detection wired to a physical deterrent.</p>
+            <p>A computer vision-triggered bird deterrent for the SUTD canteen. When a mynah is detected, a hawk
+              decoy on a ceiling-mounted rail swoops towards it and plays a hawk call to scare it away. I integrated
+              the detection logic with the physical actuation.</p>
+            <p class="tools mono">Computer vision · Hardware integration</p>
+            <a class="work-link" href="slides/dti_cv_bird_deterrent.pdf">View slides <span class="arr">↗</span></a>
           </div>
-        </div>
+          <div class="visual v-lemon">
+            <span class="visual-caption">CAM_01 / CANTEEN</span>
+            <button class="sound-toggle pixel" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
+            <canvas class="birdcam" id="birdcam" role="img" aria-label="Pixel animation: a camera detects a mynah on a canteen table, and a hawk decoy on a rollercoaster-style ceiling rail swoops down to it and screeches, scaring it away."></canvas>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
 
-  <!-- AI / SYSTEMS -->
-  <section id="systems">
+  <!-- SIGNALS -->
+  <section class="block" id="signals">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas>02 /</span>
-        <h2>AI &amp; Systems</h2>
-        <span class="section-count mono">07 entries</span>
+        <div>
+          <div class="section-label"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas>02 / SIGNALS</div>
+          <h2>Signals detected</h2>
+        </div>
+        <p class="section-note">Results from competitions and challenges.</p>
       </div>
-
-      <div class="bento">
-        <a class="card span-4 reveal" href="slides/cqu_pandabot_ai_mobility.pdf">
-          <div class="card-meta mono"><span>SYS.01</span><span>CQU × SUTD</span></div>
-          <h3><span class="glitch" data-text="AI Mobility Robotics">AI Mobility Robotics</span></h3>
-          <p>Designed a computer vision-assisted mobility concept (“PandaBot”) for elderly users.
-            Focused on detection logic, safety integration, and scalable deployment thinking.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Computer Vision</span><span class="tag">Robotics</span></div>
-            <span class="open mono">Open PDF <b>→</b></span>
-          </div>
-        </a>
-
-        <a class="card span-2 reveal" href="slides/ddw_llm_carbon_calculator.pdf">
-          <div class="card-meta mono"><span>SYS.02</span><span>DDW</span></div>
-          <h3><span class="glitch" data-text="LLM Carbon Emissions Calculator">LLM Carbon Emissions Calculator</span></h3>
-          <p>Multi-linear regression model estimating carbon emissions of LLM training configurations.
-            Selected for further development under Science for a Sustainable World.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Regression</span></div>
-            <span class="open mono">Open <b>→</b></span>
-          </div>
-        </a>
-
-        <div class="card span-3 reveal">
-          <div class="card-meta mono"><span>SYS.03</span><span>GEXP Kyoto · 2026</span></div>
-          <h3><span class="glitch" data-text="Mayumaro">Mayumaro</span></h3>
-          <p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) built on the
-            Claude API and Google Maps in Python/Streamlit, with a 4-person international team.
-            Final showcase July 2026.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">RAG</span><span class="tag">LLM</span><span class="tag">Streamlit</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
-
-        <div class="card span-3 reveal">
-          <div class="card-meta mono"><span>SYS.04</span><span>UROP</span></div>
-          <h3><span class="glitch" data-text="Neuromorphic Computing for Artificial Vision">Neuromorphic Computing for Artificial Vision</span></h3>
-          <p>Research under Prof. Desmond Loke on memristive spiking neural networks (SNNs) for artificial vision,
-            spanning computer vision, robotic control, and biosignal (EEG/ECG/EMG) processing.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">SNN</span><span class="tag">Memristors</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
-
-        <a class="card span-2 reveal" href="slides/dti_cv_bird_deterrent.pdf">
-          <div class="card-meta mono"><span>SYS.05</span><span>DTI 2025</span></div>
-          <h3><span class="glitch" data-text="CV Bird Deterrent">CV Bird Deterrent</span></h3>
-          <p>Computer vision-triggered mechanical bird-scaring system for the SUTD canteen,
-            integrating detection logic with physical actuation.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">CV</span><span class="tag">Hardware</span></div>
-            <span class="open mono">Open <b>→</b></span>
-          </div>
-        </a>
-
-        <a class="card span-2 reveal" href="slides/pcu_threadahead_logistics.pdf">
-          <div class="card-meta mono"><span>SYS.06</span><span>PCU</span></div>
-          <h3><span class="glitch" data-text="ThreadAhead">ThreadAhead</span></h3>
-          <p>Forecasting-informed workflow optimisation for a cooperative in Indonesia,
-            addressing demand volatility and operational bottlenecks.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Forecasting</span><span class="tag">Logistics</span></div>
-            <span class="open mono">Open <b>→</b></span>
-          </div>
-        </a>
-
-        <a class="card span-2 reveal" href="slides/molarData_china_cv_internship.pdf">
-          <div class="card-meta mono"><span>SYS.07</span><span>Internship · CN</span></div>
-          <h3><span class="glitch" data-text="MolarData">MolarData</span></h3>
-          <p>Object identification model training workflows, dataset preparation,
-            and standard computer vision model development processes.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">CV</span><span class="tag">Data</span></div>
-            <span class="open mono">Open <b>→</b></span>
-          </div>
-        </a>
+      <div class="signals">
+        <div class="badge"><span class="star" aria-hidden="true">★</span><div><strong>WorldQuant IQC 2026</strong><span class="what">Reached Stage 2</span></div></div>
+        <div class="badge"><span class="star" aria-hidden="true">✦</span><div><strong>IMC Prosperity 4</strong><span class="what">Top 10 Singapore · #474 global</span></div></div>
+        <div class="badge"><span class="star" aria-hidden="true">◆</span><div><strong>AlphaNova Competition 5</strong><span class="what">Quality set · rank #140</span></div></div>
+        <div class="badge"><span class="star" aria-hidden="true">♥</span><div><strong>Analytics Edge (Kaggle)</strong><span class="what">CV 1.145 · LB 1.202</span></div></div>
+        <div class="badge"><span class="star" aria-hidden="true">★</span><div><strong>TalentGeist WSP</strong><span class="what">Top-performing submission</span></div></div>
+        <div class="badge"><span class="star" aria-hidden="true">✦</span><div><strong>DDW · SSW module</strong><span class="what">Selected for further development</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- RESEARCH -->
-  <section id="research">
+  <!-- ARCHIVE -->
+  <section class="block" id="archive">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas>03 /</span>
-        <h2>Research</h2>
-        <span class="section-count mono">03 entries</span>
+        <div>
+          <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas>03 / ARCHIVE</div>
+          <h2>Experiments &amp; archive</h2>
+        </div>
+        <p class="section-note">Smaller projects, research and pitches. Filter by type.</p>
       </div>
 
-      <div class="bento">
-        <div class="card span-6 reveal">
-          <div class="card-meta mono"><span>RES.01</span><span>Credit Bureau Singapore</span></div>
-          <h3><span class="glitch" data-text="Synthetic Credit Data Generation">Synthetic Credit Data Generation</span></h3>
-          <p>Industry-partner project (reporting to DBS/OCBC/UOB). Led development of a CTGAN synthetic data
-            pipeline benchmarked against real credit data distributions, and designed the team's interactive
-            dual-view (Customer/Agency) dashboard with fidelity scoring.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">CTGAN</span><span class="tag">Synthetic Data</span><span class="tag">Dashboard</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
-
-        <div class="card span-3 reveal">
-          <div class="card-meta mono"><span>RES.02</span><span>40.018 HST</span></div>
-          <h3><span class="glitch" data-text="Nonlinear Bubble Stabilization">Nonlinear Bubble Stabilization</span></h3>
-          <p>Extended a heterogeneous-beliefs asset-pricing model to design state-feedback and observer-based
-            controllers (Ackermann's formula) for stabilizing nonlinear price bubbles, with MATLAB simulation.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Control Theory</span><span class="tag">MATLAB</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
-
-        <div class="card span-3 reveal">
-          <div class="card-meta mono"><span>RES.03</span><span>Psychology</span></div>
-          <h3><span class="glitch" data-text="Algorithm Aversion in Finance">Algorithm Aversion in Finance</span></h3>
-          <p>Designed a within-subjects experiment (AI vs. human advisor × stake level) testing how stakes,
-            self-perceived experience, and trust shape reliance on algorithmic financial advice.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Experiment Design</span><span class="tag">Behavioural</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
+      <div class="filters" role="group" aria-label="Filter archive">
+        <button class="chip" type="button" data-filter-btn="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-filter-btn="quant" aria-pressed="false">Quant</button>
+        <button class="chip" type="button" data-filter-btn="ml" aria-pressed="false">ML &amp; CV</button>
+        <button class="chip" type="button" data-filter-btn="systems" aria-pressed="false">Systems</button>
+        <button class="chip" type="button" data-filter-btn="research" aria-pressed="false">Research</button>
+        <button class="chip" type="button" data-filter-btn="finance" aria-pressed="false">Finance</button>
+        <button class="chip" type="button" data-filter-btn="strategy" aria-pressed="false">Strategy</button>
       </div>
+
+      <ul class="archive">
+        <li class="row" data-cat="quant">
+          <span class="when mono">2026</span>
+          <div><h3>IMC Prosperity 4</h3><p>Market-making, pair-trading and options strategies across a multi-round trading simulation. Top 10 in Singapore, #474 globally.</p></div>
+          <div class="tags mono"><span class="tag">Market making</span><span class="tag">Options</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="ml">
+          <span class="when mono">2026</span>
+          <div><h3>Mayumaro — GEXP Kyoto</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team.</p></div>
+          <div class="tags mono"><span class="tag">RAG</span><span class="tag">LLM</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="research ml">
+          <span class="when mono">UROP</span>
+          <div><h3>Neuromorphic computing for artificial vision</h3><p>Research under Prof. Desmond Loke on memristive spiking neural networks for vision, robotic control and biosignal (EEG/ECG/EMG) processing.</p></div>
+          <div class="tags mono"><span class="tag">SNN</span><span class="tag">Memristors</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="research quant">
+          <span class="when mono">40.018</span>
+          <div><h3>Nonlinear bubble stabilization</h3><p>Extended a heterogeneous-beliefs asset-pricing model with state-feedback and observer-based controllers (Ackermann's formula) to stabilize price bubbles, simulated in MATLAB.</p></div>
+          <div class="tags mono"><span class="tag">Control theory</span><span class="tag">MATLAB</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="research finance">
+          <span class="when mono">Psych</span>
+          <div><h3>Algorithm aversion in financial decisions</h3><p>A within-subjects experiment (AI vs. human advisor × stake level) testing how stakes, experience and trust shape reliance on algorithmic advice.</p></div>
+          <div class="tags mono"><span class="tag">Experiment design</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="ml systems">
+          <span class="when mono">CQU×SUTD</span>
+          <div><h3>AI mobility robotics — “PandaBot”</h3><p>A computer vision-assisted mobility concept for elderly users: detection logic, safety integration and scalable deployment.</p></div>
+          <div class="tags mono"><span class="tag">CV</span><span class="tag">Robotics</span></div>
+          <a class="go" href="slides/cqu_pandabot_ai_mobility.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="ml systems">
+          <span class="when mono">DDW</span>
+          <div><h3>LLM carbon emissions calculator</h3><p>A multi-linear regression model estimating the carbon emissions of LLM training configurations. Selected for further development.</p></div>
+          <div class="tags mono"><span class="tag">Regression</span><span class="tag">Sustainability</span></div>
+          <a class="go" href="slides/ddw_llm_carbon_calculator.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="systems">
+          <span class="when mono">PCU</span>
+          <div><h3>ThreadAhead — logistics &amp; workflow</h3><p>Forecasting-informed workflow optimisation for a cooperative in Indonesia, addressing demand volatility and operational bottlenecks.</p></div>
+          <div class="tags mono"><span class="tag">Forecasting</span><span class="tag">Ops</span></div>
+          <a class="go" href="slides/pcu_threadahead_logistics.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="ml">
+          <span class="when mono">Intern</span>
+          <div><h3>MolarData — computer vision (China)</h3><p>Object identification model training workflows, dataset preparation and standard CV model development.</p></div>
+          <div class="tags mono"><span class="tag">CV</span><span class="tag">Data</span></div>
+          <a class="go" href="slides/molarData_china_cv_internship.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="finance">
+          <span class="when mono">2025</span>
+          <div><h3>Nanyang Capital stock pitch (NTU)</h3><p>An investment thesis covering valuation, catalysts and risk analysis.</p></div>
+          <div class="tags mono"><span class="tag">Equity</span></div>
+          <a class="go" href="slides/ntu_stock_pitch_2025.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="finance">
+          <span class="when mono">2024</span>
+          <div><h3>CFA Research Challenge — internal selection</h3><p>Equity research, valuation modelling and investment thesis development.</p></div>
+          <div class="tags mono"><span class="tag">Valuation</span></div>
+          <a class="go" href="slides/cfa_research_challenge_internal_2024.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="strategy">
+          <span class="when mono">VinUni</span>
+          <div><h3>Workforce SaaS platform</h3><p>A workforce “sandbox” platform addressing skills mismatch, with revenue model and market expansion strategy.</p></div>
+          <div class="tags mono"><span class="tag">SaaS</span><span class="tag">GTM</span></div>
+          <a class="go" href="slides/vinuni_workforce_saas_pitch.pdf">Slides ↗</a>
+        </li>
+        <li class="row" data-cat="strategy">
+          <span class="when mono">WSP</span>
+          <div><h3>Shopee pickup points — Thailand entry</h3><p>Market-entry strategy for Shopee pickup points. Recognised as a top-performing submission.</p></div>
+          <div class="tags mono"><span class="tag">Market entry</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+        <li class="row" data-cat="strategy">
+          <span class="when mono">Pitch</span>
+          <div><h3>MakanPrint — BabyShark Fund</h3><p>Dysphagia-safe meals for elderly patients using 3D-printed texture modification.</p></div>
+          <div class="tags mono"><span class="tag">HealthTech</span></div>
+          <span class="go muted mono">Slides soon</span>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- FINANCE -->
-  <section id="finance">
+  <!-- EXPERIENCE -->
+  <section class="block" id="experience">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="coin" aria-hidden="true"></canvas>04 /</span>
-        <h2>Finance &amp; Markets</h2>
-        <span class="section-count mono">02 entries</span>
+        <div>
+          <div class="section-label"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas>04 / EXPERIENCE</div>
+          <h2>Experience</h2>
+        </div>
       </div>
-
-      <div class="bento">
-        <a class="card span-3 reveal" href="slides/cfa_research_challenge_internal_2024.pdf">
-          <div class="card-meta mono"><span>FIN.01</span><span>2024</span></div>
-          <h3><span class="glitch" data-text="CFA Research Challenge">CFA Research Challenge</span></h3>
-          <p>Equity research, valuation modelling, and investment thesis development
-            for school-level CFA Research Challenge selection.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Valuation</span><span class="tag">Equity Research</span></div>
-            <span class="open mono">Open PDF <b>→</b></span>
-          </div>
-        </a>
-
-        <a class="card span-3 reveal" href="slides/ntu_stock_pitch_2025.pdf">
-          <div class="card-meta mono"><span>FIN.02</span><span>NTU · 2025</span></div>
-          <h3><span class="glitch" data-text="Nanyang Capital Stock Pitch">Nanyang Capital Stock Pitch</span></h3>
-          <p>Developed and presented an investment thesis including valuation,
-            catalysts, and risk analysis.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Thesis</span><span class="tag">Risk</span></div>
-            <span class="open mono">Open PDF <b>→</b></span>
-          </div>
-        </a>
-      </div>
+      <ol class="transit">
+        <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
+        <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
+        <li class="stop"><div><h3>GEXP Kyoto</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
+        <li class="stop"><div><h3>MolarData, China</h3><span class="role">Computer vision intern</span></div><p>Model training workflows and dataset preparation for object identification.</p></li>
+      </ol>
     </div>
   </section>
 
-  <!-- ENTREPRENEURSHIP -->
-  <section id="ventures">
+  <!-- ABOUT + CONTACT -->
+  <section class="block" id="about">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="rocket" aria-hidden="true"></canvas>05 /</span>
-        <h2>Entrepreneurship</h2>
-        <span class="section-count mono">03 entries</span>
-      </div>
-
-      <div class="bento">
-        <a class="card span-2 reveal" href="slides/vinuni_workforce_saas_pitch.pdf">
-          <div class="card-meta mono"><span>VEN.01</span><span>VinUniversity</span></div>
-          <h3><span class="glitch" data-text="Workforce SaaS Platform">Workforce SaaS Platform</span></h3>
-          <p>Designed a scalable workforce “sandbox” platform addressing skills mismatch,
-            including revenue model and market expansion strategy.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">SaaS</span><span class="tag">GTM</span></div>
-            <span class="open mono">Open <b>→</b></span>
-          </div>
-        </a>
-
-        <div class="card span-2 reveal">
-          <div class="card-meta mono"><span>VEN.02</span><span>TalentGeist WSP</span></div>
-          <h3><span class="glitch" data-text="Shopee Pickup Points">Shopee Pickup Points</span></h3>
-          <p>Thailand market-entry strategy deck for Shopee pickup points; recognized as a
-            top-performing submission.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">Market Entry</span><span class="tag">Strategy</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
-        </div>
-
-        <div class="card span-2 reveal">
-          <div class="card-meta mono"><span>VEN.03</span><span>BabyShark Fund</span></div>
-          <h3><span class="glitch" data-text="MakanPrint">MakanPrint</span></h3>
-          <p>Pitched a venture addressing dysphagia-safe meals for elderly patients via 3D-printed
-            texture modification.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">HealthTech</span><span class="tag">3D Printing</span></div>
-            <span class="open pending mono">Slides soon</span>
-          </div>
+        <div>
+          <div class="section-label"><canvas class="px-icon" data-icon="heart" aria-hidden="true"></canvas>05 / ABOUT</div>
+          <h2>About &amp; contact</h2>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- GITHUB -->
-  <section id="code">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="section-index"><canvas class="px-icon" data-icon="code" aria-hidden="true"></canvas>06 /</span>
-        <h2>Code &amp; Repositories</h2>
-        <span class="section-count mono">github</span>
-      </div>
-
-      <div class="bento">
-        <a class="card span-6 reveal" href="https://github.com/froyosng">
-          <div class="card-meta mono"><span>SRC.01</span><span>github.com/froyosng</span></div>
-          <h3><span class="glitch" data-text="View GitHub Profile">View GitHub Profile</span></h3>
-          <p>Machine learning experiments, forecasting models, analytics tools, and prototypes.</p>
-          <div class="card-foot">
-            <div class="card-tags mono"><span class="tag">ML</span><span class="tag">Forecasting</span><span class="tag">Analytics</span></div>
-            <span class="open mono">Visit <b>→</b></span>
+      <div class="about-grid">
+        <div class="window">
+          <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">README.TXT</span></div>
+          <div class="about-body">
+            <p>I study Engineering Systems &amp; Design at SUTD. Most of my work sits where quantitative finance,
+              data analysis and software engineering meet.</p>
+            <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
+              that need a model before they need an opinion.</p>
           </div>
-        </a>
+        </div>
+        <div class="window" id="contact">
+          <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">CONTACT.EXE</span></div>
+          <ul class="contact-links">
+            <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
+            <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -982,12 +1153,17 @@
 </main>
 
 <footer>
-  <div class="wrap mono">
-    <span>© 2026 Zhenhao Sng</span>
-    <span>Built with GitHub Pages</span>
-    <a href="#top">Back to top ↑</a>
+  <div class="wrap pixel">
+    <span>© 2026 ZHENHAO SNG</span>
+    <span>FROYO.OS · BUILT WITH GITHUB PAGES</span>
+    <a href="#top">BACK TO TOP ↑</a>
   </div>
 </footer>
+
+<div class="toast" role="status" aria-live="polite">
+  <span class="star" aria-hidden="true">★</span>
+  <div><strong>SIGNAL DETECTED</strong><span>You found the desk. Click around.</span></div>
+</div>
 
 <script>
   (function () {
@@ -1017,7 +1193,59 @@
       el.parentElement.addEventListener('mouseenter', function () { scramble(el); });
     });
 
-    // Reveal cards as they scroll into view
+    // ----- Quick View / Explore World -----
+    var world = document.getElementById('world');
+    var toast = document.querySelector('.toast');
+    var toastShown = false;
+
+    function store(v) { try { localStorage.setItem('froyo-mode', v); } catch (e) {} }
+    function stored() { try { return localStorage.getItem('froyo-mode'); } catch (e) { return null; } }
+
+    function setMode(explore, scroll) {
+      world.hidden = !explore;
+      document.querySelectorAll('[data-mode-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', explore); });
+      document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = explore ? 'Quick View' : 'Explore World'; });
+      document.querySelectorAll('[data-mode-status]').forEach(function (l) { l.textContent = explore ? 'Explore World' : 'Quick View'; });
+      store(explore ? 'explore' : 'quick');
+      if (explore && scroll) world.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      if (explore && scroll && !toastShown) {
+        toastShown = true;
+        toast.classList.add('show');
+        setTimeout(function () { toast.classList.remove('show'); }, 3600);
+      }
+    }
+
+    document.querySelectorAll('[data-enter-world]').forEach(function (b) {
+      b.addEventListener('click', function () { setMode(true, true); });
+    });
+    document.querySelectorAll('[data-mode-toggle]').forEach(function (b) {
+      b.addEventListener('click', function () { setMode(world.hidden, true); });
+    });
+    document.querySelectorAll('[data-quick-view]').forEach(function (b) {
+      b.addEventListener('click', function () { setMode(false, false); });
+    });
+    if (stored() === 'explore') setMode(true, false);
+
+    // ----- Archive filters -----
+    var rows = document.querySelectorAll('.archive .row');
+    var buttons = document.querySelectorAll('[data-filter-btn]');
+
+    function applyFilter(f) {
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filter-btn') === f); });
+      rows.forEach(function (r) {
+        r.hidden = f !== 'all' && r.getAttribute('data-cat').split(' ').indexOf(f) === -1;
+      });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { applyFilter(b.getAttribute('data-filter-btn')); });
+    });
+    // World objects and legend chips jump to the archive pre-filtered
+    document.querySelectorAll('a[data-filter]').forEach(function (a) {
+      a.addEventListener('click', function () { applyFilter(a.getAttribute('data-filter')); });
+    });
+
+    // ----- Reveal on scroll -----
     var cards = document.querySelectorAll('.reveal');
     if (reduced || !('IntersectionObserver' in window)) {
       cards.forEach(function (c) { c.classList.add('in'); });
@@ -1027,11 +1255,10 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     cards.forEach(function (c) { io.observe(c); });
   })();
 </script>
-
 <script src="pixel.js"></script>
 
 </body>
