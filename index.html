@@ -48,6 +48,7 @@
       --serif: "Instrument Serif", Georgia, serif;
       --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       --pixel: "Silkscreen", var(--mono);
+      --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
 
       --radius-sm: 8px;
       --radius-md: 16px;
@@ -79,7 +80,7 @@
       position: fixed;
       inset: 0;
       z-index: -1;
-      background-image: radial-gradient(rgba(23, 21, 29, 0.08) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(23, 21, 29, 0.045) 1px, transparent 1px);
       background-size: 24px 24px;
       pointer-events: none;
     }
@@ -113,7 +114,7 @@
       gap: 10px;
       padding: 13px 22px;
       border-radius: 999px;
-      font-family: var(--sans);
+      font-family: var(--ui);
       font-weight: 600;
       font-size: 15px;
       text-decoration: none;
@@ -122,7 +123,7 @@
       transition: transform var(--motion-system), background var(--motion-system), box-shadow var(--motion-system);
     }
 
-    .btn:active { transform: translateY(1px); }
+    .btn:active, .chip:active, .syn-toggle:active, .depth button:active, .menu-btn:active, .radio-btn:active { transform: scale(0.975); }
 
     .btn-ink { background: var(--ink); color: var(--pearl); }
     .btn-ink:hover { background: #2c2935; }
@@ -179,20 +180,62 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(247, 245, 242, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
+      padding: 12px var(--gutter) 0;
+      pointer-events: none;
     }
 
-    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+    .nav-shell, .sheet {
+      pointer-events: auto;
+      max-width: calc(var(--max) - 2 * var(--gutter));
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.66);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(23, 21, 29, 0.08);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset, 0 8px 30px rgba(23, 21, 29, 0.08);
+    }
+
+    .nav-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 58px;
+      padding: 0 8px 0 20px;
+      border-radius: 999px;
+      transition: height var(--motion-system) ease, background var(--motion-system) ease;
+    }
+
+    .topbar.scrolled .nav-shell { height: 52px; background: rgba(255, 255, 255, 0.8); }
+
+    .menu-btn {
+      display: none;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(23, 21, 29, 0.06);
+      color: var(--ink);
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform var(--motion-system);
+    }
+
+    .sheet { margin-top: 8px; padding: 10px; border-radius: 22px; }
+    .sheet[hidden] { display: none; }
+    .sheet nav { display: flex; flex-direction: column; }
+    .sheet a { padding: 14px 14px; border-radius: 12px; font-family: var(--ui); font-size: 18px; font-weight: 500; text-decoration: none; }
+    .sheet a:hover, .sheet a:focus-visible { background: rgba(23, 21, 29, 0.05); }
+    .sheet hr { border: 0; border-top: 1px solid var(--line); margin: 6px 14px; }
+    .sheet .btn { margin: 8px 4px 4px; justify-content: center; }
 
     .brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; text-decoration: none; letter-spacing: 0.02em; }
     .brand .star-ico { color: var(--violet); width: 20px; height: 20px; }
     .brand span { color: var(--graphite); font-weight: 500; }
 
     .nav { display: flex; align-items: center; gap: 26px; }
-    .nav a:not(.btn) { font-weight: 500; font-size: 15px; color: var(--graphite); text-decoration: none; transition: color var(--motion-system); }
+    .nav a:not(.btn) { font-family: var(--ui); font-weight: 500; font-size: 15px; color: var(--graphite); text-decoration: none; transition: color var(--motion-system); }
     .nav a:not(.btn):hover { color: var(--ink); }
     .nav .btn { padding: 8px 16px; font-size: 14px; }
 
@@ -250,7 +293,9 @@
 
     .support { max-width: 520px; font-size: 19px; color: #3d3a45; margin: 0 0 24px; }
 
-    .hero-patches { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .hero-patches { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 36px; }
+    .hero-patches .patch { font-size: 10px; padding: 4px 8px; opacity: 0.72; transition: opacity var(--motion-system); }
+    .hero-patches .patch:hover { opacity: 1; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
     .hero-art { position: relative; height: 480px; }
@@ -295,7 +340,7 @@
       z-index: 2;
     }
 
-    .hero-sticker strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 28px; line-height: 1; }
+    .hero-sticker strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 22px; line-height: 1; }
     .hero-sticker span { font-family: var(--pixel); font-size: 10px; }
 
     .me {
@@ -344,6 +389,8 @@
     /* ---------- Explore world ---------- */
     .world { padding: 0 0 96px; }
     .world[hidden] { display: none; }
+    .world:not([hidden]) .window { animation: world-in 0.42s cubic-bezier(.2, .9, .3, 1); }
+    @keyframes world-in { from { opacity: 0; transform: translateY(16px) scale(0.985); } }
 
     .window {
       background: var(--paper);
@@ -359,7 +406,10 @@
       gap: 8px;
       padding: 10px 14px;
       border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, #FFFFFF 0%, #F2F1F7 50%, #E6E5EE 51%, #F4F3F9 100%);
+      background: rgba(255, 255, 255, 0.66);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      border-bottom-color: rgba(23, 21, 29, 0.08);
       font-size: 11px;
     }
 
@@ -368,7 +418,8 @@
     .dots i:nth-child(1) { background: var(--pink); }
     .dots i:nth-child(2) { background: var(--lemon); }
     .dots i:nth-child(3) { background: var(--cyan); }
-    .titlebar .pixel { margin-left: 6px; }
+    .titlebar .pixel { margin-left: 2px; }
+    .tb-star { width: 14px; height: 14px; color: var(--violet); flex: none; }
 
     .titlebar .close {
       margin-left: auto;
@@ -508,7 +559,7 @@
       transition: transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
     }
 
-    .edition:hover .visual { transform: rotate(-0.6deg) translateY(-4px); }
+    .edition:hover .visual { transform: translateY(-2px) scale(1.005); }
 
     .v-violet { background: var(--tint-violet); }
     .v-pink { background: var(--tint-pink); }
@@ -775,6 +826,7 @@
     /* Résumé vending machine */
     .dispenser {
       position: relative;
+      max-width: 330px;
       padding: 16px 18px 14px;
       border-radius: 18px 18px 10px 10px;
       background: linear-gradient(180deg, #2a2733 0%, var(--ink) 100%);
@@ -918,9 +970,12 @@
       gap: 12px;
       align-items: center;
       padding: 12px 16px;
-      background: var(--ink);
+      background: rgba(23, 21, 29, 0.82);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: var(--pearl);
-      border-radius: 12px;
+      border-radius: 16px;
       box-shadow: 0 16px 36px -12px rgba(23, 21, 29, 0.5);
       transform: translateY(160%);
       transition: transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
@@ -929,7 +984,63 @@
     .toast.show { transform: none; }
     .toast .star-ico { color: var(--lemon); width: 20px; height: 20px; }
     .toast strong { display: block; font-family: var(--pixel); font-weight: 400; font-size: 12px; color: var(--lemon); }
-    .toast .msg { font-size: 14px; }
+    .toast .msg { font-family: var(--ui); font-size: 14px; }
+
+    /* ---------- Brief / full synopsis ---------- */
+    .head-side { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .depth-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .depth {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(23, 21, 29, 0.06);
+    }
+
+    .depth button {
+      border: 0;
+      background: none;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font: 600 13px var(--ui);
+      color: var(--graphite);
+      cursor: pointer;
+      transition: background var(--motion-system), color var(--motion-system), transform var(--motion-system);
+    }
+
+    .depth button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(23, 21, 29, 0.15); }
+
+    .syn-toggle {
+      align-self: flex-start;
+      margin: 0 0 14px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.7);
+      font: 600 14px var(--ui);
+      color: var(--ink);
+      cursor: pointer;
+      transition: background var(--motion-system), transform var(--motion-system);
+    }
+
+    .syn-toggle:hover { background: #fff; }
+    .syn-toggle i { display: inline-block; font-style: normal; transition: transform var(--motion-system); }
+    .syn-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+
+    .synopsis { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.32s ease, opacity 0.32s ease; }
+    .synopsis.open { grid-template-rows: 1fr; opacity: 1; }
+    .synopsis > div { overflow: hidden; min-height: 0; }
+
+    body[data-depth="brief"] .row p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* Hand-drawn spiral notes: show what pressing does */
+    .scribble { display: flex; align-items: flex-end; gap: 2px; color: var(--ink); pointer-events: none; }
+    .scribble span { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.1; max-width: 190px; }
+    .spiral { width: 78px; height: 48px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .spiral.flip { transform: scaleX(-1); }
+
+    .sc-cd { position: absolute; right: 0; bottom: 70px; z-index: 4; flex-direction: column; align-items: flex-end; text-align: right; }
+    .sc-disp { position: absolute; left: calc(100% + 10px); bottom: 34px; flex-direction: column; align-items: flex-start; }
 
     /* ---------- Passport stamps ---------- */
     .stamp-head { margin: 72px 0 24px; }
@@ -982,6 +1093,7 @@
     .cd { border: 0; padding: 0; cursor: pointer; animation-play-state: paused; }
     .cd.playing { animation-play-state: running; }
     .cd:focus-visible { outline-offset: 6px; }
+    .cd:active { box-shadow: inset 0 0 0 1px rgba(23, 21, 29, 0.25), inset 0 0 70px rgba(255, 255, 255, 0.95), 0 24px 44px -26px rgba(34, 26, 74, 0.55); }
 
     .radio-btn {
       position: absolute;
@@ -1009,13 +1121,16 @@
     .radio[hidden] { display: none; }
     .radio .titlebar { gap: 6px; }
     .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 10px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
-    .radio .titlebar button:first-of-type { margin-left: auto; }
     .radio .titlebar button:hover { color: var(--ink); }
-    .radio-screen { min-height: 152px; background: #121212; }
+    .radio-screen { max-height: 152px; overflow: hidden; background: #121212; transition: max-height var(--motion-toy) ease; }
+    .radio.collapsed .radio-screen { max-height: 0; }
+    .radio .np { margin-left: auto; font-family: var(--pixel); font-size: 10px; color: var(--graphite); }
+    .radio:not([hidden]) { animation: pop-in var(--motion-toy) cubic-bezier(.2, .9, .3, 1.1); }
+    @keyframes pop-in { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
     .radio-screen iframe { display: block; width: 100%; height: 152px; border: 0; }
 
     /* Reveal-on-scroll */
-    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
     .reveal.in { opacity: 1; transform: none; }
 
     /* ---------- Responsive ---------- */
@@ -1032,7 +1147,8 @@
     }
 
     @media (max-width: 760px) {
-      .nav a:not(.btn) { display: none; }
+      .nav { display: none; }
+      .menu-btn { display: grid; }
     }
 
     @media (max-width: 640px) {
@@ -1043,7 +1159,7 @@
       .hero-art { height: 340px; }
       .cd { width: 260px; }
       .me canvas { width: 140px; height: 180px; }
-      .hero-sticker strong { font-size: 22px; }
+      .hero-sticker strong { font-size: 19px; }
       section.block { padding: 64px 0; }
       .visual { padding: 44px 14px 52px; min-height: 280px; }
       .readout { grid-template-columns: 1fr; }
@@ -1058,7 +1174,11 @@
       .stop { grid-template-columns: 26px minmax(0, 1fr); }
       .stop p { grid-column: 2; }
       .toast { left: 16px; right: 16px; }
+      .topbar { padding: 8px 12px 0; }
       .radio { left: 16px; right: 16px; width: auto; }
+      .sc-cd { display: none; }
+      .sc-disp { position: static; margin-top: 10px; }
+      .dispenser { max-width: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1075,6 +1195,11 @@
   <defs>
     <clipPath id="ss-clip"><rect width="14" height="24"/></clipPath>
     <!-- Signal Star: a four-point sparkle whose east ray breaks into pixels -->
+    <!-- Hand-drawn loop arrow for annotations -->
+    <symbol id="spiral-arrow" viewBox="0 0 100 60">
+      <path d="M4 50 C20 52 34 44 40 34 C46 24 38 14 30 20 C22 26 30 40 46 40 C62 40 76 26 94 14"/>
+      <path d="M94 14 L83 14 M94 14 L88 24"/>
+    </symbol>
     <symbol id="signal-star" viewBox="0 0 24 24">
       <path clip-path="url(#ss-clip)" d="M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z"/>
       <rect x="13" y="9.5" width="3" height="5"/>
@@ -1086,17 +1211,30 @@
 </svg>
 
 <header class="topbar">
-  <div class="wrap">
+  <div class="nav-shell">
     <a class="brand" href="#top"><svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>ZS <span>/ FROYO</span></a>
     <nav class="nav" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#archive">Archive</a>
       <a href="#about">About</a>
       <a href="slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
-      <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn ↗</a>
       <button class="btn btn-explore" type="button" data-mode-toggle aria-pressed="false">
         <span data-mode-label>Explore</span> <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
       </button>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu>☰</button>
+  </div>
+  <div class="sheet" id="mobile-menu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#work">Work</a>
+      <a href="#archive">Archive</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <hr>
+      <a href="slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
+      <a href="https://www.linkedin.com/in/sngzhenhao">LinkedIn ↗</a>
+      <a href="https://github.com/froyosng">GitHub ↗</a>
+      <button class="btn btn-explore" type="button" data-enter-world>Explore world <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg></button>
     </nav>
   </div>
 </header>
@@ -1134,6 +1272,7 @@
         <div class="hero-art">
           <div class="pearl-glow" aria-hidden="true"></div>
           <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
+          <span class="scribble sc-cd" aria-hidden="true"><svg class="spiral flip" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>psst, the CD plays my playlist</span></span>
           <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
           <div class="hero-sticker" aria-label="Top in-sample Sharpe 2.21, WorldQuant IQC Gold tier">
             <strong>2.21</strong><span>SHARPE · IQC GOLD TIER</span>
@@ -1153,7 +1292,7 @@
     <div class="wrap">
       <div class="window">
         <div class="titlebar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg>
           <span class="pixel">FROYO.OS — DESK.EXE</span>
           <button class="close" type="button" data-quick-view>✕ QUICK VIEW</button>
         </div>
@@ -1189,7 +1328,16 @@
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
           <h2 class="serif">selected work</h2>
         </div>
-        <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
+        <div class="head-side">
+          <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
+          <div class="depth-row">
+            <span class="scribble" aria-hidden="true"><span>brief, or the full story?</span><svg class="spiral" aria-hidden="true"><use href="#spiral-arrow"/></svg></span>
+            <div class="depth" role="group" aria-label="How much project detail to show">
+            <button type="button" data-depth-btn="brief" aria-pressed="true">Brief</button>
+            <button type="button" data-depth-btn="full" aria-pressed="false">Full synopsis</button>
+          </div>
+          </div>
+        </div>
       </div>
 
       <article class="edition reveal" id="hiv">
@@ -1202,15 +1350,20 @@
           <span class="ed-kicker mono">Multi-objective optimisation</span>
           <h3>$200M, 46 countries, one trade-off</h3>
           <p class="ed-sub">Allocating HIV funding when impact and fairness disagree.</p>
-          <p>After cuts to US foreign aid, suppose a funder commits US$200M to HIV programmes across 46 African
+          <div class="ed-stat"><strong>−33%</strong><span>inequity at the knee point, keeping 98.6% of greedy's DALYs averted</span></div>
+          <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-hiv"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
+          <div class="synopsis" id="syn-hiv">
+            <div inert>
+              <p>After cuts to US foreign aid, suppose a funder commits US$200M to HIV programmes across 46 African
             countries and four interventions: ARV drugs, supply chains, workforce training and drug-resistance
             surveillance. Maximising DALYs averted and minimising inequity between countries pull in different
             directions, across 184 decision variables in a non-convex model.</p>
-          <p>Our team of three compared a greedy heuristic, simulated annealing, NSGA-II and a reduced Gurobi
+              <p>Our team of three compared a greedy heuristic, simulated annealing, NSGA-II and a reduced Gurobi
             benchmark. I implemented the NSGA-II pipeline (encoding, non-dominated sorting, crowding distance,
             budget-preserving crossover and mutation, repair, knee-point selection) plus the benchmark comparison
             and all plots.</p>
-          <div class="ed-stat"><strong>−33%</strong><span>inequity at the knee point, keeping 98.6% of greedy's DALYs averted</span></div>
+            </div>
+          </div>
           <div class="ed-foot">
             <p class="tools mono">Python · NSGA-II · Simulated annealing · Gurobi</p>
             <a class="ed-link" href="slides/hiv_funding_allocation_report.pdf">Read the report <span class="arr">↗</span></a>
@@ -1293,14 +1446,19 @@
           <span class="ed-kicker mono">Signal research</span>
           <h3>Signals that survive noise</h3>
           <p class="ed-sub">Alpha research for WorldQuant IQC and AlphaNova.</p>
-          <p>For WorldQuant's IQC, I built (with a partner) market-neutral equity alphas across price, fundamental
+          <div class="ed-stat"><strong>2.21</strong><span>top in-sample Sharpe (Fitness 2.30), IQC Gold tier</span></div>
+          <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-quant"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
+          <div class="synopsis" id="syn-quant">
+            <div inert>
+              <p>For WorldQuant's IQC, I built (with a partner) market-neutral equity alphas across price, fundamental
             and sentiment signals, reaching Gold tier and Stage 2 (top 22 in Singapore, #1,376 globally). To search
             faster I wrote a Python BRAIN API pipeline with an expression canonicaliser, template-based generation
             and SQLite experiment tracking.</p>
-          <p>For AlphaNova, I built walk-forward Ridge ranking signals (z-scores, rank velocity) for 20 assets per
+              <p>For AlphaNova, I built walk-forward Ridge ranking signals (z-scores, rank velocity) for 20 assets per
             timestamp; two passed the overfitting and originality checks for the prize-eligible Quality set. Along
             the way I caught a silent feature–target misalignment caused by MultiIndex column ordering.</p>
-          <div class="ed-stat"><strong>2.21</strong><span>top in-sample Sharpe (Fitness 2.30), IQC Gold tier</span></div>
+            </div>
+          </div>
           <div class="ed-foot">
             <p class="tools mono">Python · BRAIN API · SQLite · Ridge</p>
             <span class="soon mono">Case study · soon</span>
@@ -1341,10 +1499,15 @@
           <span class="ed-kicker mono">Predictive modelling</span>
           <h3>The discrete choice machine</h3>
           <p class="ed-sub">Predicting which car safety-feature bundle people choose.</p>
-          <p>Analytics Edge Data Competition on Kaggle. I modelled the choice with conditional and mixed logit,
+          <div class="ed-stat"><strong>1.145</strong><span>cross-validated log-loss · public leaderboard 1.202</span></div>
+          <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-choice"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
+          <div class="synopsis" id="syn-choice">
+            <div inert>
+              <p>Analytics Edge Data Competition on Kaggle. I modelled the choice with conditional and mixed logit,
             then added price-factor identification, task-fatigue effects and an XGBoost blend. Along the way I
             diagnosed a rank-deficient model matrix via QR decomposition and fixed it.</p>
-          <div class="ed-stat"><strong>1.145</strong><span>cross-validated log-loss · public leaderboard 1.202</span></div>
+            </div>
+          </div>
           <div class="ed-foot">
             <p class="tools mono">R · Mixed logit · XGBoost</p>
             <span class="soon mono">Case study · soon</span>
@@ -1377,13 +1540,18 @@
           <span class="ed-kicker mono">Synthetic data</span>
           <h3>Credit data that isn't real</h3>
           <p class="ed-sub">A synthetic data generator for Credit Bureau Singapore.</p>
-          <p>An industry project reporting to DBS, OCBC and UOB. Real credit data can't be used for testing or
+          <div class="ed-stat"><strong>80.7</strong><span>/100 best fidelity: Copula, account-balance series</span></div>
+          <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-cbs"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
+          <div class="synopsis" id="syn-cbs">
+            <div inert>
+              <p>An industry project reporting to DBS, OCBC and UOB. Real credit data can't be used for testing or
             client demos, so our team of five built a generator that mimics it.</p>
-          <p>The tool clusters banks' time series with K-medoids (k chosen by silhouette score), synthesises each
+              <p>The tool clusters banks' time series with K-medoids (k chosen by silhouette score), synthesises each
             cluster with seven methods (ARIMA, Holt-Winters, Prophet, Copula, Beta, Gaussian and CTGAN), scores
             every method for fidelity and recommends the best. I led the CTGAN pipeline and designed the dual-view
             (Customer/Agency) dashboard.</p>
-          <div class="ed-stat"><strong>80.7</strong><span>/100 best fidelity: Copula, account-balance series</span></div>
+            </div>
+          </div>
           <div class="ed-foot">
             <p class="tools mono">Python · Streamlit · CTGAN · K-medoids</p>
             <a class="ed-link" href="slides/cbs_synthetic_data_poster.png">View poster <span class="arr">↗</span></a>
@@ -1415,9 +1583,14 @@
           <span class="ed-kicker mono">Computer vision</span>
           <h3>A camera that scares birds</h3>
           <p class="ed-sub">CV detection wired to a physical deterrent.</p>
-          <p>A computer vision-triggered bird deterrent for the SUTD canteen. When a mynah is detected, a hawk
+          <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-birds"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
+          <div class="synopsis" id="syn-birds">
+            <div inert>
+              <p>A computer vision-triggered bird deterrent for the SUTD canteen. When a mynah is detected, a hawk
             decoy on a ceiling-mounted rail swoops towards it and plays a hawk call to scare it away. I integrated
             the detection logic with the physical actuation.</p>
+            </div>
+          </div>
           <div class="ed-foot">
             <p class="tools mono">Computer vision · Hardware integration</p>
             <a class="ed-link" href="slides/dti_cv_bird_deterrent.pdf">View slides <span class="arr">↗</span></a>
@@ -1465,7 +1638,13 @@
           <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas>03 / ARCHIVE</div>
           <h2>Experiments &amp; archive</h2>
         </div>
-        <p class="section-note">Smaller projects, research and pitches. Filter by patch.</p>
+        <div class="head-side">
+          <p class="section-note">Smaller projects, research and pitches. Filter by patch.</p>
+          <div class="depth" role="group" aria-label="How much project detail to show">
+            <button type="button" data-depth-btn="brief" aria-pressed="true">Brief</button>
+            <button type="button" data-depth-btn="full" aria-pressed="false">Full synopsis</button>
+          </div>
+        </div>
       </div>
 
       <div class="filters" role="group" aria-label="Filter archive">
@@ -1621,7 +1800,7 @@
       <div class="about-grid">
         <div class="about-col">
           <div class="window">
-            <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">README.TXT</span></div>
+            <div class="titlebar"><svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg><span class="pixel">README.TXT</span></div>
             <div class="about-body">
               <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Aug 2026 – Jan 2027 on exchange at
                 National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
@@ -1633,7 +1812,7 @@
             </div>
           </div>
           <div class="window" id="contact">
-            <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">CONTACT.EXE</span></div>
+            <div class="titlebar"><svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg><span class="pixel">CONTACT.EXE</span></div>
             <ul class="contact-links">
               <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
               <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
@@ -1651,6 +1830,7 @@
             </div>
             <div class="disp-slot" aria-hidden="true"></div>
             <p class="disp-note">cv.pdf, still one page, somehow</p>
+            <span class="scribble sc-disp" aria-hidden="true"><svg class="spiral flip" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>press it, the CV is free</span></span>
           </div>
         </div>
 
@@ -1725,9 +1905,11 @@
 
 <div class="radio window" hidden role="region" aria-label="FROYO RADIO player">
   <div class="titlebar">
-    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg>
     <span class="pixel">♫ FROYO RADIO</span>
+    <span class="np" data-np aria-live="polite">LOADING…</span>
     <button type="button" data-radio-pause aria-pressed="false">PAUSE</button>
+    <button type="button" data-radio-collapse aria-expanded="true" aria-label="Collapse player">–</button>
     <button type="button" data-radio-close aria-label="Close player">✕</button>
   </div>
   <div class="radio-screen"><div id="spotify-player"></div></div>
@@ -1832,6 +2014,14 @@
     var radio = document.querySelector('.radio');
     var cd = document.querySelector('.cd');
     var pauseBtn = document.querySelector('[data-radio-pause]');
+    var np = document.querySelector('[data-np]');
+    var collapseBtn = document.querySelector('[data-radio-collapse]');
+    collapseBtn.addEventListener('click', function () {
+      var collapsed = radio.classList.toggle('collapsed');
+      collapseBtn.textContent = collapsed ? '↑' : '–';
+      collapseBtn.setAttribute('aria-expanded', !collapsed);
+      collapseBtn.setAttribute('aria-label', collapsed ? 'Expand player' : 'Collapse player');
+    });
     var controller = null, playing = false, loading = false, radioToast = false;
 
     function setPlaying(on) {
@@ -1841,6 +2031,7 @@
       document.querySelectorAll('.radio-btn').forEach(function (b) { b.setAttribute('aria-pressed', on); });
       document.querySelectorAll('[data-radio-state]').forEach(function (s) { s.textContent = on ? 'PAUSE' : 'PLAY'; });
       pauseBtn.textContent = on ? 'PAUSE' : 'PLAY';
+      np.textContent = on ? '● PLAYING' : 'PAUSED';
       pauseBtn.setAttribute('aria-pressed', !on);
     }
 
@@ -1899,6 +2090,54 @@
         if (!dispensed) { dispensed = true; window.froyoToast('+1 SIGNAL', 'Career dispensed. Price: $0.00.'); }
       });
     });
+
+    // ----- Nav: slightly tighter once scrolled -----
+    var topbar = document.querySelector('.topbar');
+    var onScroll = function () { topbar.classList.toggle('scrolled', window.scrollY > 8); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ----- Mobile menu: Escape closes, focus goes in and comes back -----
+    var menuBtn = document.querySelector('[data-menu]');
+    var sheet = document.getElementById('mobile-menu');
+    function setMenu(open) {
+      sheet.hidden = !open;
+      menuBtn.setAttribute('aria-expanded', open);
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuBtn.textContent = open ? '✕' : '☰';
+      if (open) sheet.querySelector('a').focus();
+    }
+    menuBtn.addEventListener('click', function () { setMenu(sheet.hidden); });
+    sheet.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !sheet.hidden) { setMenu(false); menuBtn.focus(); }
+    });
+
+    // ----- Brief / full synopsis -----
+    function setSynopsis(btn, open) {
+      var box = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', open);
+      btn.querySelector('span').textContent = open ? 'Hide synopsis' : 'Read synopsis';
+      box.classList.toggle('open', open);
+      box.firstElementChild.inert = !open;
+    }
+    function setDepth(d, save) {
+      document.body.setAttribute('data-depth', d);
+      document.querySelectorAll('[data-depth-btn]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-depth-btn') === d); });
+      document.querySelectorAll('.syn-toggle').forEach(function (b) { setSynopsis(b, d === 'full'); });
+      if (save) { try { localStorage.setItem('froyo-depth', d); } catch (e) {} }
+    }
+    document.querySelectorAll('.syn-toggle').forEach(function (b) {
+      b.addEventListener('click', function () { setSynopsis(b, b.getAttribute('aria-expanded') !== 'true'); });
+    });
+    document.querySelectorAll('[data-depth-btn]').forEach(function (b) {
+      b.addEventListener('click', function () { setDepth(b.getAttribute('data-depth-btn'), true); });
+    });
+    var savedDepth = null;
+    try { savedDepth = localStorage.getItem('froyo-depth'); } catch (e) {}
+    setDepth(savedDepth === 'full' ? 'full' : 'brief', false);
 
     // ----- Frog: five clicks is too many -----
     var frogClicks = 0;
