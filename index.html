@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -22,7 +22,9 @@
       --glass-hover: rgba(255, 255, 255, 0.06);
       --accent: #00F0FF;
       --accent-dim: rgba(0, 240, 255, 0.14);
-      --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --sans: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+      --pixel: "Silkscreen", var(--mono);
       --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       --gutter: 40px;
       --max: 1200px;
@@ -143,6 +145,8 @@
 
     @keyframes pulse { 50% { opacity: 0.3; } }
 
+    h1, h2, h3 { font-family: var(--display); }
+
     h1 {
       font-size: clamp(56px, 10vw, 136px);
       line-height: 0.88;
@@ -206,7 +210,16 @@
       padding: 72px 0 28px;
     }
 
-    .section-index { color: var(--accent); }
+    .section-index {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--accent);
+      font-family: var(--pixel);
+      font-size: 14px;
+    }
+
+    .px-icon { height: 20px; width: auto; image-rendering: pixelated; }
 
     h2 {
       font-size: clamp(32px, 4.5vw, 56px);
@@ -445,6 +458,66 @@
 
     .open.pending { color: var(--faint); }
 
+    /* ---------- Pixel desk scene ---------- */
+    .scene-band { border-bottom: 1px solid var(--line); }
+    .scene-band .wrap { padding-top: 40px; padding-bottom: 40px; }
+
+    .scene {
+      position: relative;
+      border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .scene canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .hot {
+      position: absolute;
+      outline-offset: 2px;
+    }
+
+    .hot:focus-visible { outline: 1px dashed var(--accent); }
+
+    .hot-label {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translate(-50%, -4px);
+      padding: 3px 8px;
+      background: #000;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--pixel);
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+    }
+
+    .hot:hover .hot-label,
+    .hot:focus-visible .hot-label { opacity: 1; }
+
+    .scene-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-top: 0;
+      font-family: var(--pixel);
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    .scene-strip b { color: var(--accent); font-weight: 400; }
+    .scene-strip .cursor { height: 10px; width: 6px; vertical-align: -1px; }
+
     /* Reveal-on-scroll */
     .reveal {
       opacity: 0;
@@ -555,11 +628,30 @@
     </div>
   </div>
 
+  <!-- PIXEL DESK -->
+  <div class="scene-band">
+    <div class="wrap">
+      <div class="scene">
+        <canvas id="scene" role="img" aria-label="Pixel-art desk: a live stock chart and code on two monitors, a Singapore skyline through the window, a bookshelf, posters, a plant and a sleeping cat."></canvas>
+        <a class="hot" href="#quant" data-id="quant" aria-label="Jump to Quant" style="left:44.53%;top:37.50%;width:15.62%;height:25.00%"><span class="hot-label">QUANT →</span></a>
+        <a class="hot" href="#code" data-id="code" aria-label="Jump to Code" style="left:61.72%;top:39.58%;width:13.28%;height:22.92%"><span class="hot-label">CODE →</span></a>
+        <a class="hot" href="#research" data-id="research" aria-label="Jump to Research" style="left:29.69%;top:29.17%;width:9.38%;height:60.42%"><span class="hot-label">RESEARCH →</span></a>
+        <a class="hot" href="#finance" data-id="finance" aria-label="Jump to Finance" style="left:41.41%;top:10.42%;width:7.03%;height:22.92%"><span class="hot-label">FINANCE →</span></a>
+        <a class="hot" href="#systems" data-id="systems" aria-label="Jump to Systems" style="left:72.66%;top:68.75%;width:5.08%;height:20.83%"><span class="hot-label">SYSTEMS →</span></a>
+        <a class="hot" href="#ventures" data-id="ventures" aria-label="Jump to Ventures" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">VENTURES →</span></a>
+      </div>
+      <div class="scene-strip">
+        <span>&gt; ZHENHAO.SNG // DESK.EXE <span class="cursor"></span></span>
+        <span>Click an object: <b>chart</b> quant · <b>pc</b> systems · <b>shelf</b> research · <b>payoff</b> finance · <b>plant</b> ventures · <b>code</b> github</span>
+      </div>
+    </div>
+  </div>
+
   <!-- QUANT -->
   <section id="quant">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">01 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas>01 /</span>
         <h2>Quantitative Finance</h2>
         <span class="section-count mono">04 entries</span>
       </div>
@@ -649,7 +741,7 @@
   <section id="systems">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">02 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas>02 /</span>
         <h2>AI &amp; Systems</h2>
         <span class="section-count mono">07 entries</span>
       </div>
@@ -740,7 +832,7 @@
   <section id="research">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">03 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas>03 /</span>
         <h2>Research</h2>
         <span class="section-count mono">03 entries</span>
       </div>
@@ -787,7 +879,7 @@
   <section id="finance">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">04 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="coin" aria-hidden="true"></canvas>04 /</span>
         <h2>Finance &amp; Markets</h2>
         <span class="section-count mono">02 entries</span>
       </div>
@@ -822,7 +914,7 @@
   <section id="ventures">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">05 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="rocket" aria-hidden="true"></canvas>05 /</span>
         <h2>Entrepreneurship</h2>
         <span class="section-count mono">03 entries</span>
       </div>
@@ -868,7 +960,7 @@
   <section id="code">
     <div class="wrap">
       <div class="section-head">
-        <span class="section-index mono">06 /</span>
+        <span class="section-index"><canvas class="px-icon" data-icon="code" aria-hidden="true"></canvas>06 /</span>
         <h2>Code &amp; Repositories</h2>
         <span class="section-count mono">github</span>
       </div>
@@ -939,6 +1031,8 @@
     cards.forEach(function (c) { io.observe(c); });
   })();
 </script>
+
+<script src="pixel.js"></script>
 
 </body>
 </html>
