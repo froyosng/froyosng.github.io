@@ -171,6 +171,7 @@
     .p-fin { background: var(--wine); }
     .p-biz { background: var(--pink); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-opt { background: #0B6E87; }
+    .p-psy { background: var(--lemon); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-all { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); outline-color: transparent; }
 
     /* ---------- Top bar ---------- */
@@ -1475,6 +1476,7 @@
         <button class="patch p-lab" type="button" data-filter-btn="research" aria-pressed="false">LAB</button>
         <button class="patch p-fin" type="button" data-filter-btn="finance" aria-pressed="false">FIN</button>
         <button class="patch p-biz" type="button" data-filter-btn="strategy" aria-pressed="false">BIZ</button>
+        <button class="patch p-psy" type="button" data-filter-btn="psych" aria-pressed="false">PSY</button>
       </div>
 
       <ul class="archive">
@@ -1486,9 +1488,9 @@
         </li>
         <li class="row" id="row-mayumaro" data-cat="ml">
           <span class="when mono">2026</span>
-          <div><h3>Mayumaro — Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team.</p></div>
+          <div><h3>Mayumaro — Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team. Built from field observations of crowding, transit confusion and waste disposal around Gion, Nishiki and Arashiyama.</p></div>
           <div class="cats"><span class="patch p-ml">ML</span></div>
-          <span class="go muted mono">Slides soon</span>
+          <a class="go" href="slides/do_you_kyoto_mayumaro.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="research ml">
           <span class="when mono">UROP</span>
@@ -1496,11 +1498,17 @@
           <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-ml">ML</span></div>
           <span class="go muted mono">Slides soon</span>
         </li>
-        <li class="row" data-cat="research finance">
+        <li class="row" data-cat="psych research finance">
           <span class="when mono">Psych</span>
-          <div><h3>Algorithm aversion in financial decisions</h3><p>A within-subjects experiment (AI vs. human advisor × stake level) testing how stakes, experience and trust shape reliance on algorithmic advice.</p></div>
-          <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-fin">FIN</span></div>
-          <span class="go muted mono">Slides soon</span>
+          <div><h3>Algorithm aversion in financial decisions</h3><p>A 2 × 2 within-subjects study (AI robo-advisor vs. human advisor × stakes of up to 5% vs. 40%) with 42 participants, in a team of five. High stakes cut both willingness to delegate and the advice's influence, but equally for AI and human advisors, with no moderation by experience, task subjectivity or trust. Big stakes make people rely less on advice in general, not on algorithms specifically.</p></div>
+          <div class="cats"><span class="patch p-psy">PSY</span><span class="patch p-fin">FIN</span></div>
+          <a class="go" href="slides/algorithm_aversion_paper.pdf">Paper ↗</a>
+        </li>
+        <li class="row" data-cat="psych research">
+          <span class="when mono">Psych</span>
+          <div><h3>Sleep-dependent memory</h3><p>A solo presentation on how rest shapes what we remember, reviewing Stickgold (2005), Walker &amp; Stickgold (2004) and Mednick, Nakayama &amp; Stickgold (2003): different sleep stages support different kinds of memory, and a 60–90 minute nap can match a night's sleep for perceptual learning.</p></div>
+          <div class="cats"><span class="patch p-psy">PSY</span></div>
+          <a class="go" href="slides/sleep_dependent_memory.pdf">Slides ↗</a>
         </li>
         <li class="row" id="row-pandabot" data-cat="ml systems">
           <span class="when mono">CQU×SUTD</span>
