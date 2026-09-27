@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hawker Hawk: AI myna deterrent — Zhenhao Sng</title>
+  <meta name="description" content="A computer-vision triggered hawk decoy on a ceiling string track, built to keep mynas away from the SUTD canteen.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect width='14' height='24'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg fill='%237657FF'%3E%3Cpath clip-path='url(%23c)' d='M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z'/%3E%3Crect x='13' y='9.5' width='3' height='5'/%3E%3Crect x='16' y='10.5' width='3' height='3'/%3E%3Crect x='19' y='11' width='3' height='2'/%3E%3Crect x='22' y='11.5' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/case.css?v=4">
+</head>
+
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="ss-clip"><rect width="14" height="24"/></clipPath>
+    <symbol id="signal-star" viewBox="0 0 24 24">
+      <path clip-path="url(#ss-clip)" d="M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z"/>
+      <rect x="13" y="9.5" width="3" height="5"/>
+      <rect x="16" y="10.5" width="3" height="3"/>
+      <rect x="19" y="11" width="3" height="2"/>
+      <rect x="22" y="11.5" width="2" height="1"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="nav-shell">
+    <a class="brand" href="../../"><svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>ZS <span>/ FROYO</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="keep" href="../../#work">Work</a>
+      <a href="../../#archive">Archive</a>
+      <a href="../../#about">About</a>
+      <a class="keep" href="../../slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="crumb" href="../../#birds">← Selected work</a>
+      <div class="case-label pixel"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>CV-005 / CASE STUDY</div>
+      <h1 class="case-title">A camera<br>that <span class="serif">scares birds.</span></h1>
+      <p class="case-sub">Hawker Hawk: a hawk decoy that flies along the canteen ceiling only when computer vision spots a myna.</p>
+      <dl class="meta">
+        <div><dt>My role</dt><dd>Integrated the detection logic with the physical actuation</dd></div>
+        <div><dt>Team</dt><dd>Group 3, Design Thinking &amp; Innovation</dd></div>
+        <div><dt>When</dt><dd>2025 · DTI, SUTD</dd></div>
+        <div><dt>Tools</dt><dd>YOLOv8 (Roboflow), Python, webcam, CAD, 3D printing, motors</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="stage" aria-labelledby="stage-title">
+    <div class="wrap">
+      <h2 id="stage-title" class="mono" style="font-weight:400;color:var(--graphite);margin-bottom:18px">Same model, better data. Compare the two training sets.</h2>
+      <div class="chart-grid">
+        <div>
+          <div class="seg" role="group" aria-label="Training dataset">
+            <button type="button" data-ds="0" aria-pressed="false">v1 · 400+ online images</button>
+            <button type="button" data-ds="1" aria-pressed="true">v2 · 477 own images</button>
+          </div>
+          <div class="pick-bars" aria-live="polite">
+            <div class="pick" style="cursor:default"><span>mAP@50</span><span class="track"><i class="fill" data-bar="0"></i><span class="val" data-val="0"></span></span></div>
+            <div class="pick" style="cursor:default"><span>Precision</span><span class="track"><i class="fill" data-bar="1"></i><span class="val" data-val="1"></span></span></div>
+            <div class="pick" style="cursor:default"><span>Recall</span><span class="track"><i class="fill" data-bar="2"></i><span class="val" data-val="2"></span></span></div>
+          </div>
+          <p class="cols-caption" style="margin-top:14px">Validation metrics reported by the training platform for each dataset.</p>
+        </div>
+        <aside class="readout">
+          <span class="hint pixel">WHAT CHANGED</span>
+          <h3 data-r="name">—</h3>
+          <p data-r="note" style="margin-top:0"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="case-sec" aria-labelledby="s1">
+      <div class="sec-num"><b aria-hidden="true">01</b><span>Problem</span></div>
+      <div class="prose">
+        <h2 id="s1">Mynas at the canteen</h2>
+        <p>Common mynas are a regular nuisance around the SUTD canteen's tables. We set out to build a deterrent designed for
+          that canteen but adaptable to most ceiling types.</p>
+        <p>Two things shaped the design early. Mynas are clever: a decoy that moves on a fixed schedule becomes background, and
+          a constantly running motor adds noise and wastes energy. And sound alone can't do it, because our noise test found
+          the range that scares birds (65–85 dBA) overlaps what's comfortable for people (below 75 dBA).</p>
+        <p>So the deterrent had to be <strong>visual</strong>, and it had to move <strong>only when a myna is actually there</strong>.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s2">
+      <div class="sec-num"><b aria-hidden="true">02</b><span>How it works</span></div>
+      <div class="prose">
+        <h2 id="s2">See a myna, send the hawk</h2>
+        <div class="cam-card">
+          <span class="cap">THE LOOP, IN PIXELS</span>
+          <button class="sound-toggle" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
+          <canvas class="birdcam" id="birdcam" role="img" aria-label="Pixel animation: a myna is detected on a table, and a hawk decoy on a ceiling rail swoops down to it and screeches, scaring it away."></canvas>
+        </div>
+        <ol class="steps">
+          <li><span>A <strong>webcam</strong> watches the tables, running a <strong>YOLOv8</strong> model trained on Roboflow.</span></li>
+          <li><span>When it spots a myna, it signals the <strong>motor driver</strong>, with a cooldown between detections so it doesn't fire constantly.</span></li>
+          <li><span><strong>Dual driver wheels</strong> in a ceiling-clamped pulley pull a string, flying the hawk along the track.</span></li>
+          <li><span>The hawk is modelled on the <strong>Crested Goshawk</strong>, a local predator of the common myna, with wings that flap as it rises and falls.</span></li>
+        </ol>
+        <figure class="fig">
+          <img src="img/concept.jpg" alt="Concept render: the hawk decoy flying along a red string track across the SUTD canteen ceiling toward a myna." loading="lazy" width="1050" height="1845" style="max-width:420px">
+          <figcaption>The concept in the canteen: the red line is the hawk's string track.</figcaption>
+        </figure>
+        <figure class="fig">
+          <img src="img/detector.jpg" alt="Bird Detector window showing a myna figure on a table detected with 0.90 confidence, with motor and timing settings on screen." loading="lazy" width="850" height="700" style="max-width:560px">
+          <figcaption>The detector running: a myna figure at 0.90 confidence, motors on, a 5-second detection interval and a 5-second fade-out.</figcaption>
+        </figure>
+        <div class="callout"><b>MY PART</b>I integrated the detection logic with the physical actuation, so a detection on the webcam
+          feed actually drives the motors that fly the hawk.</div>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s3">
+      <div class="sec-num"><b aria-hidden="true">03</b><span>Iteration</span></div>
+      <div class="prose">
+        <h2 id="s3">Three chassis, three wings, two datasets</h2>
+        <p><strong>The track.</strong> A pre-built track looping the canteen was hard to install, even in pieces. We switched to a
+          string pulled by modular motor mounts clamped to the ceiling. Early versions let the rope slip out because only wheel
+          friction held it, so we added a guide shaft; its final form has a chamfer and a swivel, so the driver can feed string
+          arriving from a 180° range.</p>
+        <figure class="fig">
+          <img src="img/model.jpg" alt="The predator model with patterned wings, next to a CAD render of the mounted pulley motor with dual driver wheels, F-clamp and swivelling catchment." loading="lazy" width="1400" height="735">
+          <figcaption>The final hawk and the mounted pulley motor: dual driver wheels, an F-clamp and a swivelling catchment.</figcaption>
+        </figure>
+        <p><strong>The wings.</strong> Flat, stationary wings weren't convincing. Hinged wings that catch air stayed up for the whole
+          flight. The final design ties the wings to a balanced marionette bar, so they flap as the hawk moves up and down.</p>
+        <figure class="fig">
+          <img src="img/wings.jpg" alt="Three wing iterations: flat stationary wings, hinged wings, and final wings tied to a puppet control bar." loading="lazy" width="1400" height="843">
+          <figcaption>Wing iterations 01 → 03.</figcaption>
+        </figure>
+        <p><strong>The vision model.</strong> Trained on 400+ online images, it sometimes mistook people for birds, which rules it
+          out for a busy canteen. Retraining on 477 images of 3D-printed myna figures, shot with the same webcam it runs on, fixed
+          that and let it pick up mynas from further away.</p>
+        <figure class="fig">
+          <img src="img/datasets.jpg" alt="Side by side: the v1 model misdetecting in a cluttered scene with mAP 58.2%, and the v2 model detecting a myna figure with mAP 99.5%." loading="lazy" width="1400" height="610">
+          <figcaption>v1 vs v2, with the metrics reported for each.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s4">
+      <div class="sec-num"><b aria-hidden="true">04</b><span>Results</span></div>
+      <div class="prose">
+        <h2 id="s4">A working prototype</h2>
+        <span class="patch-sticker">SCAN COMPLETE</span>
+        <div class="stats">
+          <div><strong>99.5%</strong>mAP@50 after retraining (from 58.2%)</div>
+          <div><strong>100%</strong>recall on the v2 validation set (from 52.8%)</div>
+          <div><strong>180°</strong>range of string angles the final guide handles</div>
+        </div>
+        <p>The final prototype met all of its engineering functions: it mounts on the ceiling, holds the string under tension, flies
+          the hawk with flapping wings, and only runs when the camera sees a myna.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s5">
+      <div class="sec-num"><b aria-hidden="true">05</b><span>Limits</span></div>
+      <div class="prose">
+        <h2 id="s5">What we didn't prove yet</h2>
+        <ul>
+          <li><strong>The 99.5% is on our own test setup.</strong> v2 was trained and validated on 3D-printed myna figures filmed with
+            the deployment webcam. That's why it's so high; it still needs checking against live mynas in a crowded canteen.</li>
+          <li><strong>Habituation is a risk, not a result.</strong> Triggering only on detection is meant to stop mynas getting used to
+            the hawk, but we didn't run a long-term trial.</li>
+          <li><strong>Materials.</strong> The PLA filament for the track and motor chassis carried an energy cost we flagged as not ideal.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="evidence" aria-labelledby="ev">
+    <div class="wrap">
+      <h2 id="ev">Evidence</h2>
+      <div class="ev-links">
+        <a class="btn btn-ink" href="../../slides/dti_cv_bird_deterrent.pdf">View the slides (PDF) ↗</a>
+        <a class="btn btn-ghost" href="../../#work">← Back to selected work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="still-online">FROYO SYSTEM<span>still online ✦</span></div>
+    <span class="frog"><canvas data-icon="frog" aria-hidden="true"></canvas></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Validation metrics from the slides
+    var DS = [
+      { v: [58.2, 67.1, 52.8], name: 'v1 · 400+ online images',
+        note: 'A general online bird dataset. It sometimes “hallucinated” people as birds, which makes it unusable in a busy canteen.' },
+      { v: [99.5, 97.3, 100.0], name: 'v2 · 477 own images',
+        note: 'Photos of 3D-printed myna figures taken with the same webcam the detector runs on. Much more accurate and detects from further away, though measured on our own setup rather than live birds.' }
+    ];
+    var bars = document.querySelectorAll('[data-bar]'), vals = document.querySelectorAll('[data-val]');
+    var name = document.querySelector('[data-r="name"]'), note = document.querySelector('[data-r="note"]');
+    function select(i) {
+      document.querySelectorAll('[data-ds]').forEach(function (b) { b.setAttribute('aria-pressed', +b.getAttribute('data-ds') === i); });
+      DS[i].v.forEach(function (v, k) {
+        bars[k].style.setProperty('--w', v + '%');
+        vals[k].textContent = v.toFixed(1) + '%';
+      });
+      name.textContent = DS[i].name;
+      note.textContent = DS[i].note;
+    }
+    document.querySelectorAll('[data-ds]').forEach(function (b) {
+      b.addEventListener('click', function () { select(+b.getAttribute('data-ds')); });
+    });
+    select(1);
+  })();
+</script>
+<script src="../../pixel.js?v=5"></script>
+
+</body>
+</html>
