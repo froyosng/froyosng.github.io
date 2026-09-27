@@ -1020,75 +1020,13 @@
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
           <h2 class="serif">selected work</h2>
         </div>
-        <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
+        <p class="section-note">Four editions that show how I approach a problem. Everything else is in the archive.</p>
       </div>
-
-      <article class="edition reveal no-tilt" id="bubbles">
-        <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">01</span>
-          <span class="ed-serial mono">SYS-001<br>Summer 2026</span>
-          <span class="patch p-sys">SYS</span>
-          <span class="patch p-qnt">QNT</span>
-        </div>
-        <div class="ed-body">
-          <span class="ed-kicker mono">Nonlinear control</span>
-          <h3>Stabilising a speculative bubble</h3>
-          <p class="ed-sub">State-feedback control of a market where traders switch strategies.</p>
-          <p>For 40.018 Heuristics &amp; Systems Theory, our team of three took the Schmitt, Tramontana &amp;
-            Westerhoff (2020) market model, where traders flip between chasing trends and betting on fair value
-            depending on which paid off last period, and asked whether a regulator using full state feedback
-            could beat the paper's fixed price rules.</p>
-          <p>I led the linearisation, Lyapunov stability, controllability and observability analysis, and the
-            controller and observer design. At fair value the model is only rank-2 controllable, so we placed poles
-            on the controllable subsystem. On the true nonlinear model it held for every bubble size we tested, and
-            only failed when trader behaviour drifted, which re-tuning fixed.</p>
-          <div class="ed-stat"><strong>1.06 → 0.40</strong><span>spectral radius, open loop → closed loop</span></div>
-          <div class="ed-foot">
-            <p class="tools mono">MATLAB · Pole placement · Luenberger observer</p>
-            <span class="soon mono">Report · soon</span>
-          </div>
-        </div>
-        <div class="visual v-cyan">
-          <span class="visual-caption">SIM_01 / NONLINEAR MODEL</span>
-          <span class="label top">TRY IT</span>
-          <div class="sim" data-sim>
-            <div class="sim-controls">
-              <label class="ctl"><span class="mono">Bubble a</span>
-                <input type="range" min="0.1" max="3" step="0.1" value="0.5" data-sim-a aria-label="Initial bubble size">
-                <output data-sim-a-out>0.5</output></label>
-              <div class="seg" role="group" aria-label="Chartist strength chi">
-                <span class="mono">χ</span>
-                <button type="button" data-sim-chi="0.2" aria-pressed="true">0.2</button>
-                <button type="button" data-sim-chi="1" aria-pressed="false">1.0</button>
-              </div>
-              <label class="ctl-check"><input type="checkbox" data-sim-retune disabled><span>Re-tune gain</span></label>
-            </div>
-            <svg class="sim-chart" viewBox="0 0 560 280" role="img" aria-label="Simulated price deviation over 60 periods"></svg>
-            <div class="sim-tip" hidden></div>
-            <div class="sim-legend">
-              <span><i class="key-open"></i>No regulator</span>
-              <span><i class="key-ctrl"></i>State feedback (reduced-order)</span>
-            </div>
-            <div class="sim-stats">
-              <div><strong data-stat="peak">—</strong>peak mispricing, no regulator</div>
-              <div><strong data-stat="final">—</strong>|x₁| after 60 periods, regulated</div>
-              <div><strong data-stat="u">—</strong>peak intervention |u|</div>
-            </div>
-            <details>
-              <summary>Data table</summary>
-              <table>
-                <thead><tr><th>t</th><th>no regulator</th><th>regulated</th><th>u</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </details>
-          </div>
-        </div>
-      </article>
 
       <article class="edition reveal" id="quant">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">02</span>
-          <span class="ed-serial mono">QNT-002<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">01</span>
+          <span class="ed-serial mono">QNT-001<br>Edition 2026</span>
           <span class="patch p-qnt">QNT</span>
         </div>
         <div class="ed-body">
@@ -1133,8 +1071,8 @@
 
       <article class="edition reveal" id="choice">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">03</span>
-          <span class="ed-serial mono">ML-003<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">02</span>
+          <span class="ed-serial mono">ML-002<br>Edition 2026</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
@@ -1169,8 +1107,8 @@
 
       <article class="edition reveal" id="cbs">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">04</span>
-          <span class="ed-serial mono">ML-004<br>Credit Bureau SG</span>
+          <span class="ed-num" aria-hidden="true">03</span>
+          <span class="ed-serial mono">ML-003<br>Credit Bureau SG</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
@@ -1207,8 +1145,8 @@
 
       <article class="edition reveal" id="birds">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">05</span>
-          <span class="ed-serial mono">CV-005<br>DTI 2025</span>
+          <span class="ed-num" aria-hidden="true">04</span>
+          <span class="ed-serial mono">CV-004<br>DTI 2025</span>
           <span class="patch p-cv">CV</span>
         </div>
         <div class="ed-body">
@@ -1284,7 +1222,7 @@
         </li>
         <li class="row" data-cat="ml">
           <span class="when mono">2026</span>
-          <div><h3>Mayumaro — GEXP Kyoto</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team.</p></div>
+          <div><h3>Mayumaro — Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team.</p></div>
           <div class="cats"><span class="patch p-ml">ML</span></div>
           <span class="go muted mono">Slides soon</span>
         </li>
@@ -1374,10 +1312,10 @@
         </div>
       </div>
       <ol class="transit">
-        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">Exchange · College of EECS · Sep–Dec 2026</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML and stochastic calculus for finance. Also a course on edible insects.</p></li>
+        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Sep–Dec 2026</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML and stochastic calculus for finance. Also a course on edible insects.</p></li>
         <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
         <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
-        <li class="stop"><div><h3>GEXP Kyoto</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
+        <li class="stop"><div><h3>Kyoto sustainability trip</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
         <li class="stop"><div><h3>MolarData, China</h3><span class="role">Computer vision intern</span></div><p>Model training workflows and dataset preparation for object identification.</p></li>
       </ol>
     </div>
@@ -1429,7 +1367,7 @@
             <div class="cur-block">
               <span class="cur-label pixel">CURRENTLY</span>
               <p class="cur-big">taipei <span class="star-bit">✦</span> exchange mode</p>
-              <p class="cur-small">National Taiwan University · Sep–Dec 2026</p>
+              <p class="cur-small">National Taiwan University · CSIE · Sep–Dec 2026</p>
             </div>
             <div class="cur-block">
               <span class="cur-label pixel">TAKING</span>
@@ -1589,7 +1527,6 @@
   })();
 </script>
 <script src="pixel.js?v=5"></script>
-<script src="sim.js?v=5"></script>
 
 </body>
 </html>
