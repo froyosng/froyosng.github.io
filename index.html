@@ -848,6 +848,87 @@
     .toast strong { display: block; font-family: var(--pixel); font-weight: 400; font-size: 12px; color: var(--lemon); }
     .toast .msg { font-size: 14px; }
 
+    /* ---------- Passport stamps ---------- */
+    .stamp-head { margin: 72px 0 24px; }
+    .stamp-head .section-label { display: flex; margin-bottom: 8px; }
+    .stamp-head h3 { font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.03em; font-weight: 700; }
+
+    .stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px 18px; }
+
+    .stamp {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 16px 14px;
+      border: 2px dashed currentColor;
+      border-radius: 14px;
+      background: rgba(255, 253, 252, 0.75);
+      color: var(--violet-deep);
+      text-decoration: none;
+      transform: rotate(var(--r, 0deg));
+      transition: transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
+    }
+
+    .stamp:nth-child(4n+2) { color: var(--wine); }
+    .stamp:nth-child(4n+3) { color: var(--ink); }
+    .stamp:nth-child(4n+4) { color: #0B6E87; }
+    a.stamp:hover { transform: rotate(0deg) scale(1.03); }
+
+    .stamp::after {
+      content: "✦";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1.5px dashed currentColor;
+      border-radius: 50%;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .st-no { font-size: 10px; }
+    .st-city { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin: 8px 0 4px; text-transform: uppercase; color: var(--ink); }
+    .st-date { font-size: 11px; }
+    .st-prog { font-size: 14px; font-weight: 600; color: var(--ink); margin: 12px 0 4px; }
+    .st-what { font-size: 14px; color: #3d3a45; line-height: 1.45; }
+
+    /* ---------- FROYO RADIO ---------- */
+    .cd { border: 0; padding: 0; cursor: pointer; animation-play-state: paused; }
+    .cd.playing { animation-play-state: running; }
+    .cd:focus-visible { outline-offset: 6px; }
+
+    .radio-btn {
+      position: absolute;
+      right: 6%;
+      bottom: 18px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 0 0 3px #fff;
+    }
+
+    .radio-btn[aria-pressed="true"] { background: var(--ink); color: var(--pearl); }
+
+    .radio { position: fixed; left: 20px; bottom: 20px; z-index: 25; width: 280px; }
+    .radio[hidden] { display: none; }
+    .radio .titlebar { gap: 6px; }
+    .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 10px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
+    .radio .titlebar button:first-of-type { margin-left: auto; }
+    .radio .titlebar button:hover { color: var(--ink); }
+    .radio-screen { aspect-ratio: 16 / 9; background: var(--ink); }
+    .radio-screen iframe, .radio-screen > div { width: 100%; height: 100%; display: block; border: 0; }
+
     /* Reveal-on-scroll */
     .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.in { opacity: 1; transform: none; }
@@ -892,6 +973,7 @@
       .stop { grid-template-columns: 26px minmax(0, 1fr); }
       .stop p { grid-column: 2; }
       .toast { left: 16px; right: 16px; }
+      .radio { left: 16px; right: 16px; width: auto; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -965,7 +1047,8 @@
 
         <div class="hero-art">
           <div class="pearl-glow" aria-hidden="true"></div>
-          <div class="cd" aria-hidden="true"></div>
+          <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
+          <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
           <div class="hero-sticker" aria-label="Best in-sample Sharpe 2.21+, WorldQuant IQC Stage 2">
             <strong>2.21+</strong><span>SHARPE · IQC STAGE 2</span>
           </div>
@@ -1220,7 +1303,7 @@
           <div class="cats"><span class="patch p-qnt">QNT</span></div>
           <span class="go muted mono">Slides soon</span>
         </li>
-        <li class="row" data-cat="ml">
+        <li class="row" id="row-mayumaro" data-cat="ml">
           <span class="when mono">2026</span>
           <div><h3>Mayumaro — Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team.</p></div>
           <div class="cats"><span class="patch p-ml">ML</span></div>
@@ -1238,7 +1321,7 @@
           <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-fin">FIN</span></div>
           <span class="go muted mono">Slides soon</span>
         </li>
-        <li class="row" data-cat="ml systems">
+        <li class="row" id="row-pandabot" data-cat="ml systems">
           <span class="when mono">CQU×SUTD</span>
           <div><h3>AI mobility robotics — “PandaBot”</h3><p>A computer vision-assisted mobility concept for elderly users: detection logic, safety integration and scalable deployment.</p></div>
           <div class="cats"><span class="patch p-ml">CV</span><span class="patch p-sys">SYS</span></div>
@@ -1256,15 +1339,15 @@
           <div class="cats"><span class="patch p-sys">SYS</span></div>
           <a class="go" href="slides/aster_ph43_aggregate_planning.pdf">Slides ↗</a>
         </li>
-        <li class="row" data-cat="systems">
+        <li class="row" id="row-threadahead" data-cat="systems">
           <span class="when mono">PCU</span>
           <div><h3>ThreadAhead — logistics &amp; workflow</h3><p>Forecasting-informed workflow optimisation for a cooperative in Indonesia, addressing demand volatility and operational bottlenecks.</p></div>
           <div class="cats"><span class="patch p-sys">SYS</span></div>
           <a class="go" href="slides/pcu_threadahead_logistics.pdf">Slides ↗</a>
         </li>
-        <li class="row" data-cat="ml">
+        <li class="row" id="row-molardata" data-cat="ml">
           <span class="when mono">Intern</span>
-          <div><h3>MolarData — computer vision (China)</h3><p>Object identification model training workflows, dataset preparation and standard CV model development.</p></div>
+          <div><h3>MolarData — computer vision internship (Hangzhou)</h3><p>Dataset annotation and preparation for object-identification models, as part of a 10-person team.</p></div>
           <div class="cats"><span class="patch p-ml">CV</span></div>
           <a class="go" href="slides/molarData_china_cv_internship.pdf">Slides ↗</a>
         </li>
@@ -1280,7 +1363,7 @@
           <div class="cats"><span class="patch p-fin">FIN</span></div>
           <a class="go" href="slides/cfa_research_challenge_internal_2024.pdf">Slides ↗</a>
         </li>
-        <li class="row" data-cat="strategy">
+        <li class="row" id="row-vinuni" data-cat="strategy">
           <span class="when mono">VinUni</span>
           <div><h3>Workforce SaaS platform</h3><p>A workforce “sandbox” platform addressing skills mismatch, with revenue model and market expansion strategy.</p></div>
           <div class="cats"><span class="patch p-biz">BIZ</span></div>
@@ -1312,12 +1395,26 @@
         </div>
       </div>
       <ol class="transit">
-        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Sep–Dec 2026</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML and stochastic calculus for finance. Also a course on edible insects.</p></li>
+        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Aug 2026 – Jan 2027</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML, game theory and stochastic calculus for finance. Also a course on edible insects.</p></li>
         <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
         <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
         <li class="stop"><div><h3>Kyoto sustainability trip</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
-        <li class="stop"><div><h3>MolarData, China</h3><span class="role">Computer vision intern</span></div><p>Model training workflows and dataset preparation for object identification.</p></li>
+        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Annotation intern · via TIIDE × Zhejiang University</span></div><p>Dataset annotation and preparation for object-identification models, as part of a 10-person team.</p></li>
       </ol>
+
+      <div class="stamp-head">
+        <span class="section-label">STAMP_LOG.DAT</span>
+        <h3>Seven school trips, one passport</h3>
+      </div>
+      <div class="stamps">
+        <div class="stamp" style="--r:-2deg"><span class="st-no pixel">01 · VIETNAM</span><span class="st-city">HCMC</span><span class="st-date mono">Jan 2025</span><span class="st-prog">EntreConference (Reactor School)</span><span class="st-what">Exposure trip: pitching, networking, city tours. No build, just a stamp.</span></div>
+        <a class="stamp" href="#row-pandabot" data-filter="all" style="--r:1.5deg"><span class="st-no pixel">02 · CHINA</span><span class="st-city">Chongqing</span><span class="st-date mono">Aug 2025</span><span class="st-prog">Design AI × CQU</span><span class="st-what">→ PandaBot: CV-assisted mobility for elderly users</span></a>
+        <a class="stamp" href="#row-vinuni" data-filter="all" style="--r:-1deg"><span class="st-no pixel">03 · VIETNAM</span><span class="st-city">Hanoi</span><span class="st-date mono">Sep 2025</span><span class="st-prog">GEO Experiential Learning × VinUni</span><span class="st-what">→ Workforce SaaS: a “sandbox” for skills mismatch</span></a>
+        <a class="stamp" href="#row-molardata" data-filter="all" style="--r:2deg"><span class="st-no pixel">04 · CHINA</span><span class="st-city">Hangzhou</span><span class="st-date mono">Sep 2025 – Jan 2026</span><span class="st-prog">TIIDE × Zhejiang University</span><span class="st-what">→ MolarData: object-ID dataset annotation</span></a>
+        <a class="stamp" href="#row-threadahead" data-filter="all" style="--r:-1.5deg"><span class="st-no pixel">05 · INDONESIA</span><span class="st-city">Surabaya</span><span class="st-date mono">Jan 2026</span><span class="st-prog">Design AI × PCU</span><span class="st-what">→ ThreadAhead: forecasting-informed workflow optimisation</span></a>
+        <a class="stamp" href="#row-mayumaro" data-filter="all" style="--r:1deg"><span class="st-no pixel">06 · JAPAN</span><span class="st-city">Kyoto</span><span class="st-date mono">May 2026</span><span class="st-prog">Kyoto sustainability trip</span><span class="st-what">→ Mayumaro: sustainable route companion, “DO YOU 京途?”</span></a>
+        <a class="stamp" href="#about" style="--r:-0.5deg"><span class="st-no pixel">07 · TAIWAN</span><span class="st-city">Taipei</span><span class="st-date mono">Aug 2026 – Jan 2027</span><span class="st-prog">NTU exchange (GEXP)</span><span class="st-what">→ Now: algorithms, ML, econometrics, causal ML, game theory, stochastic calculus, and edible insects</span></a>
+      </div>
     </div>
   </section>
 
@@ -1335,7 +1432,7 @@
           <div class="window">
             <div class="titlebar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="pixel">README.TXT</span></div>
             <div class="about-body">
-              <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Sep–Dec 2026 on exchange at
+              <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Aug 2026 – Jan 2027 on exchange at
                 National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
                 and software engineering meet.</p>
               <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
@@ -1367,7 +1464,7 @@
             <div class="cur-block">
               <span class="cur-label pixel">CURRENTLY</span>
               <p class="cur-big">taipei <span class="star-bit">✦</span> exchange mode</p>
-              <p class="cur-small">National Taiwan University · CSIE · Sep–Dec 2026</p>
+              <p class="cur-small">National Taiwan University · CSIE · 27 Aug 2026 – 4 Jan 2027</p>
             </div>
             <div class="cur-block">
               <span class="cur-label pixel">TAKING</span>
@@ -1378,6 +1475,7 @@
                 <span class="stk">Econometric theory I(b)</span>
                 <span class="stk">Causal ML in econ &amp; poli-sci</span>
                 <span class="stk">Stochastic calculus for finance</span>
+                <span class="stk">Game theory with applications</span>
                 <span class="stk stk-lemon">Edible insects <em>yes, really</em></span>
               </div>
             </div>
@@ -1409,6 +1507,16 @@
     <button class="frog" type="button" data-frog aria-label="A tiny frog"><canvas data-icon="frog" aria-hidden="true"></canvas></button>
   </div>
 </footer>
+
+<div class="radio window" hidden role="region" aria-label="FROYO RADIO player">
+  <div class="titlebar">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="pixel">♫ FROYO RADIO</span>
+    <button type="button" data-radio-mute aria-pressed="false">MUTE</button>
+    <button type="button" data-radio-close aria-label="Close player">✕</button>
+  </div>
+  <div class="radio-screen"><div id="yt-player"></div></div>
+</div>
 
 <div class="toast" role="status" aria-live="polite">
   <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
@@ -1502,6 +1610,67 @@
     // World objects and legend chips jump to the archive pre-filtered
     document.querySelectorAll('a[data-filter]').forEach(function (a) {
       a.addEventListener('click', function () { applyFilter(a.getAttribute('data-filter')); });
+    });
+
+    // ----- FROYO RADIO: YouTube embed, loaded only when a visitor asks for it -----
+    var VIDEO = '9qkpcLK422o', LIST = 'RD9qkpcLK422o';
+    var radio = document.querySelector('.radio');
+    var cd = document.querySelector('.cd');
+    var player = null, playing = false, triedList = false, radioToast = false;
+
+    function setPlaying(on) {
+      playing = on;
+      cd.classList.toggle('playing', on);
+      cd.setAttribute('aria-label', on ? 'Pause FROYO RADIO' : 'Play FROYO RADIO');
+      document.querySelectorAll('.radio-btn').forEach(function (b) { b.setAttribute('aria-pressed', on); });
+      document.querySelectorAll('[data-radio-state]').forEach(function (s) { s.textContent = on ? 'PAUSE' : 'PLAY'; });
+    }
+
+    function loadAPI(cb) {
+      if (window.YT && window.YT.Player) return cb();
+      window.onYouTubeIframeAPIReady = cb;
+      var s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(s);
+    }
+
+    function startRadio() {
+      radio.hidden = false;
+      if (player) { player.playVideo(); return; }
+      loadAPI(function () {
+        player = new YT.Player('yt-player', {
+          host: 'https://www.youtube-nocookie.com',
+          videoId: VIDEO,
+          playerVars: { list: LIST, autoplay: 1, playsinline: 1, rel: 0 },
+          events: {
+            onStateChange: function (e) { setPlaying(e.data === YT.PlayerState.PLAYING); },
+            // Auto-generated mixes don't always embed; fall back to the first song
+            onError: function () { if (!triedList) { triedList = true; player.loadVideoById(VIDEO); } }
+          }
+        });
+      });
+      if (!radioToast) {
+        radioToast = true;
+        window.froyoToast('♫ FROYO RADIO', 'Now playing. Mute or close it any time.');
+      }
+    }
+
+    document.querySelectorAll('[data-radio-toggle]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (playing && player) player.pauseVideo(); else startRadio();
+      });
+    });
+    document.querySelector('[data-radio-mute]').addEventListener('click', function () {
+      if (!player) return;
+      var btn = this, muted = player.isMuted();
+      if (muted) player.unMute(); else player.mute();
+      btn.textContent = muted ? 'MUTE' : 'UNMUTE';
+      btn.setAttribute('aria-pressed', !muted);
+    });
+    document.querySelector('[data-radio-close]').addEventListener('click', function () {
+      if (player) player.pauseVideo();
+      radio.hidden = true;
+      setPlaying(false);
     });
 
     // ----- Frog: five clicks is too many -----
