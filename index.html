@@ -170,6 +170,7 @@
     .p-lab { background: var(--lilac); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-fin { background: var(--wine); }
     .p-biz { background: var(--pink); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
+    .p-opt { background: #0B6E87; }
     .p-all { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); outline-color: transparent; }
 
     /* ---------- Top bar ---------- */
@@ -639,6 +640,32 @@
     .sim th { color: var(--graphite); }
     .sim th:first-child, .sim td:first-child { text-align: left; }
 
+    /* ---------- HIV allocation scatter ---------- */
+    .pareto-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--paper);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      padding: 14px 14px 10px;
+    }
+
+    .pareto { display: block; width: 100%; height: auto; }
+    .pareto .tick, .pareto .axis { font-family: var(--mono); font-size: 11px; fill: var(--graphite); }
+    .pareto .note { font-family: var(--mono); font-size: 11px; fill: var(--ink); }
+    .pareto .pt { cursor: default; }
+    .pareto .pt circle { transition: transform var(--motion-system); transform-box: fill-box; transform-origin: center; }
+    .pareto .pt:hover circle { transform: scale(1.5); }
+
+    .pareto-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--graphite); margin: 6px 4px 8px; }
+    .pareto-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+    .pareto-card details { font-size: 13px; margin: 0 4px; }
+    .pareto-card summary { cursor: pointer; color: var(--graphite); }
+    .pareto-card table { width: 100%; border-collapse: collapse; margin-top: 8px; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .pareto-card th, .pareto-card td { text-align: right; padding: 3px 6px; border-bottom: 1px solid var(--line); font-weight: 400; }
+    .pareto-card th { color: var(--graphite); }
+    .pareto-card th:first-child, .pareto-card td:first-child { text-align: left; }
+
     /* ---------- Fidelity bars (CBS) ---------- */
     .fid {
       width: 100%;
@@ -919,6 +946,8 @@
       box-shadow: 0 0 0 3px #fff;
     }
 
+    .radio-btn[hidden] { display: none; }
+    .cd:disabled { cursor: default; }
     .radio-btn[aria-pressed="true"] { background: var(--ink); color: var(--pearl); }
 
     .radio { position: fixed; left: 20px; bottom: 20px; z-index: 25; width: 280px; }
@@ -1050,8 +1079,8 @@
           <div class="pearl-glow" aria-hidden="true"></div>
           <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
           <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
-          <div class="hero-sticker" aria-label="Best in-sample Sharpe 2.21+, WorldQuant IQC Stage 2">
-            <strong>2.21+</strong><span>SHARPE · IQC STAGE 2</span>
+          <div class="hero-sticker" aria-label="Top in-sample Sharpe 2.21, WorldQuant IQC Gold tier">
+            <strong>2.21</strong><span>SHARPE · IQC GOLD TIER</span>
           </div>
           <div class="floor-shadow" aria-hidden="true"></div>
           <button class="me" type="button" data-me aria-label="Pixel Zhenhao">
@@ -1104,27 +1133,120 @@
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
           <h2 class="serif">selected work</h2>
         </div>
-        <p class="section-note">Four editions that show how I approach a problem. Everything else is in the archive.</p>
+        <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
       </div>
+
+      <article class="edition reveal" id="hiv">
+        <div class="ed-index">
+          <span class="ed-num" aria-hidden="true">01</span>
+          <span class="ed-serial mono">OPT-001<br>Summer 2026</span>
+          <span class="patch p-opt">OPT</span>
+        </div>
+        <div class="ed-body">
+          <span class="ed-kicker mono">Multi-objective optimisation</span>
+          <h3>$200M, 46 countries, one trade-off</h3>
+          <p class="ed-sub">Allocating HIV funding when impact and fairness disagree.</p>
+          <p>After cuts to US foreign aid, suppose a funder commits US$200M to HIV programmes across 46 African
+            countries and four interventions: ARV drugs, supply chains, workforce training and drug-resistance
+            surveillance. Maximising DALYs averted and minimising inequity between countries pull in different
+            directions, across 184 decision variables in a non-convex model.</p>
+          <p>Our team of three compared a greedy heuristic, simulated annealing, NSGA-II and a reduced Gurobi
+            benchmark. I implemented the NSGA-II pipeline (encoding, non-dominated sorting, crowding distance,
+            budget-preserving crossover and mutation, repair, knee-point selection) plus the benchmark comparison
+            and all plots.</p>
+          <div class="ed-stat"><strong>−33%</strong><span>inequity at the knee point, keeping 98.6% of greedy's DALYs averted</span></div>
+          <div class="ed-foot">
+            <p class="tools mono">Python · NSGA-II · Simulated annealing · Gurobi</p>
+            <span class="soon mono">Report · soon</span>
+          </div>
+        </div>
+        <div class="visual v-violet">
+          <span class="visual-caption">PARETO_FRONT.CSV</span>
+          <div class="pareto-card">
+            <svg class="pareto" viewBox="0 0 560 330" role="img" aria-labelledby="pareto-title">
+<title id="pareto-title">Nine allocations compared: NSGA-II front points reach high DALYs at low inequity; greedy has high DALYs but higher inequity; simulated annealing runs are dominated.</title>
+<line x1="58" x2="542" y1="263.0" y2="263.0" stroke="#E7E4EA"/>
+<text x="50" y="267.0" text-anchor="end" class="tick">2.0</text>
+<line x1="58" x2="542" y1="215.6" y2="215.6" stroke="#E7E4EA"/>
+<text x="50" y="219.6" text-anchor="end" class="tick">2.5</text>
+<line x1="58" x2="542" y1="168.2" y2="168.2" stroke="#E7E4EA"/>
+<text x="50" y="172.2" text-anchor="end" class="tick">3.0</text>
+<line x1="58" x2="542" y1="120.8" y2="120.8" stroke="#E7E4EA"/>
+<text x="50" y="124.8" text-anchor="end" class="tick">3.5</text>
+<line x1="58" x2="542" y1="73.4" y2="73.4" stroke="#E7E4EA"/>
+<text x="50" y="77.4" text-anchor="end" class="tick">4.0</text>
+<line x1="58" x2="542" y1="26.0" y2="26.0" stroke="#E7E4EA"/>
+<text x="50" y="30.0" text-anchor="end" class="tick">4.5</text>
+<text x="108.9" y="300" text-anchor="middle" class="tick">50k</text>
+<text x="236.3" y="300" text-anchor="middle" class="tick">75k</text>
+<text x="363.7" y="300" text-anchor="middle" class="tick">100k</text>
+<text x="491.1" y="300" text-anchor="middle" class="tick">125k</text>
+<line x1="58" x2="542" y1="282" y2="282" stroke="#B9B6C2"/>
+<text x="542" y="324" text-anchor="end" class="axis">inequity: std of per-capita impact →</text>
+<text x="58" y="16" class="axis">net DALYs averted (millions)</text>
+<text x="66" y="40" class="axis">↖ better</text>
+<g class="pt"><title>NSGA-II best-DALYs endpoint: 4,313,203 DALYs, inequity 100,700</title><circle cx="367.3" cy="43.7" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>NSGA-II knee point: 4,240,734 DALYs, inequity 60,159</title><circle cx="160.7" cy="50.6" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>NSGA-II best-equity endpoint: 3,956,995 DALYs, inequity 47,634</title><circle cx="96.9" cy="77.5" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>Greedy marginal-DALY baseline: 4,298,745 DALYs, inequity 89,949</title><circle cx="312.5" cy="45.1" r="5" fill="#69666F" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>SA λ = 0: 1,998,629 DALYs, inequity 60,164</title><circle cx="160.7" cy="263.2" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>SA λ = 0.25: 2,362,897 DALYs, inequity 64,941</title><circle cx="185.1" cy="228.6" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>SA λ = 0.5: 4,025,437 DALYs, inequity 110,552</title><circle cx="417.4" cy="71.0" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>SA λ = 0.75: 4,071,999 DALYs, inequity 125,507</title><circle cx="493.6" cy="66.6" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt"><title>SA λ = 1: 4,100,415 DALYs, inequity 128,745</title><circle cx="510.1" cy="63.9" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
+<line x1="165.7" y1="56.6" x2="184.7" y2="80.6" stroke="#17151D" stroke-width="1"/>
+<text x="188.7" y="88.6" class="note">NSGA-II knee: 98.6% of greedy’s DALYs,</text>
+<text x="188.7" y="102.6" class="note">33% less inequity</text>
+<text x="322.5" y="63.1" class="note">greedy</text>
+<text x="170.7" y="267.2" class="note">SA, equity-weighted</text>
+</svg>
+            <div class="pareto-legend">
+              <span><i style="background:#7657FF"></i>NSGA-II front (3 of 60 points)</span>
+              <span><i style="background:#69666F"></i>Greedy baseline</span>
+              <span><i style="background:#FF77B7"></i>Simulated annealing</span>
+            </div>
+            <details>
+              <summary>Data table</summary>
+              <table>
+                <thead><tr><th>method</th><th>net DALYs averted</th><th>inequity</th></tr></thead>
+                <tbody>
+                  <tr><td>NSGA-II knee point</td><td>4,240,734</td><td>60,159</td></tr>
+                  <tr><td>NSGA-II best-DALYs endpoint</td><td>4,313,203</td><td>100,700</td></tr>
+                  <tr><td>NSGA-II best-equity endpoint</td><td>3,956,995</td><td>47,634</td></tr>
+                  <tr><td>Greedy marginal-DALY</td><td>4,298,745</td><td>89,949</td></tr>
+                  <tr><td>Simulated annealing, λ = 0</td><td>1,998,629</td><td>60,164</td></tr>
+                  <tr><td>Simulated annealing, λ = 0.25</td><td>2,362,897</td><td>64,941</td></tr>
+                  <tr><td>Simulated annealing, λ = 0.5</td><td>4,025,437</td><td>110,552</td></tr>
+                  <tr><td>Simulated annealing, λ = 0.75</td><td>4,071,999</td><td>125,507</td></tr>
+                  <tr><td>Simulated annealing, λ = 1</td><td>4,100,415</td><td>128,745</td></tr>
+                </tbody>
+              </table>
+            </details>
+          </div>
+          <span class="label">PARETO CERTIFIED™</span>
+        </div>
+      </article>
 
       <article class="edition reveal" id="quant">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">01</span>
-          <span class="ed-serial mono">QNT-001<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">02</span>
+          <span class="ed-serial mono">QNT-002<br>Edition 2026</span>
           <span class="patch p-qnt">QNT</span>
         </div>
         <div class="ed-body">
           <span class="ed-kicker mono">Signal research</span>
           <h3>Signals that survive noise</h3>
           <p class="ed-sub">Alpha research for WorldQuant IQC and AlphaNova.</p>
-          <p>On WorldQuant's BRAIN platform, I built (with a partner) a delay-0 signal combining volume dynamics
-            with news sentiment, and a delay-1 growth-at-a-reasonable-price valuation signal. Both passed BRAIN's
-            full in-sample validation suite, reaching IQC Stage 2.</p>
-          <p>For AlphaNova, I built walk-forward, Ridge-based cross-sectional signals ranking 20 assets per
-            timestamp. Two made the prize-eligible “Quality set”.</p>
-          <div class="ed-stat"><strong>2.21+</strong><span>best in-sample Sharpe, IQC Stage 2</span></div>
+          <p>For WorldQuant's IQC, I built (with a partner) market-neutral equity alphas across price, fundamental
+            and sentiment signals, reaching Gold tier and Stage 2 (top 22 in Singapore, #1,376 globally). To search
+            faster I wrote a Python BRAIN API pipeline with an expression canonicaliser, template-based generation
+            and SQLite experiment tracking.</p>
+          <p>For AlphaNova, I built walk-forward Ridge ranking signals (z-scores, rank velocity) for 20 assets per
+            timestamp; two passed the overfitting and originality checks for the prize-eligible Quality set. Along
+            the way I caught a silent feature–target misalignment caused by MultiIndex column ordering.</p>
+          <div class="ed-stat"><strong>2.21</strong><span>top in-sample Sharpe (Fitness 2.30), IQC Gold tier</span></div>
           <div class="ed-foot">
-            <p class="tools mono">WorldQuant BRAIN · Ridge · Walk-forward</p>
+            <p class="tools mono">Python · BRAIN API · SQLite · Ridge</p>
             <span class="soon mono">Case study · soon</span>
           </div>
         </div>
@@ -1155,8 +1277,8 @@
 
       <article class="edition reveal" id="choice">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">02</span>
-          <span class="ed-serial mono">ML-002<br>Edition 2026</span>
+          <span class="ed-num" aria-hidden="true">03</span>
+          <span class="ed-serial mono">ML-003<br>Edition 2026</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
@@ -1165,7 +1287,7 @@
           <p class="ed-sub">Predicting which car safety-feature bundle people choose.</p>
           <p>Analytics Edge Data Competition on Kaggle. I modelled the choice with conditional and mixed logit,
             then added price-factor identification, task-fatigue effects and an XGBoost blend. Along the way I
-            diagnosed and fixed a rank-deficient design matrix.</p>
+            diagnosed a rank-deficient model matrix via QR decomposition and fixed it.</p>
           <div class="ed-stat"><strong>1.145</strong><span>cross-validated log-loss · public leaderboard 1.202</span></div>
           <div class="ed-foot">
             <p class="tools mono">R · Mixed logit · XGBoost</p>
@@ -1191,8 +1313,8 @@
 
       <article class="edition reveal" id="cbs">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">03</span>
-          <span class="ed-serial mono">ML-003<br>Credit Bureau SG</span>
+          <span class="ed-num" aria-hidden="true">04</span>
+          <span class="ed-serial mono">ML-004<br>Credit Bureau SG</span>
           <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
@@ -1207,7 +1329,7 @@
             (Customer/Agency) dashboard.</p>
           <div class="ed-stat"><strong>80.7</strong><span>/100 best fidelity: Copula, account-balance series</span></div>
           <div class="ed-foot">
-            <p class="tools mono">K-medoids · Copula · CTGAN · Prophet</p>
+            <p class="tools mono">Python · Streamlit · CTGAN · K-medoids</p>
             <a class="ed-link" href="slides/cbs_synthetic_data_poster.png">View poster <span class="arr">↗</span></a>
           </div>
         </div>
@@ -1229,8 +1351,8 @@
 
       <article class="edition reveal" id="birds">
         <div class="ed-index">
-          <span class="ed-num" aria-hidden="true">04</span>
-          <span class="ed-serial mono">CV-004<br>DTI 2025</span>
+          <span class="ed-num" aria-hidden="true">05</span>
+          <span class="ed-serial mono">CV-005<br>DTI 2025</span>
           <span class="patch p-cv">CV</span>
         </div>
         <div class="ed-body">
@@ -1266,13 +1388,15 @@
         <p class="section-note">Results from competitions and challenges.</p>
       </div>
       <div class="stickers">
-        <div class="sticker red"><strong>STAGE 2</strong><span>WorldQuant IQC 2026</span></div>
-        <div class="sticker"><strong>TOP 10 SG</strong><span>IMC Prosperity 4 · #474 global</span></div>
+        <div class="sticker red"><strong>GOLD · TOP 22 SG</strong><span>WorldQuant IQC 2026 · Stage 2 · #1,376 global</span></div>
+        <div class="sticker"><strong>TOP 10 SG</strong><span>IMC Prosperity 4 finalist · #474 of 18,000+ teams</span></div>
         <div class="sticker"><strong>QUALITY SET</strong><span>AlphaNova Competition 5 · #140</span></div>
         <div class="sticker"><strong>LB 1.202</strong><span>Analytics Edge, Kaggle · CV 1.145</span></div>
         <div class="sticker"><strong>TOP SUBMISSION</strong><span>TalentGeist WSP · Shopee strategy</span></div>
         <a class="sticker sticker-link" href="slides/esd_newsletter_2026.pdf#page=7"><strong>FEATURED ↗</strong><span>ESD Newsletter 2026 · p.7</span></a>
-        <div class="sticker"><strong>SELECTED</strong><span>DDW · further development</span></div>
+        <div class="sticker"><strong>BEST PROJECT</strong><span>Data Driven World · LLM carbon calculator</span></div>
+        <div class="sticker"><strong>TOP 3</strong><span>Design Thinking 3</span></div>
+        <div class="sticker"><strong>PRIZE</strong><span>Sustainability Design Prize</span></div>
       </div>
     </div>
   </section>
@@ -1337,7 +1461,7 @@
         </li>
         <li class="row" data-cat="systems">
           <span class="when mono">2026</span>
-          <div><h3>Aster PH43 — aggregate planning</h3><p>Workforce and capacity planning for a pumphouse at Aster's Pulau Bukom refinery: a 12-month cost-minimising LP over headcount, overtime, contractors, pre-build and backlog. Our hybrid plan kept a stable 24-person crew and came within 0.95% of the LP optimum.</p></div>
+          <div><h3>Aster PH43 — aggregate planning</h3><p>Workforce and capacity planning for a pumphouse at Aster's Pulau Bukom refinery: a 12-month cost-minimising LP over headcount, overtime, contractors, pre-build and backlog. Our hybrid plan kept a stable 24-person crew and came within 0.95% of the LP optimum. I owned the workforce-planning Solver model, linearising IF() constraints for Simplex. Scored 18.9/20.</p></div>
           <div class="cats"><span class="patch p-sys">SYS</span></div>
           <a class="go" href="slides/aster_ph43_aggregate_planning.pdf">Slides ↗</a>
         </li>
@@ -1373,9 +1497,9 @@
         </li>
         <li class="row" data-cat="strategy">
           <span class="when mono">WSP</span>
-          <div><h3>Shopee Pickup Points — Thailand go-to-market</h3><p>A five-year, US$10M go-to-market strategy for NYC × TalentGeist's Work Simulation Programme: a six-market Southeast Asia screen to pick Thailand, then a “Surface–Subsidise–Socialise” adoption plan projected to lift pickup-point adoption from about 10% to 35% by year 5. Recognised as a top-performing submission.</p></div>
+          <div><h3>Shopee Pickup Points — Thailand go-to-market</h3><p>A five-year, US$10M go-to-market strategy for NYC × TalentGeist's Work Simulation Programme: a six-market Southeast Asia screen to pick Thailand, then a “Surface–Subsidise–Socialise” adoption plan projected to lift pickup-point adoption from about 10% to 35% by year 5, for a projected 4–6× ROI. Recognised as a top-performing submission.</p></div>
           <div class="cats"><span class="patch p-biz">BIZ</span></div>
-          <a class="go" href="slides/esd_newsletter_2026.pdf#page=7">Featured ↗</a>
+          <a class="go" href="slides/talentgeist_shopee_pickup_strategy.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="strategy">
           <span class="when mono">Pitch</span>
@@ -1400,9 +1524,10 @@
         <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Aug 2026 – Jan 2027</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML, game theory and stochastic calculus for finance. Also a course on edible insects.</p></li>
         <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
         <li class="stop"><div><h3>Institute of Mental Health</h3><span class="role">Volunteer · BRAVE study</span></div><p>Recruited participants for BRAVE, a nationwide study of mental health in children and adolescents, explaining the study to families and young people.</p></li>
+        <li class="stop"><div><h3>SUTD MarketWatch Club</h3><span class="role">Treasurer · Feb 2025 – Mar 2026</span></div><p>Managed S$10,000+ in club funds (budgeting, claims, event allocation) for fortnightly trading and macro workshops.</p></li>
         <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
         <li class="stop"><div><h3>Kyoto sustainability trip</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
-        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Annotation intern · via TIIDE × Zhejiang University</span></div><p>Dataset annotation and preparation for object-identification models, as part of a 10-person team.</p></li>
+        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Computer vision intern · Oct – Dec 2025</span></div><p>Annotated and classified 2,000+ images in a 10-person team, producing training datasets for in-house CNN models.</p></li>
       </ol>
 
       <div class="stamp-head">
@@ -1438,6 +1563,8 @@
               <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Aug 2026 – Jan 2027 on exchange at
                 National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
                 and software engineering meet.</p>
+              <p>GPA 4.14/5.00, specialising in Financial Services and Business Analytics &amp; Operations Research.
+                CFA Level I candidate (May 2027).</p>
               <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
                 that need a model before they need an opinion.</p>
             </div>
@@ -1480,6 +1607,15 @@
                 <span class="stk">Stochastic calculus for finance</span>
                 <span class="stk">Game theory with applications</span>
                 <span class="stk stk-lemon">Edible insects <em>yes, really</em></span>
+              </div>
+            </div>
+            <div class="cur-block">
+              <span class="cur-label pixel">SPEAKS</span>
+              <div class="stick-row">
+                <span class="stk">English</span>
+                <span class="stk">Mandarin</span>
+                <span class="stk stk-pink">Teochew</span>
+                <span class="stk">Malay</span>
               </div>
             </div>
             <div class="cur-block">
@@ -1620,6 +1756,13 @@
     var radio = document.querySelector('.radio');
     var cd = document.querySelector('.cd');
     var player = null, playing = false, triedList = false, radioToast = false;
+    var RADIO_ON = false;  // the YouTube mix won't embed; switch back on with a working playlist
+    if (!RADIO_ON) {
+      document.querySelectorAll('.radio-btn').forEach(function (b) { b.hidden = true; });
+      cd.disabled = true;
+      cd.setAttribute('aria-hidden', 'true');
+      cd.classList.add('playing');
+    }
 
     function setPlaying(on) {
       playing = on;
