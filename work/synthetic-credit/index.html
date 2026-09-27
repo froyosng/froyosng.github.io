@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Synthetic credit data — Zhenhao Sng</title>
+  <meta name="description" content="A synthetic data generator for Credit Bureau Singapore: clustering, seven synthesis methods and automatic fidelity scoring.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect width='14' height='24'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg fill='%237657FF'%3E%3Cpath clip-path='url(%23c)' d='M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z'/%3E%3Crect x='13' y='9.5' width='3' height='5'/%3E%3Crect x='16' y='10.5' width='3' height='3'/%3E%3Crect x='19' y='11' width='3' height='2'/%3E%3Crect x='22' y='11.5' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/case.css?v=3">
+</head>
+
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="ss-clip"><rect width="14" height="24"/></clipPath>
+    <symbol id="signal-star" viewBox="0 0 24 24">
+      <path clip-path="url(#ss-clip)" d="M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z"/>
+      <rect x="13" y="9.5" width="3" height="5"/>
+      <rect x="16" y="10.5" width="3" height="3"/>
+      <rect x="19" y="11" width="3" height="2"/>
+      <rect x="22" y="11.5" width="2" height="1"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="nav-shell">
+    <a class="brand" href="../../"><svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>ZS <span>/ FROYO</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="keep" href="../../#work">Work</a>
+      <a href="../../#archive">Archive</a>
+      <a href="../../#about">About</a>
+      <a class="keep" href="../../slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="case-hero">
+    <div class="wrap">
+      <a class="crumb" href="../../#cbs">← Selected work</a>
+      <div class="case-label pixel"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>ML-004 / CASE STUDY</div>
+      <h1 class="case-title">Credit data<br><span class="serif">that isn't real.</span></h1>
+      <p class="case-sub">A synthetic data generator that lets Credit Bureau Singapore test and demo analytics products without touching real credit data.</p>
+      <dl class="meta">
+        <div><dt>My role</dt><dd>Led the CTGAN pipeline and designed the dual-view (Customer/Agency) dashboard</dd></div>
+        <div><dt>Team</dt><dd>Teo Zhi Jian Bryan, Fung Xin Jie, Phudit Thanakulkairid, Sng Zhenhao, Tay Sha Lin Shannon</dd></div>
+        <div><dt>When</dt><dd>Feb – May 2026 · Data &amp; Business Analytics industry project, SUTD</dd></div>
+        <div><dt>Tools</dt><dd>Python, Streamlit, CTGAN, K-medoids, Prophet, copulas</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="stage" aria-labelledby="stage-title">
+    <div class="wrap">
+      <h2 id="stage-title" class="mono" style="font-weight:400;color:var(--graphite);margin-bottom:18px">Six methods, one account-balance series. Select a method.</h2>
+      <div class="chart-grid">
+        <div>
+          <div class="pick-bars" role="group" aria-label="Fidelity score by synthesis method, out of 100">
+            <button class="pick" type="button" data-m="0" aria-pressed="true"><span>Copula</span><span class="track"><i class="fill" style="--w:80.7%"></i><span class="val">80.7</span></span></button>
+            <button class="pick" type="button" data-m="1" aria-pressed="false"><span>Gaussian</span><span class="track"><i class="fill" style="--w:71.7%"></i><span class="val">71.7</span></span></button>
+            <button class="pick" type="button" data-m="2" aria-pressed="false"><span>Holt-Winters</span><span class="track"><i class="fill" style="--w:63.7%"></i><span class="val">63.7</span></span></button>
+            <button class="pick" type="button" data-m="3" aria-pressed="false"><span>Prophet</span><span class="track"><i class="fill" style="--w:61%"></i><span class="val">61.0</span></span></button>
+            <button class="pick" type="button" data-m="4" aria-pressed="false"><span>ARIMA</span><span class="track"><i class="fill" style="--w:53.5%"></i><span class="val">53.5</span></span></button>
+            <button class="pick" type="button" data-m="5" aria-pressed="false"><span>CTGAN</span><span class="track"><i class="fill" style="--w:17.6%"></i><span class="val">17.6</span></span></button>
+          </div>
+          <p class="cols-caption" style="margin-top:14px">Fidelity out of 100 on the account-balance (ACCT_BAL) series, from the tool's stats summary.</p>
+        </div>
+        <aside class="readout" aria-live="polite">
+          <span class="hint pixel">SELECTED METHOD</span>
+          <h3 data-r="name">—</h3>
+          <div class="rows" data-r="rows"></div>
+          <p data-r="note"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="case-sec" aria-labelledby="s1">
+      <div class="sec-num"><b aria-hidden="true">01</b><span>Problem</span></div>
+      <div class="prose">
+        <h2 id="s1">Real data can't leave the building</h2>
+        <p>Credit Bureau Singapore is the country's main consumer credit bureau, regulated by the Monetary Authority of
+          Singapore. It collects individuals' credit data (loans, credit cards, repayment history) and helps lenders assess
+          creditworthiness.</p>
+        <p>Privacy rules mean that <strong>real data cannot be used for testing or client demos</strong>. CBS was building its
+          demo and test data by hand, which was slow, inconsistent and hard to scale.</p>
+        <p>The brief: a reproducible system that generates synthetic credit data that <strong>behaves like the real
+          thing</strong> statistically, for testing new analytics products and producing client demonstration reports.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s2">
+      <div class="sec-num"><b aria-hidden="true">02</b><span>Data</span></div>
+      <div class="prose">
+        <h2 id="s2">Four kinds of credit series</h2>
+        <p>The tool handles four data types: <strong>share of wallet, delinquency, new customers and account balance</strong>.
+          In the example run shown on our poster, the upload held 15 bank series with 61 data points each; 11 were usable as they were
+          and 4 needed modification.</p>
+        <p>Before anything was generated, the pipeline filled missing values, standardised formats to a common range and removed
+          duplicates and outliers.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s3">
+      <div class="sec-num"><b aria-hidden="true">03</b><span>System</span></div>
+      <div class="prose">
+        <h2 id="s3">Cluster first, then pick the right generator</h2>
+        <p>Banks don't all behave alike, so the tool groups them before generating anything. The workflow in the Streamlit app:</p>
+        <ol class="steps">
+          <li><span><strong>Upload</strong> a CSV of real series.</span></li>
+          <li><span><strong>Cluster</strong> banks with similar patterns (K-medoids or K-means), choosing k by silhouette score.</span></li>
+          <li><span><strong>Select synthesis methods</strong> to compare.</span></li>
+          <li><span><strong>Set series per cluster</strong>, then generate, score and export as CSV or TXT.</span></li>
+        </ol>
+        <div class="cols" role="img" aria-label="Silhouette score by number of clusters k: k=2 0.719, k=3 0.619 (selected), k=4 0.613, k=5 0.470, k=6 0.439, k=7 0.404, k=8 0.302, k=9 0.296, k=10 0.273.">
+          <div class="col"><span class="v">.719</span><i style="--h:89.9%"></i><span class="k">2</span></div>
+          <div class="col sel"><span class="v">.619</span><i style="--h:77.4%"></i><span class="k">3</span></div>
+          <div class="col"><span class="v">.613</span><i style="--h:76.6%"></i><span class="k">4</span></div>
+          <div class="col"><span class="v">.470</span><i style="--h:58.8%"></i><span class="k">5</span></div>
+          <div class="col"><span class="v">.439</span><i style="--h:54.9%"></i><span class="k">6</span></div>
+          <div class="col"><span class="v">.404</span><i style="--h:50.5%"></i><span class="k">7</span></div>
+          <div class="col"><span class="v">.302</span><i style="--h:37.8%"></i><span class="k">8</span></div>
+          <div class="col"><span class="v">.296</span><i style="--h:37%"></i><span class="k">9</span></div>
+          <div class="col"><span class="v">.273</span><i style="--h:34.1%"></i><span class="k">10</span></div>
+        </div>
+        <p class="cols-caption">Silhouette score by k in the example run. k = 3 was used (clusters of 6, 6 and 3 series); k = 2 scored highest.</p>
+        <p>Each data type suits different generators, so the tool offers seven, from classical time series to a neural network:</p>
+        <table class="data text">
+          <thead><tr><th>Method</th><th>What it captures</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>ARIMA</td><td>Autocorrelation and linear trend</td><td>Account balance</td></tr>
+            <tr><td>Holt-Winters</td><td>Trend plus seasonality</td><td>Account balance, new customers</td></tr>
+            <tr><td>Prophet</td><td>Seasonality, holidays, changepoints</td><td>New customers</td></tr>
+            <tr><td>Copula</td><td>Marginals separately from dependence</td><td>Share of wallet, delinquency</td></tr>
+            <tr><td>Beta</td><td>Proportions and rates between 0 and 1</td><td>Share of wallet, delinquency</td></tr>
+            <tr><td>Gaussian</td><td>Joint distribution, fast baseline</td><td>Share of wallet, new customers</td></tr>
+            <tr><td>CTGAN</td><td>Non-linear structure, imbalanced categories</td><td>Delinquency, account balance (large datasets)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout"><b>MY PART</b>I led the CTGAN pipeline, the generative adversarial network that creates entirely new rows
+          by training a generator against a discriminator, and designed the team's dual-view dashboard (Customer/Agency) with
+          fidelity scoring, so results could be compared and exported in one place.</div>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s4">
+      <div class="sec-num"><b aria-hidden="true">04</b><span>Results</span></div>
+      <div class="prose">
+        <h2 id="s4">The simple model won, and that's the point</h2>
+        <span class="patch-sticker">100% SYNTHETIC</span>
+        <div class="stats">
+          <div><strong>80.7</strong>best fidelity on account balance: Copula</div>
+          <div><strong>90.5</strong>Copula fidelity on cluster 0 (85.4 and 84.2 on the others)</div>
+          <div><strong>7</strong>methods scored and ranked automatically</div>
+        </div>
+        <p>On the account-balance series, <strong>Copula</strong> scored highest (80.7/100) with the lowest Wasserstein distance
+          (167.1), and <strong>CTGAN scored lowest (17.6)</strong>. That's consistent with our own method guide, which marks CTGAN
+          as suited to large datasets; these series had 61 data points each.</p>
+        <p>The lesson we built into the tool: <strong>the best generator depends on the data type</strong>, so instead of betting on one
+          method it scores every candidate and recommends the winner for each series.</p>
+      </div>
+    </section>
+
+    <section class="case-sec" aria-labelledby="s5">
+      <div class="sec-num"><b aria-hidden="true">05</b><span>Limits</span></div>
+      <div class="prose">
+        <h2 id="s5">What we'd check before anyone relied on it</h2>
+        <ul>
+          <li><strong>Only statistical validation.</strong> Fidelity is judged by statistical comparisons, without formal review by CBS analysts.</li>
+          <li><strong>Bounded by the input.</strong> Synthetic data stays within the date range of the data provided.</li>
+          <li><strong>General-purpose methods.</strong> The generators weren't customised specifically for CBS data.</li>
+          <li><strong>Assumes stable behaviour.</strong> It treats the raw data as representative and consumer behaviour as fairly stable over time.</li>
+        </ul>
+        <p>Next steps we proposed: integrate the pipeline into CBS's internal tooling, extend it to more credit metrics and product
+          lines, and revalidate periodically as the real data evolves.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="evidence" aria-labelledby="ev">
+    <div class="wrap">
+      <h2 id="ev">Evidence</h2>
+      <div class="ev-links">
+        <a class="btn btn-ink" href="../../slides/cbs_synthetic_data_poster.png">View the project poster ↗</a>
+        <a class="btn btn-ghost" href="../../#work">← Back to selected work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="still-online">FROYO SYSTEM<span>still online ✦</span></div>
+    <span class="frog"><canvas data-icon="frog" aria-hidden="true"></canvas></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Stats summary from the tool (ACCT_BAL series)
+    var M = [
+      { n: 'Copula', f: 80.7, w: 167.115, mean: [8.1, 'warn'], min: [10.08, 'warn'], max: [-0.89, 'ok'], vr: [6.56, 'warn'],
+        note: 'Models each marginal distribution separately from how series move together. Best overall here, with the closest distribution (lowest Wasserstein distance).' },
+      { n: 'Gaussian', f: 71.7, w: 199.0802, mean: [9.69, 'warn'], min: [-78.43, 'bad'], max: [-1.24, 'ok'], vr: [9.2, 'warn'],
+        note: 'A fast, interpretable joint-distribution baseline. Close on the mean, but badly misses the minimum values.' },
+      { n: 'Holt-Winters', f: 63.7, w: 190.1992, mean: [9.29, 'warn'], min: [147.45, 'bad'], max: [1.55, 'ok'], vr: [0.14, 'ok'],
+        note: 'Exponential smoothing with trend and seasonality. Keeps variance almost exact, but overshoots the minimum.' },
+      { n: 'Prophet', f: 61.0, w: 194.5979, mean: [9.43, 'warn'], min: [146.12, 'bad'], max: [1.46, 'ok'], vr: [0.48, 'ok'],
+        note: 'Additive model with seasonality, holidays and changepoints. Similar profile to Holt-Winters on this series.' },
+      { n: 'ARIMA', f: 53.5, w: 351.0415, mean: [17.07, 'bad'], min: [134.51, 'bad'], max: [7.07, 'warn'], vr: [27.42, 'bad'],
+        note: 'Autoregressive model for stationary series. The largest distribution distance of the six.' },
+      { n: 'CTGAN', f: 17.6, w: 302.4001, mean: [9.16, 'warn'], min: [-219.84, 'bad'], max: [7.41, 'warn'], vr: [41.34, 'bad'],
+        note: 'A generator and discriminator trained against each other. Built for large datasets; with 61 points per series it scored lowest.' }
+    ];
+    var LABEL = { ok: 'OK', warn: 'WARN', bad: 'BAD' };
+    var r = {};
+    document.querySelectorAll('[data-r]').forEach(function (el) { r[el.getAttribute('data-r')] = el; });
+    function row(k, v, flag) {
+      return '<div><span class="k">' + k + '</span><span><b>' + v + '</b>' +
+        (flag ? ' <span class="flag ' + flag + '">' + LABEL[flag] + '</span>' : '') + '</span></div>';
+    }
+    function pct(v) { return (v > 0 ? '+' : '') + v + '%'; }
+    function select(i) {
+      var m = M[i];
+      document.querySelectorAll('.pick').forEach(function (b) { b.setAttribute('aria-pressed', +b.getAttribute('data-m') === i); });
+      r.name.textContent = m.n + ' · ' + m.f + '/100';
+      r.rows.innerHTML = row('Wasserstein distance', m.w.toFixed(1)) + row('Mean Δ', pct(m.mean[0]), m.mean[1]) +
+        row('Min Δ', pct(m.min[0]), m.min[1]) + row('Max Δ', pct(m.max[0]), m.max[1]) + row('Variance Δ', pct(m.vr[0]), m.vr[1]);
+      r.note.textContent = m.note;
+    }
+    document.querySelectorAll('.pick').forEach(function (b) {
+      b.addEventListener('click', function () { select(+b.getAttribute('data-m')); });
+    });
+    select(0);
+  })();
+</script>
+<script src="../../pixel.js?v=5"></script>
+
+</body>
+</html>
