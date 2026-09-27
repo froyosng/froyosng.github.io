@@ -163,6 +163,16 @@
       '   ###   ',
       '    #    '
     ],
+    frog: [
+      ' ###    ### ',
+      '#wwk#  #wwk#',
+      '#wwk####wwk#',
+      '#gggggggggg#',
+      '#gg#gggg#gg#',
+      '#ggg####ggg#',
+      ' #gggggggg# ',
+      '##g##  ##g##'
+    ],
     code: [
       '      #    ',
       '  #   # #  ',
@@ -174,12 +184,15 @@
     ]
   };
 
+  var ICON_MAPS = { frog: { '#': INK, g: '#8FD694', w: '#FFFFFF', k: INK } };
+
   document.querySelectorAll('canvas[data-icon]').forEach(function (cv) {
     var rows = ICONS[cv.getAttribute('data-icon')];
     if (!rows) return;
     cv.width = Math.max.apply(null, rows.map(function (r) { return r.length; }));
     cv.height = rows.length;
-    painter(cv.getContext('2d')).SPR(rows, 0, 0, { '#': ICON });
+    var map = ICON_MAPS[cv.getAttribute('data-icon')] || { '#': ICON };
+    painter(cv.getContext('2d')).SPR(rows, 0, 0, map);
   });
 
   // ---------- Hawk cam (CV flagship) ----------

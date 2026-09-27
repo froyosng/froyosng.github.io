@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal lost — Zhenhao Sng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@1&family=Silkscreen&display=swap" rel="stylesheet">
+  <style>
+    :root { --pearl: #F7F5F2; --ink: #17151D; --graphite: #69666F; --violet: #7657FF; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: var(--pearl);
+      background-image: radial-gradient(rgba(23, 21, 29, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink);
+      font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+    }
+    .lost { font-family: "Silkscreen", monospace; color: var(--violet); font-size: 14px; letter-spacing: 0.04em; }
+    h1 { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(44px, 9vw, 88px); line-height: 0.95; margin: 14px 0 28px; letter-spacing: -0.02em; }
+    canvas { height: 96px; width: auto; image-rendering: pixelated; margin-bottom: 20px; }
+    a { display: inline-block; padding: 13px 22px; border-radius: 999px; background: var(--ink); color: var(--pearl); font-weight: 600; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+    p { color: var(--graphite); margin: 0 0 28px; }
+  </style>
+</head>
+<body>
+  <main>
+    <canvas data-icon="frog" role="img" aria-label="A tiny pixel frog"></canvas>
+    <div class="lost">SIGNAL LOST</div>
+    <h1>you wandered outside the plaza</h1>
+    <p>This page doesn't exist. The frog has no idea either.</p>
+    <a href="/">Return home</a>
+  </main>
+  <script src="/pixel.js?v=4"></script>
+</body>
+</html>
