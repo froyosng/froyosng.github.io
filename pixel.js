@@ -352,6 +352,136 @@
     animate(cv, function () { t++; draw(); });
   })();
 
+  // ---------- Pixel me ----------
+  var SKIN = '#F2C9A5', HAIR = '#1E1B24', COAT = '#D8CBB3', COAT_SH = '#B9AB90';
+
+  // Standing, front view (16 x 32). h hair, s skin, g glasses, k eyes, m mouth,
+  // w teeth, c/C coat, t black top, p trousers, b shoes
+  var ME = [
+    '    hhhhhhhh    ',
+    '   hhhhhhhhhh   ',
+    '  hhhhhhhhhhhh  ',
+    '  hhhhhhhhhhhh  ',
+    '  hhhshhhhshhh  ',
+    '  hssssssssssh  ',
+    '  gggggssggggg  ',
+    '  gsksggggsksg  ',
+    '  gggggssggggg  ',
+    '  ssssssssssss  ',
+    '  sssmwwwwmsss  ',
+    '  ssssmmmmssss  ',
+    '   ssssssssss   ',
+    '   ccctttttccc  ',
+    ' cccccttttccccc ',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'cCccctttttcccCcc',
+    'sCccctttttcccCcs',
+    'sCccctttttcccCcs',
+    '  cCccctttccCc  ',
+    '  cCccctttccCc  ',
+    '  cCccctttccCc  ',
+    '  cCccctttccCc  ',
+    '   pppp  pppp   ',
+    '   pppp  pppp   ',
+    '   pppp  pppp   ',
+    '  bbbbb  bbbbb  '
+  ];
+  var HELMET = [
+    '    HHHHHHHH    ',
+    '   HHHHHHwHHH   ',
+    '  HHHHHHHHHwHH  ',
+    '  HHHHHHHHHHHH  ',
+    '  HhhhshhhhshH  ',
+    '  HssssssssssH  '
+  ];
+
+  function meGrid(opts) {
+    var rows = ME.map(function (r) { return r.split(''); });
+    if (opts.ski) {
+      HELMET.forEach(function (r, j) { rows[j] = r.split(''); });
+      [9, 10, 11].forEach(function (j) { rows[j][2] = 'H'; rows[j][13] = 'H'; });
+    }
+    if (opts.blink) { rows[7] = '  gkkkggggkkkg  '.split(''); }
+    if (opts.wave) {
+      // Drop the right arm and raise it instead
+      for (var j = 15; j <= 23; j++) { rows[j][15] = '.'; rows[j][14] = 'c'; }
+      for (j = 0; j < rows.length; j++) rows[j].push('.', '.');
+      for (j = 9; j <= 14; j++) { rows[j][15] = 'c'; rows[j][16] = 'c'; }
+      var hx = opts.wave === 2 ? 17 : 16;
+      rows[7][hx] = 's'; rows[8][hx] = 's'; rows[7][hx - 1] = 's'; rows[8][hx - 1] = 's';
+    }
+    return rows;
+  }
+
+  // ---------- Hero avatar: blinks, waves on hover, 3 clicks = ski mode ----------
+  (function () {
+    var btn = document.querySelector('[data-me]');
+    if (!btn) return;
+    var cv = btn.querySelector('canvas');
+    var bubble = btn.querySelector('.me-bubble');
+    var W = 28, H = 36, OX = 5, OY = 2;
+    cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d'), d = painter(ctx);
+    var t = 0, hovering = false, ski = false, clicks = 0;
+    var MAP = {
+      h: HAIR, s: SKIN, g: INK, k: INK, m: '#9C3550', w: '#FFFFFF',
+      c: COAT, C: COAT_SH, t: INK, p: '#2A2733', b: '#4A4752', H: '#26232C'
+    };
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var rows = meGrid({
+        ski: ski,
+        blink: t % 40 < 2,
+        wave: hovering && !ski ? (reduced ? 1 : 1 + ((t >> 2) % 2)) : 0
+      });
+      var map = Object.assign({}, MAP, ski ? { b: '#3D5BD9' } : {});
+      var filled = function (x, y) {
+        return y >= 0 && y < rows.length && x >= 0 && x < rows[y].length && map[rows[y][x]];
+      };
+      // 1px ink outline so the beige coat reads on the milk background
+      for (var y = -1; y <= rows.length; y++)
+        for (var x = -1; x <= 18; x++)
+          if (!filled(x, y) && (filled(x - 1, y) || filled(x + 1, y) || filled(x, y - 1) || filled(x, y + 1)))
+            d.P(OX + x, OY + y, INK);
+      d.SPR(rows.map(function (r) { return r.join(''); }), OX, OY, map);
+
+      if (ski) {
+        // Ski in the left hand, pole in the right
+        d.R(1, 3, 3, 33, INK); d.R(2, 4, 1, 31, '#D8412F');
+        for (var s = 8; s < 30; s += 3) d.P(2, s, '#F6C945');
+        d.V(22, 22, 35, '#6B6B68'); d.R(21, 20, 3, 4, '#C8A45A');
+      }
+    }
+
+    function say(msg) { bubble.textContent = msg; }
+
+    btn.addEventListener('mouseenter', function () { hovering = true; say(ski ? 'BRRR!' : 'HI!'); draw(); });
+    btn.addEventListener('mouseleave', function () { hovering = false; draw(); });
+    btn.addEventListener('focus', function () { hovering = true; draw(); });
+    btn.addEventListener('blur', function () { hovering = false; draw(); });
+    btn.addEventListener('click', function () {
+      clicks++;
+      if (clicks % 3 === 1) say(ski ? 'LEAVING?' : 'HEY!');
+      if (clicks % 3 === 2) say('ONE MORE…');
+      if (clicks % 3 === 0) {
+        ski = !ski;
+        say(ski ? 'SKI MODE!' : 'BACK TO WORK');
+        btn.setAttribute('aria-label', ski ? 'Pixel Zhenhao in ski gear' : 'Pixel Zhenhao');
+        if (ski && clicks === 3 && window.froyoToast) window.froyoToast('+1 SIGNAL', 'Ski mode unlocked.');
+      }
+      draw();
+    });
+
+    draw();
+    animate(cv, function () { t++; draw(); });
+  })();
+
   // ---------- Desk scene ----------
   var cv = document.getElementById('scene');
   if (!cv) return;
@@ -400,6 +530,37 @@
     '  ############  '
   ];
   var Z = ['####', '..#.', '.#..', '####'];
+  var ME_SCENE = { o: FG, h: '#0E0C14', s: SKIN, g: '#0E0C14', k: '#0E0C14', m: '#B84A5E', w: '#FFFFFF', c: COAT, p: '#0E0C14' };
+  var ME_BACK = [
+    '   oooooo   ',
+    '  ohhhhhho  ',
+    ' ohhhhhhhho ',
+    ' ohhhhhhhho ',
+    ' ohhhhhhhho ',
+    '  ohhhhhho  ',
+    '   osssso   ',
+    ' occcccccco ',
+    'occcccccccco',
+    'occcccccccco'
+  ];
+  var ME_FRONT = [
+    '   oooooo   ',
+    '  ohhhhhho  ',
+    ' ohhhhhhhho ',
+    ' ohhshhhsho ',
+    ' ogggssgggo ',
+    ' ogsggggsgo ',
+    ' osssssssso ',
+    ' ossmwwmsso ',
+    '  osssssso  ',
+    '   occcco   ',
+    ' occcccccco ',
+    'occcccccccco',
+    'occcccccccco',
+    'occcccccccco',
+    ' oppppppppo ',
+    ' oppo  oppo '
+  ];
   var TROPHY = [
     '#######',
     '#.###.#',
@@ -541,6 +702,8 @@
     [72, 74, 76].forEach(function (y) { d.H(189, 196, y, DIM); });
     d.P(189, 69, (t >> 3) % 2 ? UP : DIM);
 
+    if (hover !== 'me') d.SPR(ME_BACK, 132, 48, ME_SCENE);
+
     // Chair, drawn last so it sits in front of the desk
     d.R(130, 58, 16, 14, BG);
     d.BOX(130, 58, 16, 14, FG);
@@ -549,6 +712,13 @@
     d.V(138, 74, 80, FG);
     d.LINE(138, 80, 130, 84, FG); d.LINE(138, 80, 146, 84, FG);
     d.P(129, 85, FG); d.P(147, 85, FG); d.P(138, 85, FG);
+
+    if (hover === 'me') {
+      d.SPR(ME_FRONT, 132, 46, ME_SCENE);
+      var up = (t >> 2) % 2;
+      d.LINE(143, 57, 145, 52, COAT);
+      d.R(145 + up, 49, 2, 3, SKIN);
+    }
   }
 
   function drawRoom() {

@@ -261,6 +261,41 @@
 
     .titlebar .pixel { margin-left: auto; color: var(--graphite); }
 
+    .hero-side { display: flex; flex-direction: column; align-items: flex-end; }
+    .hero-side .window { width: 100%; }
+
+    .me {
+      position: relative;
+      margin: 0 28px -6px 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .me canvas { display: block; width: 112px; height: 144px; image-rendering: pixelated; }
+
+    .me-bubble {
+      position: absolute;
+      top: 4px;
+      right: 100%;
+      margin-right: -4px;
+      padding: 5px 9px;
+      background: var(--paper);
+      border: 1px solid var(--ink);
+      border-radius: 10px 10px 2px 10px;
+      font-size: 11px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.15s, transform 0.15s;
+      pointer-events: none;
+    }
+
+    .me:hover .me-bubble,
+    .me:focus-visible .me-bubble { opacity: 1; transform: none; }
+
     .status-list { list-style: none; margin: 0; padding: 8px 18px 14px; }
 
     .status-list li {
@@ -789,6 +824,11 @@
         </div>
       </div>
 
+      <div class="hero-side">
+      <button class="me" type="button" data-me aria-label="Pixel Zhenhao">
+        <span class="me-bubble pixel" aria-hidden="true">HI!</span>
+        <canvas aria-hidden="true"></canvas>
+      </button>
       <aside class="window" aria-label="Summary">
         <div class="titlebar">
           <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -802,6 +842,7 @@
           <li><span class="k">Mode</span><span class="v"><span class="led"></span><span data-mode-status>Quick View</span></span></li>
         </ul>
       </aside>
+      </div>
     </div>
   </div>
 
@@ -821,6 +862,7 @@
           <a class="hot" href="#archive" data-filter="research" data-id="research" aria-label="Research projects" style="left:29.69%;top:29.17%;width:9.38%;height:60.42%"><span class="hot-label">RESEARCH →</span></a>
           <a class="hot" href="#archive" data-filter="finance" data-id="finance" aria-label="Finance projects" style="left:41.41%;top:10.42%;width:7.03%;height:22.92%"><span class="hot-label">FINANCE →</span></a>
           <a class="hot" href="#archive" data-filter="systems" data-id="systems" aria-label="Systems projects" style="left:72.66%;top:68.75%;width:5.08%;height:20.83%"><span class="hot-label">SYSTEMS →</span></a>
+          <a class="hot" href="#about" data-id="me" aria-label="About Zhenhao" style="left:51.56%;top:50.00%;width:4.69%;height:22.92%"><span class="hot-label">HI, I'M ZHENHAO →</span></a>
           <a class="hot" href="#archive" data-filter="strategy" data-id="ventures" aria-label="Strategy and ventures" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">VENTURES →</span></a>
         </div>
         <div class="scene-legend">
@@ -831,6 +873,7 @@
           <a class="chip" href="#archive" data-filter="finance"><b>POSTER</b> Finance</a>
           <a class="chip" href="#archive" data-filter="strategy"><b>PLANT</b> Ventures</a>
           <a class="chip" href="https://github.com/froyosng"><b>CODE</b> GitHub</a>
+          <a class="chip" href="#about"><b>ME</b> About</a>
         </div>
       </div>
     </div>
@@ -1196,7 +1239,15 @@
     // ----- Quick View / Explore World -----
     var world = document.getElementById('world');
     var toast = document.querySelector('.toast');
-    var toastShown = false;
+    var toastShown = false, toastTimer = null;
+
+    window.froyoToast = function (title, msg) {
+      toast.querySelector('strong').textContent = title;
+      toast.querySelector('span:not(.star)').textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3600);
+    };
 
     function store(v) { try { localStorage.setItem('froyo-mode', v); } catch (e) {} }
     function stored() { try { return localStorage.getItem('froyo-mode'); } catch (e) { return null; } }
@@ -1210,8 +1261,7 @@
       if (explore && scroll) world.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
       if (explore && scroll && !toastShown) {
         toastShown = true;
-        toast.classList.add('show');
-        setTimeout(function () { toast.classList.remove('show'); }, 3600);
+        window.froyoToast('SIGNAL DETECTED', 'You found the desk. Click around.');
       }
     }
 
