@@ -331,6 +331,12 @@ footer .wrap { display: flex; justify-content: space-between; align-items: flex-
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--violet); }
 
+/* Smooth scroll (Lenis) */
+html.lenis, html.lenis body { height: auto; }
+.lenis-smooth { scroll-behavior: auto !important; }
+.lenis-stopped { overflow: clip; }
+.fig, .cam-card { transform-origin: 50% 0; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .chart-grid { grid-template-columns: 1fr; }
