@@ -9,10 +9,11 @@
       d.classList.add('js');
       try {
         if (!CSS.supports('animation-timeline: view()')) d.classList.add('no-sda');
-        if (!sessionStorage.getItem('froyo-arrived') && !location.hash &&
+        if (!sessionStorage.getItem('froyo-intro') && !location.hash &&
             matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-          d.classList.add('arrive');
-          sessionStorage.setItem('froyo-arrived', '1');
+          d.classList.add('intro');
+          sessionStorage.setItem('froyo-intro', '1');
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         }
       } catch (e) {}
     })(document.documentElement);
@@ -247,46 +248,45 @@
     .nav a:not(.btn):hover { color: var(--ink); }
     .nav .btn { padding: 8px 16px; font-size: 14px; }
 
-    /* ---------- Hero: campaign poster ---------- */
-    .hero { position: relative; padding: 36px 0 96px; overflow: hidden; }
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 28px 0 88px; overflow: hidden; }
+    .hero .wrap { container-type: inline-size; }
 
     .hero-meta {
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      flex-wrap: wrap;
-      padding-bottom: 14px;
-      margin-bottom: 56px;
-      border-bottom: 1px solid var(--line);
+      margin-bottom: 10px;
       color: var(--graphite);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
-    .hero-meta .pixel { color: var(--violet); font-size: 12px; }
+    .hero-meta .pixel { color: var(--violet); font-size: 12px; letter-spacing: 0.02em; }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 40px;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(34px, 4.2vw, 54px);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      font-weight: 600;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 .serif { font-size: 1.12em; }
-
-    .thesis {
-      font-size: clamp(50px, 8.2vw, 124px);
-      line-height: 0.86;
-      letter-spacing: -0.055em;
+    /* The name, as big as the column allows */
+    .kname {
+      font-size: calc(100cqi * 0.1455);
+      line-height: 0.82;
+      letter-spacing: -0.045em;
       font-weight: 700;
       text-transform: uppercase;
-      margin: 0 0 28px;
+      text-align: center;
+      white-space: nowrap;
+      margin: 0 0 30px;
+    }
+    .kname .l { display: inline-block; }
+
+    .thesis {
+      font-size: clamp(22px, 3.2vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0 0 16px;
     }
 
     /* Holo text */
@@ -295,31 +295,46 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 2px var(--ink);
+      -webkit-text-stroke: 1.5px var(--ink);
     }
 
-    .support { max-width: 520px; font-size: 19px; color: #3d3a45; margin: 0 0 36px; }
+    .support { max-width: 620px; font-size: 17px; color: #3d3a45; margin: 0 auto 24px; text-align: center; }
 
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 48px; }
 
-    .hero-art { position: relative; height: 480px; }
+    /* Two tiles, like two photos */
+    .htiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 
-    .pearl-glow {
-      position: absolute;
-      inset: 10% -10% 0 0;
+    .htile {
+      position: relative;
+      aspect-ratio: 5 / 4;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-radius 250ms var(--ease-out), scale 250ms var(--ease-out);
+    }
+
+    .htile-radio {
       background:
-        radial-gradient(circle at 35% 40%, rgba(255, 119, 183, 0.22), transparent 55%),
-        radial-gradient(circle at 70% 60%, rgba(147, 232, 255, 0.35), transparent 55%),
-        radial-gradient(circle at 55% 25%, rgba(201, 185, 255, 0.4), transparent 50%);
-      filter: blur(8px);
+        radial-gradient(circle at 30% 30%, rgba(255, 119, 183, 0.25), transparent 55%),
+        radial-gradient(circle at 75% 70%, rgba(147, 232, 255, 0.45), transparent 55%),
+        radial-gradient(circle at 60% 20%, rgba(201, 185, 255, 0.5), transparent 50%),
+        var(--tint-violet);
     }
+
+    .htile-me {
+      background:
+        radial-gradient(ellipse at 50% 120%, rgba(255, 119, 183, 0.35), transparent 60%),
+        var(--tint-pink);
+    }
+
+    .htile-in { position: absolute; inset: 0; }
 
     /* CD */
     .cd {
       position: absolute;
-      right: 0;
-      top: 20px;
-      width: min(360px, 90%);
+      inset: 0;
+      margin: auto;
+      width: min(340px, 64%);
       aspect-ratio: 1;
       border-radius: 50%;
       background:
@@ -330,8 +345,8 @@
 
     .hero-sticker {
       position: absolute;
-      left: 4%;
-      top: 36px;
+      right: 28px;
+      top: 30px;
       padding: 12px 16px 10px;
       background: var(--red);
       color: var(--sports-white);
@@ -347,8 +362,8 @@
 
     .me {
       position: absolute;
-      left: 14%;
-      bottom: 0;
+      left: calc(50% - 84px);
+      bottom: 9%;
       padding: 0;
       border: 0;
       background: none;
@@ -379,13 +394,22 @@
 
     .floor-shadow {
       position: absolute;
-      left: 12%;
-      bottom: -6px;
+      left: calc(50% - 95px);
+      bottom: calc(9% - 6px);
       width: 190px;
       height: 14px;
       border-radius: 50%;
-      background: rgba(23, 21, 29, 0.12);
+      background: rgba(23, 21, 29, 0.14);
       filter: blur(3px);
+    }
+
+    /* Kirk-style tags: shown on hover */
+    .tags { position: absolute; top: 14px; left: 14px; z-index: 4; display: flex; flex-wrap: wrap; gap: 6px; opacity: 0; translate: 0 -4px; transition: opacity 250ms var(--ease-out), translate 250ms var(--ease-out); pointer-events: none; }
+    .tags span { padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255, 255, 255, 0.85); color: var(--ink); }
+    .tags span + span { background: rgba(23, 21, 29, 0.42); color: #fff; }
+    @media (hover: hover) {
+      .htile:hover { border-radius: 26px; scale: 0.99; }
+      .htile:hover .tags { opacity: 1; translate: 0 0; }
     }
 
     /* ---------- Explore world ---------- */
@@ -542,9 +566,10 @@
       align-items: center;
       justify-content: center;
       padding: 48px 28px;
-      border-radius: var(--radius-md);
+      border-radius: 10px;
       min-height: 340px;
-      transition: border-radius 250ms var(--ease-out);
+      overflow: clip;
+      transition: border-radius 250ms var(--ease-out), scale 250ms var(--ease-out);
     }
 
     .v-violet { background: var(--tint-violet); }
@@ -876,7 +901,7 @@
     .spiral { width: 78px; height: 48px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
     .spiral.flip { transform: scaleX(-1); }
 
-    .sc-cd { position: absolute; right: 0; bottom: 70px; z-index: 4; flex-direction: column; align-items: flex-end; text-align: right; }
+    .sc-cd { position: absolute; left: 22px; bottom: 18px; z-index: 4; flex-direction: column; align-items: flex-start; }
 
     /* ---------- Passport stamps ---------- */
     .stamp-head { margin: 72px 0 24px; }
@@ -931,8 +956,8 @@
 
     .radio-btn {
       position: absolute;
-      right: 6%;
-      bottom: 18px;
+      right: 16px;
+      bottom: 16px;
       z-index: 3;
       display: inline-flex;
       align-items: center;
@@ -966,17 +991,14 @@
     /* Reveal-on-scroll */
 
     /* ---------- Motion ---------- */
-    .thesis .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.06em 0.03em; margin: -0.06em -0.03em; }
-    .thesis .w > span { display: inline-block; }
     .ph { overflow: hidden; border-radius: 4px; }
-    .settle { transition: transform 250ms var(--ease-out); }
 
-    /* Panel hover: shape + one pill */
+    /* Panel hover: shape + tags + one link pill */
     .v-pill {
       position: absolute;
       left: 16px;
       bottom: 14px;
-      z-index: 2;
+      z-index: 4;
       padding: 6px 12px;
       border-radius: 999px;
       background: var(--ink);
@@ -989,26 +1011,34 @@
       transition: opacity 250ms var(--ease-out), translate 250ms var(--ease-out);
       translate: 0 4px;
     }
+    .visual .visual-caption { transition: opacity 250ms var(--ease-out); }
     @media (hover: hover) {
-      .visual:hover { border-radius: 28px; }
-      .visual:hover .settle { transform: scale(0.985); }
+      .visual:hover { border-radius: 26px; scale: 0.99; }
       .visual:hover .v-pill { opacity: 1; translate: 0 0; pointer-events: auto; }
+      .visual:hover .tags { opacity: 1; translate: 0 0; }
+      .visual:hover .visual-caption { opacity: 0; }
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      /* 1. Hero arrival, once per session */
-      .arrive .thesis .w > span { animation: rise-in 700ms var(--ease-out) both; animation-delay: calc(var(--i) * 70ms); }
-      .arrive .thesis .w > .holo { animation: rise-in 700ms var(--ease-out) both, holo-sweep 900ms var(--ease-out) 350ms both; animation-delay: calc(var(--i) * 70ms), 350ms; }
-      .arrive .hero h1, .arrive .support, .arrive .hero-actions { animation: faint-in 700ms var(--ease-out) both; }
-      .arrive .cd, .arrive .hero-sticker, .arrive .radio-btn, .arrive .sc-cd, .arrive .floor-shadow, .arrive .pearl-glow { animation: art-in 450ms var(--ease-out) 500ms both; }
-      .arrive .cd { animation: art-in 450ms var(--ease-out) 500ms both, nudge 1s var(--ease-out) 500ms both; }
-      .arrive .me { animation: hop 360ms steps(2, jump-none) 850ms both; }
-      @keyframes rise-in { from { transform: translateY(105%); } }
+      /* 1. Kirk intro: the name fills in small, travels to centre, then lands big */
+      .intro { overflow: hidden; }
+      .intro .topbar, .intro .hero-meta, .intro .thesis, .intro .support, .intro .hero-actions, .intro .htile { opacity: 0; }
+      .intro:not(.go) .kname { opacity: 0; }
+      .intro .kname .l { opacity: 0.15; }
+      .intro.go .kname .l { animation: lfill 220ms linear forwards; animation-delay: calc(var(--i) * 85ms + 120ms); }
+      .intro-out .topbar, .intro-out .hero-meta, .intro-out .thesis, .intro-out .support, .intro-out .hero-actions { animation: fade-up 600ms var(--ease-out) both; }
+      .intro-out .htile { animation: tile-in 800ms var(--ease-out) both; animation-delay: calc(var(--k, 0) * 90ms + 120ms); }
+      .intro-out .thesis .holo { animation: holo-sweep 900ms var(--ease-out) 200ms both; }
+      @keyframes lfill { to { opacity: 1; } }
+      @keyframes fade-up { from { opacity: 0; translate: 0 8px; } }
+      @keyframes tile-in { from { opacity: 0; translate: 0 48px; } }
       @keyframes holo-sweep { from { background-size: 300% 100%; background-position: 100% 0; } to { background-size: 100% 100%; background-position: 0 0; } }
-      @keyframes faint-in { from { opacity: 0.15; } }
-      @keyframes art-in { from { opacity: 0; scale: 0.96; } }
-      @keyframes nudge { from { rotate: -90deg; } }
-      @keyframes hop { 0% { opacity: 0; translate: 0 -6px; } 50% { opacity: 1; translate: 0 -6px; } 100% { opacity: 1; translate: 0 0; } }
+
+      /* Hero tiles zoom inside their frames as you scroll away */
+      @supports (animation-timeline: view()) {
+        .htile-in { animation: hdrift linear both; animation-timeline: view(); animation-range: cover 50% cover 100%; }
+      }
+      @keyframes hdrift { from { scale: 1; } to { scale: 1.18; } }
 
       /* 2. Chapter rise */
       .js [data-rise] { transition: opacity 600ms var(--ease-out), translate 600ms var(--ease-out); }
@@ -1023,12 +1053,12 @@
 
       /* 3. Visual settle (scroll-linked where supported) */
       @supports (animation-timeline: view()) {
-        .settle { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+        .settle { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
         .ph img { animation: drift linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
       }
-      .no-sda .settle { transition: transform 250ms var(--ease-out), scale 700ms var(--ease-out), translate 700ms var(--ease-out); }
-      .no-sda .settle:not(.in) { scale: 0.96; translate: 0 24px; }
-      @keyframes settle { from { scale: 0.96; translate: 0 24px; } to { scale: 1; translate: 0 0; } }
+      .no-sda .settle { transition: scale 900ms var(--ease-out); }
+      .no-sda .settle:not(.in) { scale: 1.1; }
+      @keyframes settle { from { scale: 1.14; } to { scale: 1; } }
       @keyframes drift { from { scale: 1; } to { scale: 1.06; } }
     }
 
@@ -1047,8 +1077,6 @@
 
     /* ---------- Responsive ---------- */
     @media (max-width: 980px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-art { height: 400px; max-width: 520px; }
       .edition { grid-template-columns: 1fr; gap: 20px; }
       .ed-num { font-size: 88px; }
       .section-head { grid-template-columns: 1fr; }
@@ -1065,11 +1093,12 @@
     @media (max-width: 640px) {
       :root { --gutter: 16px; }
       .hero { padding-top: 24px; }
-      .hero-meta { margin-bottom: 36px; }
       .hero-meta .hide-sm { display: none; }
-      .hero-art { height: 340px; }
-      .cd { width: 260px; }
+      .htiles { grid-template-columns: 1fr; gap: 14px; }
+      .htile { aspect-ratio: 4 / 3; }
       .me canvas { width: 140px; height: 180px; }
+      .me { left: calc(50% - 70px); }
+      .floor-shadow { left: calc(50% - 80px); width: 160px; }
       .hero-sticker strong { font-size: 19px; }
       section.block { padding: 64px 0; }
       .visual { padding: 44px 14px 52px; min-height: 280px; }
@@ -1150,37 +1179,43 @@
   <!-- HERO -->
   <div class="hero">
     <div class="wrap">
-      <div class="hero-meta small">
+      <div class="hero-meta">
         <span class="pixel">FROYO</span>
+        <span>2026</span>
         <span class="hide-sm">SUTD × NTU · Singapore ↔ Taipei</span>
       </div>
 
-      <div class="hero-grid">
-        <div>
-          <h1>Zhenhao <span class="serif">Sng</span></h1>
-          <p class="thesis"><span class="w"><span style="--i:0">Building</span></span> <span class="w"><span style="--i:1">models</span></span><br><span class="w"><span style="--i:2">for</span></span> <span class="w"><span class="holo" style="--i:3">messy</span></span><br><span class="w"><span style="--i:4">decisions.</span></span></p>
-          <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
-          <div class="hero-actions">
-            <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
-            <button class="btn btn-explore" type="button" data-enter-world>
-              Explore world <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
+      <h1 class="kname" aria-label="Zhenhao Sng"><span class="l" style="--i:0">Z</span><span class="l" style="--i:1">H</span><span class="l" style="--i:2">E</span><span class="l" style="--i:3">N</span><span class="l" style="--i:4">H</span><span class="l" style="--i:5">A</span><span class="l" style="--i:6">O</span><span class="l" style="--i:7">&nbsp;</span><span class="l" style="--i:8">S</span><span class="l" style="--i:9">N</span><span class="l" style="--i:10">G</span></h1>
+      <p class="thesis">Building models for <span class="holo">messy</span> decisions.</p>
+      <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
+      <div class="hero-actions">
+        <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
+        <button class="btn btn-explore" type="button" data-enter-world>
+          Explore world <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
+        </button>
+      </div>
+
+      <div class="htiles">
+        <div class="htile htile-radio" style="--k:0">
+          <div class="htile-in">
+            <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
+          </div>
+          <div class="tags" aria-hidden="true"><span>FROYO RADIO</span><span>Tap the CD</span></div>
+          <span class="scribble sc-cd" aria-hidden="true"><svg class="spiral" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>psst, the CD plays my playlist</span></span>
+          <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
+        </div>
+        <div class="htile htile-me" style="--k:1">
+          <div class="htile-in">
+            <div class="floor-shadow" aria-hidden="true"></div>
+            <button class="me" type="button" data-me aria-label="Pixel Zhenhao">
+              <span class="me-bubble pixel" aria-hidden="true">HI!</span>
+              <canvas aria-hidden="true"></canvas>
             </button>
           </div>
-        </div>
-
-        <div class="hero-art">
-          <div class="pearl-glow" aria-hidden="true"></div>
-          <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
-          <span class="scribble sc-cd" aria-hidden="true"><svg class="spiral flip" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>psst, the CD plays my playlist</span></span>
-          <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
+          <div class="tags" aria-hidden="true"><span>Pixel Zhenhao</span><span>Click me</span></div>
           <a class="hero-sticker" href="#quant" aria-label="Top in-sample Sharpe 2.21, see the quant project">
             <strong>2.21</strong><span>IN-SAMPLE SHARPE</span>
           </a>
-          <div class="floor-shadow" aria-hidden="true"></div>
-          <button class="me" type="button" data-me aria-label="Pixel Zhenhao">
-            <span class="me-bubble pixel" aria-hidden="true">HI!</span>
-            <canvas aria-hidden="true"></canvas>
-          </button>
         </div>
       </div>
     </div>
@@ -1257,6 +1292,7 @@
           </div>
         </div>
         <div class="visual v-violet">
+          <div class="tags" aria-hidden="true"><span>Optimisation</span><span>NSGA-II</span></div>
           <a class="v-pill" href="work/hiv-allocation/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <div class="pareto-card settle">
             <svg class="pareto" viewBox="0 0 560 330" role="img" aria-labelledby="pareto-title">
@@ -1350,6 +1386,7 @@
           </div>
         </div>
         <div class="visual v-violet">
+          <div class="tags" aria-hidden="true"><span>Quant</span><span>WorldQuant · AlphaNova</span></div>
           <a class="v-pill" href="https://www.alphanova.tech/blog/zhenhao-sng" tabindex="-1" aria-hidden="true">AlphaNova interview ↗</a>
           <span class="visual-caption">IQC 2026, in-sample</span>
           <div class="readout settle" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova Competition 5 #140, 2 of the 160 surviving signals.">
@@ -1397,6 +1434,7 @@
           </div>
         </div>
         <div class="visual v-pink">
+          <div class="tags" aria-hidden="true"><span>ML</span><span>Kaggle</span></div>
           <span class="v-pill" aria-hidden="true">Case study soon</span>
           <div class="pipeline settle" role="img" aria-label="Model flow: choice tasks, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
             <div class="node"><small>input</small>Choice tasks</div>
@@ -1438,6 +1476,7 @@
           </div>
         </div>
         <div class="visual v-mist">
+          <div class="tags" aria-hidden="true"><span>Synthetic data</span><span>Credit Bureau SG</span></div>
           <a class="v-pill" href="work/synthetic-credit/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <div class="fid settle" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
             <h4>Fidelity by synthesis method</h4>
@@ -1475,6 +1514,7 @@
           </div>
         </div>
         <div class="visual v-lemon">
+          <div class="tags" aria-hidden="true"><span>Computer vision</span><span>DTI 2025</span></div>
           <a class="v-pill" href="work/bird-deterrent/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <span class="visual-caption pixel">CAM_01 / CANTEEN</span>
           <button class="sound-toggle pixel" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
@@ -1982,8 +2022,46 @@
       });
     });
 
-    // ----- Arrival class comes off once the hero has landed -----
-    setTimeout(function () { document.documentElement.classList.remove('arrive'); }, 1800);
+
+    // ----- Kirk intro: name fills in small, travels to centre, lands big -----
+    (function () {
+      var root = document.documentElement;
+      if (!root.classList.contains('intro')) return;
+      var name = document.querySelector('.kname');
+      var anim = null, done = false, skips = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+      window.scrollTo(0, 0);
+      function reveal() {
+        if (done) return;
+        done = true;
+        skips.forEach(function (e) { window.removeEventListener(e, skip); });
+        root.classList.remove('intro', 'go');
+        root.classList.add('intro-out');
+        setTimeout(function () { root.classList.remove('intro-out'); }, 1400);
+      }
+      function skip() { if (anim) anim.finish(); reveal(); }
+      skips.forEach(function (e) { window.addEventListener(e, skip, { passive: true }); });
+      function start() {
+        if (done) return;
+        if (typeof name.animate !== 'function') return reveal();
+        var r = name.getBoundingClientRect();
+        var cy = r.top + r.height / 2;
+        var dx = window.innerWidth / 2 - (r.left + r.width / 2);
+        var s0 = Math.max(0.2, Math.min(0.5, 220 / r.width));
+        var topY = 64 + r.height * s0 / 2 - cy, midY = window.innerHeight / 2 - cy;
+        var n = name.querySelectorAll('.l').length;
+        var fill = 120 + n * 85 + 220, travel = 600, grow = 800, T = fill + travel + grow;
+        root.classList.add('go');
+        anim = name.animate([
+          { transform: 'translate(' + dx + 'px,' + topY + 'px) scale(' + s0 + ')', offset: 0 },
+          { transform: 'translate(' + dx + 'px,' + topY + 'px) scale(' + s0 + ')', offset: fill / T, easing: 'cubic-bezier(.65, 0, .35, 1)' },
+          { transform: 'translate(' + dx + 'px,' + midY + 'px) scale(' + s0 + ')', offset: (fill + travel) / T, easing: 'cubic-bezier(.16, 1, .3, 1)' },
+          { transform: 'none', offset: 1 }
+        ], { duration: T });
+        setTimeout(reveal, T - 250);
+      }
+      var fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+      Promise.race([fonts, new Promise(function (r) { setTimeout(r, 700); })]).then(start);
+    })();
 
     // ----- One observer: chapter rise, stamps, photo, settle fallback -----
     document.querySelectorAll('.stamps .stamp').forEach(function (s, i) { s.style.setProperty('--i', i); });
