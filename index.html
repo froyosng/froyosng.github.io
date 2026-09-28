@@ -4,6 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zhenhao Sng</title>
+  <script>
+    (function (d) {
+      d.classList.add('js');
+      try {
+        if (!CSS.supports('animation-timeline: view()')) d.classList.add('no-sda');
+        if (!sessionStorage.getItem('froyo-arrived') && !location.hash &&
+            matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+          d.classList.add('arrive');
+          sessionStorage.setItem('froyo-arrived', '1');
+        }
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
   <meta name="description" content="Zhenhao Sng is an engineering student at SUTD, on exchange at National Taiwan University. Quant research, machine learning and optimisation projects.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect width='14' height='24'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg fill='%237657FF'%3E%3Cpath clip-path='url(%23c)' d='M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z'/%3E%3Crect x='13' y='9.5' width='3' height='5'/%3E%3Crect x='16' y='10.5' width='3' height='3'/%3E%3Crect x='19' y='11' width='3' height='2'/%3E%3Crect x='22' y='11.5' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E">
 
@@ -54,6 +67,8 @@
       --radius-md: 16px;
       --motion-system: 150ms;
       --motion-toy: 360ms;
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+      --ease-io: cubic-bezier(.65, 0, .35, 1);
 
       --gutter: 40px;
       --max: 1200px;
@@ -311,10 +326,7 @@
         radial-gradient(circle, var(--pearl) 0 8%, #bdbccb 8.5% 10%, rgba(255, 255, 255, 0.6) 10.5% 17%, transparent 17.5%),
         conic-gradient(from 30deg, #ececf4, #c9b9ff, #93e8ff, #ffffff, #ffc2df, #d9d8e3, #b5f0ff, #ececf4);
       box-shadow: inset 0 0 0 1px rgba(23, 21, 29, 0.18), inset 0 0 40px rgba(255, 255, 255, 0.6), 0 30px 60px -30px rgba(34, 26, 74, 0.45);
-      animation: spin 24s linear infinite;
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
 
     .hero-sticker {
       position: absolute;
@@ -379,8 +391,6 @@
     /* ---------- Explore world ---------- */
     .world { padding: 0 0 96px; }
     .world[hidden] { display: none; }
-    .world:not([hidden]) .window { animation: world-in 0.42s cubic-bezier(.2, .9, .3, 1); }
-    @keyframes world-in { from { opacity: 0; transform: translateY(16px) scale(0.985); } }
 
     .window {
       background: var(--paper);
@@ -534,17 +544,14 @@
       padding: 48px 28px;
       border-radius: var(--radius-md);
       min-height: 340px;
-      transition: transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
+      transition: border-radius 250ms var(--ease-out);
     }
-
-    .edition:hover .visual { transform: translateY(-2px) scale(1.005); }
 
     .v-violet { background: var(--tint-violet); }
     .v-pink { background: var(--tint-pink); }
     .v-cyan { background: var(--tint-cyan); }
     .v-lemon { background: var(--tint-lemon); }
     .v-mist { background: #F0EEF3; }
-    .edition.no-tilt:hover .visual { transform: none; }
 
     .visual-caption { position: absolute; top: 14px; left: 16px; font-size: 13px; color: var(--graphite); }
     .visual-caption.pixel { font-size: 12px; }
@@ -918,8 +925,7 @@
     .st-what { font-size: 14px; color: #3d3a45; line-height: 1.45; }
 
     /* ---------- FROYO RADIO ---------- */
-    .cd { border: 0; padding: 0; cursor: pointer; animation-play-state: paused; }
-    .cd.playing { animation-play-state: running; }
+    .cd { border: 0; padding: 0; cursor: pointer; }
     .cd:focus-visible { outline-offset: 6px; }
     .cd:active { box-shadow: inset 0 0 0 1px rgba(23, 21, 29, 0.25), inset 0 0 70px rgba(255, 255, 255, 0.95), 0 24px 44px -26px rgba(34, 26, 74, 0.55); }
 
@@ -950,16 +956,94 @@
     .radio .titlebar { gap: 6px; }
     .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 12px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
     .radio .titlebar button:hover { color: var(--ink); }
-    .radio-screen { max-height: 152px; overflow: hidden; background: #121212; transition: max-height var(--motion-toy) ease; }
+    .radio-screen { max-height: 152px; overflow: hidden; background: #121212; transition: max-height var(--motion-toy) var(--ease-out); }
     .radio.collapsed .radio-screen { max-height: 0; }
     .radio .np { margin-left: auto; font-family: var(--pixel); font-size: 12px; color: var(--graphite); }
-    .radio:not([hidden]) { animation: pop-in var(--motion-toy) cubic-bezier(.2, .9, .3, 1.1); }
-    @keyframes pop-in { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+    .radio:not([hidden]) { animation: pop-in var(--motion-toy) var(--ease-out); transform-origin: 0 100%; }
+    @keyframes pop-in { from { opacity: 0; transform: translateY(16px) scale(0.96); } }
     .radio-screen iframe { display: block; width: 100%; height: 152px; border: 0; }
 
     /* Reveal-on-scroll */
-    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
-    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Motion ---------- */
+    .thesis .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.06em 0.03em; margin: -0.06em -0.03em; }
+    .thesis .w > span { display: inline-block; }
+    .ph { overflow: hidden; border-radius: 4px; }
+    .settle { transition: transform 250ms var(--ease-out); }
+
+    /* Panel hover: shape + one pill */
+    .v-pill {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      z-index: 2;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--pearl);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 250ms var(--ease-out), translate 250ms var(--ease-out);
+      translate: 0 4px;
+    }
+    @media (hover: hover) {
+      .visual:hover { border-radius: 28px; }
+      .visual:hover .settle { transform: scale(0.985); }
+      .visual:hover .v-pill { opacity: 1; translate: 0 0; pointer-events: auto; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      /* 1. Hero arrival, once per session */
+      .arrive .thesis .w > span { animation: rise-in 700ms var(--ease-out) both; animation-delay: calc(var(--i) * 70ms); }
+      .arrive .thesis .w > .holo { animation: rise-in 700ms var(--ease-out) both, holo-sweep 900ms var(--ease-out) 350ms both; animation-delay: calc(var(--i) * 70ms), 350ms; }
+      .arrive .hero h1, .arrive .support, .arrive .hero-actions { animation: faint-in 700ms var(--ease-out) both; }
+      .arrive .cd, .arrive .hero-sticker, .arrive .radio-btn, .arrive .sc-cd, .arrive .floor-shadow, .arrive .pearl-glow { animation: art-in 450ms var(--ease-out) 500ms both; }
+      .arrive .cd { animation: art-in 450ms var(--ease-out) 500ms both, nudge 1s var(--ease-out) 500ms both; }
+      .arrive .me { animation: hop 360ms steps(2, jump-none) 850ms both; }
+      @keyframes rise-in { from { transform: translateY(105%); } }
+      @keyframes holo-sweep { from { background-size: 300% 100%; background-position: 100% 0; } to { background-size: 100% 100%; background-position: 0 0; } }
+      @keyframes faint-in { from { opacity: 0.15; } }
+      @keyframes art-in { from { opacity: 0; scale: 0.96; } }
+      @keyframes nudge { from { rotate: -90deg; } }
+      @keyframes hop { 0% { opacity: 0; translate: 0 -6px; } 50% { opacity: 1; translate: 0 -6px; } 100% { opacity: 1; translate: 0 0; } }
+
+      /* 2. Chapter rise */
+      .js [data-rise] { transition: opacity 600ms var(--ease-out), translate 600ms var(--ease-out); }
+      .js [data-rise]:not(.in) { opacity: 0; translate: 0 24px; }
+      .js .stamps .stamp {
+        transition: opacity 240ms var(--ease-io) calc(var(--i, 0) * 60ms), scale 240ms var(--ease-io) calc(var(--i, 0) * 60ms),
+          transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
+      }
+      .js .stamps:not(.in) .stamp { opacity: 0; scale: 1.08; }
+      .js .photo { transition: opacity 700ms var(--ease-out), translate 700ms var(--ease-out), rotate 700ms var(--ease-out); }
+      .js .photo:not(.in) { opacity: 0; translate: 0 24px; rotate: -2.5deg; }
+
+      /* 3. Visual settle (scroll-linked where supported) */
+      @supports (animation-timeline: view()) {
+        .settle { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+        .ph img { animation: drift linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+      }
+      .no-sda .settle { transition: transform 250ms var(--ease-out), scale 700ms var(--ease-out), translate 700ms var(--ease-out); }
+      .no-sda .settle:not(.in) { scale: 0.96; translate: 0 24px; }
+      @keyframes settle { from { scale: 0.96; translate: 0 24px; } to { scale: 1; translate: 0 0; } }
+      @keyframes drift { from { scale: 1; } to { scale: 1.06; } }
+    }
+
+    /* Scrollbar: a little holo pill */
+    @supports not selector(::-webkit-scrollbar) {
+      html { scrollbar-color: var(--lilac) transparent; }
+    }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--lilac), var(--cyan) 50%, var(--pink));
+      border: 3px solid var(--pearl);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--violet); }
 
     /* ---------- Responsive ---------- */
     @media (max-width: 980px) {
@@ -1007,7 +1091,6 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition: none !important; }
-      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -1075,7 +1158,7 @@
       <div class="hero-grid">
         <div>
           <h1>Zhenhao <span class="serif">Sng</span></h1>
-          <p class="thesis">Building models<br>for <span class="holo">messy</span><br>decisions.</p>
+          <p class="thesis"><span class="w"><span style="--i:0">Building</span></span> <span class="w"><span style="--i:1">models</span></span><br><span class="w"><span style="--i:2">for</span></span> <span class="w"><span class="holo" style="--i:3">messy</span></span><br><span class="w"><span style="--i:4">decisions.</span></span></p>
           <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
           <div class="hero-actions">
             <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
@@ -1142,12 +1225,12 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas></div>
-          <h2 class="serif">selected work</h2>
+          <h2 class="serif" data-rise>selected work</h2>
         </div>
         <p class="section-note">Five projects. The rest are in the archive.</p>
       </div>
 
-      <article class="edition reveal" id="hiv">
+      <article class="edition" id="hiv">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">01</span>
         </div>
@@ -1174,7 +1257,8 @@
           </div>
         </div>
         <div class="visual v-violet">
-          <div class="pareto-card">
+          <a class="v-pill" href="work/hiv-allocation/" tabindex="-1" aria-hidden="true">Explore project →</a>
+          <div class="pareto-card settle">
             <svg class="pareto" viewBox="0 0 560 330" role="img" aria-labelledby="pareto-title">
 <title id="pareto-title">Nine allocations compared: NSGA-II front points reach high DALYs at low inequity; greedy has high DALYs but higher inequity; simulated annealing runs are dominated.</title>
 <line x1="58" x2="542" y1="263.0" y2="263.0" stroke="#E7E4EA"/>
@@ -1237,7 +1321,7 @@
         </div>
       </article>
 
-      <article class="edition reveal" id="quant">
+      <article class="edition" id="quant">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">02</span>
         </div>
@@ -1266,8 +1350,9 @@
           </div>
         </div>
         <div class="visual v-violet">
+          <a class="v-pill" href="https://www.alphanova.tech/blog/zhenhao-sng" tabindex="-1" aria-hidden="true">AlphaNova interview ↗</a>
           <span class="visual-caption">IQC 2026, in-sample</span>
-          <div class="readout" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova Competition 5 #140, 2 of the 160 surviving signals.">
+          <div class="readout settle" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova Competition 5 #140, 2 of the 160 surviving signals.">
             <div class="tile">
               <div class="small">Vol × sentiment · D0</div>
               <div class="num">2.21</div>
@@ -1289,7 +1374,7 @@
         </div>
       </article>
 
-      <article class="edition reveal" id="choice">
+      <article class="edition" id="choice">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">03</span>
         </div>
@@ -1312,7 +1397,8 @@
           </div>
         </div>
         <div class="visual v-pink">
-          <div class="pipeline" role="img" aria-label="Model flow: choice tasks, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
+          <span class="v-pill" aria-hidden="true">Case study soon</span>
+          <div class="pipeline settle" role="img" aria-label="Model flow: choice tasks, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
             <div class="node"><small>input</small>Choice tasks</div>
             <span class="arrow">→</span>
             <div class="node"><small>baseline</small>Conditional logit</div>
@@ -1326,7 +1412,7 @@
         </div>
       </article>
 
-      <article class="edition reveal" id="cbs">
+      <article class="edition" id="cbs">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">04</span>
         </div>
@@ -1352,7 +1438,8 @@
           </div>
         </div>
         <div class="visual v-mist">
-          <div class="fid" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
+          <a class="v-pill" href="work/synthetic-credit/" tabindex="-1" aria-hidden="true">Explore project →</a>
+          <div class="fid settle" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
             <h4>Fidelity by synthesis method</h4>
             <p>Account-balance series, score out of 100, from the tool's stats summary</p>
             <div class="fid-row" title="Copula: 80.7 / 100"><span>Copula</span><div class="fid-track"><div class="fid-bar" style="--w:80.7%"></div><span class="fid-val">80.7</span></div></div>
@@ -1366,7 +1453,7 @@
         </div>
       </article>
 
-      <article class="edition reveal" id="birds">
+      <article class="edition" id="birds">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">05</span>
         </div>
@@ -1388,9 +1475,10 @@
           </div>
         </div>
         <div class="visual v-lemon">
+          <a class="v-pill" href="work/bird-deterrent/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <span class="visual-caption pixel">CAM_01 / CANTEEN</span>
           <button class="sound-toggle pixel" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
-          <canvas class="birdcam" id="birdcam" role="img" aria-label="Pixel animation: a camera detects a myna on a canteen table, and a hawk decoy on a rollercoaster-style ceiling rail swoops down to it and screeches, scaring it away."></canvas>
+          <canvas class="birdcam settle" id="birdcam" role="img" aria-label="Pixel animation: a camera detects a myna on a canteen table, and a hawk decoy on a rollercoaster-style ceiling rail swoops down to it and screeches, scaring it away."></canvas>
         </div>
       </article>
     </div>
@@ -1402,7 +1490,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas></div>
-          <h2 class="serif">results</h2>
+          <h2 class="serif" data-rise>results</h2>
         </div>
       </div>
       <div class="stickers">
@@ -1425,7 +1513,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas></div>
-          <h2 class="serif">archive</h2>
+          <h2 class="serif" data-rise>archive</h2>
         </div>
         <p class="section-note">Smaller projects, research and pitches.</p>
       </div>
@@ -1530,7 +1618,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas></div>
-          <h2 class="serif">experience</h2>
+          <h2 class="serif" data-rise>experience</h2>
         </div>
       </div>
       <ol class="transit">
@@ -1563,7 +1651,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="heart" aria-hidden="true"></canvas></div>
-          <h2 class="serif">about</h2>
+          <h2 class="serif" data-rise>about</h2>
         </div>
       </div>
       <div class="about-grid">
@@ -1599,7 +1687,7 @@
 
         <div class="purikura">
           <figure class="photo">
-            <img src="assets/img/zhenhao.jpg" width="1200" height="900" loading="lazy" alt="Zhenhao in sunglasses, smiling at a hilltop lookout above rice fields, a lake and distant mountains.">
+            <div class="ph"><img src="assets/img/zhenhao.jpg" width="1200" height="900" loading="lazy" alt="Zhenhao in sunglasses, smiling at a hilltop lookout above rice fields, a lake and distant mountains."></div>
           </figure>
           <div class="currently">
             <div class="cur-block">
@@ -1697,8 +1785,35 @@
     function store(v) { try { localStorage.setItem('froyo-mode', v); } catch (e) {} }
     function stored() { try { return localStorage.getItem('froyo-mode'); } catch (e) { return null; } }
 
+    var EASE = 'cubic-bezier(.16, 1, .3, 1)';
+    var win = world.querySelector('.window');
+    var closing = null;
+
     function setMode(explore, scroll) {
-      world.hidden = !explore;
+      var animate = scroll && !reduced && typeof win.animate === 'function';
+      if (closing) { closing.cancel(); closing = null; }
+      if (explore) {
+        var wasHidden = world.hidden;
+        world.hidden = false;
+        if (animate && wasHidden) {
+          win.animate([
+            { clipPath: 'inset(8% 12% round 40px)', transform: 'scale(0.92)', opacity: 0 },
+            { clipPath: 'inset(0 round 12px)', transform: 'none', opacity: 1 }
+          ], { duration: window.innerWidth < 640 ? 450 : 600, easing: EASE });
+          win.querySelector('.scene-legend').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 200, easing: EASE, fill: 'backwards' });
+        }
+      } else if (!world.hidden) {
+        var r = world.getBoundingClientRect();
+        if (animate && r.bottom > 0 && r.top < window.innerHeight) {
+          closing = win.animate([
+            { transform: 'none', opacity: 1 },
+            { transform: 'scale(0.94)', opacity: 0 }
+          ], { duration: 300, easing: 'cubic-bezier(.65, 0, .35, 1)' });
+          closing.onfinish = function () { world.hidden = true; closing = null; };
+        } else {
+          world.hidden = true;
+        }
+      }
       document.querySelectorAll('[data-mode-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', explore); });
       document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = explore ? 'Close world' : 'Explore world'; });
       store(explore ? 'explore' : 'quick');
@@ -1712,7 +1827,8 @@
       b.addEventListener('click', function () { setMode(world.hidden, true); });
     });
     document.querySelectorAll('[data-quick-view]').forEach(function (b) {
-      b.addEventListener('click', function () { setMode(false, false); });
+      // The close button animates; "View work" jumps, so it must hide at once
+      b.addEventListener('click', function () { setMode(false, b.tagName === 'BUTTON'); });
     });
     if (stored() === 'explore') setMode(true, false);
 
@@ -1750,7 +1866,27 @@
     });
     var controller = null, playing = false, loading = false;
 
+    // CD spins up and down instead of snapping
+    var spin = null, spinRaf = 0;
+    function spinTo(target) {
+      if (reduced || typeof cd.animate !== 'function') return;
+      if (!spin) {
+        spin = cd.animate([{ rotate: '0deg' }, { rotate: '360deg' }], { duration: 24000, iterations: Infinity });
+        spin.playbackRate = 0;
+      }
+      cancelAnimationFrame(spinRaf);
+      var from = spin.playbackRate, t0 = performance.now(), dur = target ? 800 : 600;
+      if (target) spin.play();
+      (function step(now) {
+        var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        spin.playbackRate = from + (target - from) * e;
+        if (k < 1) spinRaf = requestAnimationFrame(step);
+        else if (!target) spin.pause();
+      })(t0);
+    }
+
     function setPlaying(on) {
+      if (on !== playing) spinTo(on ? 1 : 0);
       playing = on;
       cd.classList.toggle('playing', on);
       cd.setAttribute('aria-label', on ? 'Pause FROYO RADIO' : 'Play FROYO RADIO');
@@ -1796,8 +1932,10 @@
     });
     document.querySelector('[data-radio-close]').addEventListener('click', function () {
       if (controller) controller.pause();
-      radio.hidden = true;
       setPlaying(false);
+      if (reduced || typeof radio.animate !== 'function') { radio.hidden = true; return; }
+      radio.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(8px)' }],
+        { duration: 200, easing: 'cubic-bezier(.65, 0, .35, 1)' }).onfinish = function () { radio.hidden = true; };
     });
 
     // ----- Nav: slightly tighter once scrolled -----
@@ -1844,18 +1982,22 @@
       });
     });
 
-    // ----- Reveal on scroll -----
-    var cards = document.querySelectorAll('.reveal');
+    // ----- Arrival class comes off once the hero has landed -----
+    setTimeout(function () { document.documentElement.classList.remove('arrive'); }, 1800);
+
+    // ----- One observer: chapter rise, stamps, photo, settle fallback -----
+    document.querySelectorAll('.stamps .stamp').forEach(function (s, i) { s.style.setProperty('--i', i); });
+    var risers = document.querySelectorAll('[data-rise], .stamps, .photo, .no-sda .settle');
     if (reduced || !('IntersectionObserver' in window)) {
-      cards.forEach(function (c) { c.classList.add('in'); });
+      risers.forEach(function (c) { c.classList.add('in'); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.1 });
-    cards.forEach(function (c) { io.observe(c); });
+    }, { threshold: 0.2 });
+    risers.forEach(function (c) { io.observe(c); });
   })();
 </script>
 <script src="pixel.js?v=6"></script>

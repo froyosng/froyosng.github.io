@@ -318,6 +318,19 @@ footer .wrap { display: flex; justify-content: space-between; align-items: flex-
 .still-online span { color: var(--violet); }
 .frog canvas { display: block; height: 28px; width: auto; image-rendering: pixelated; }
 
+/* Scrollbar: a little holo pill */
+@supports not selector(::-webkit-scrollbar) {
+  html { scrollbar-color: var(--lilac) transparent; }
+}
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--lilac), var(--cyan) 50%, var(--pink));
+  border: 3px solid var(--pearl);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--violet); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .chart-grid { grid-template-columns: 1fr; }
