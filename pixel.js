@@ -486,7 +486,6 @@
         ski = !ski;
         say(ski ? 'SKI MODE!' : 'BACK TO WORK');
         btn.setAttribute('aria-label', ski ? 'Pixel Zhenhao in ski gear' : 'Pixel Zhenhao');
-        if (ski && clicks === 3 && window.froyoToast) window.froyoToast('+1 SIGNAL', 'Ski mode unlocked.');
       }
       draw();
     });

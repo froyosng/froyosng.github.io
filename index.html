@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zhenhao Sng</title>
-  <meta name="description" content="Zhenhao Sng builds models for messy decisions — machine learning, quantitative research, optimisation and systems.">
+  <meta name="description" content="Zhenhao Sng is an engineering student at SUTD, on exchange at National Taiwan University. Quant research, machine learning and optimisation projects.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Crect width='14' height='24'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg fill='%237657FF'%3E%3Cpath clip-path='url(%23c)' d='M12 0C12.8 6.5 17.5 11.2 24 12 17.5 12.8 12.8 17.5 12 24 11.2 17.5 6.5 12.8 0 12 6.5 11.2 11.2 6.5 12 0Z'/%3E%3Crect x='13' y='9.5' width='3' height='5'/%3E%3Crect x='16' y='10.5' width='3' height='3'/%3E%3Crect x='19' y='11' width='3' height='2'/%3E%3Crect x='22' y='11.5' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,12 +31,12 @@
       --lilac: #C9B9FF;
       --galaxy: #221A4A;
 
-      /* Kitsch / attitude accents — rare */
+      /* Accents */
       --red: #E83645;
       --wine: #7F1830;
       --sports-white: #FFF8F5;
 
-      /* Surprise — very rare */
+      /* Accents */
       --lemon: #F4ED63;
 
       --tint-violet: #EEEAFF;
@@ -48,7 +48,7 @@
       --serif: "Instrument Serif", Georgia, serif;
       --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       --pixel: "Silkscreen", var(--mono);
-      --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+      --ui: var(--sans);
 
       --radius-sm: 8px;
       --radius-md: 16px;
@@ -93,12 +93,7 @@
 
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 
-    .mono {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
+    .small { font-size: 13px; color: var(--graphite); }
 
     .pixel { font-family: var(--pixel); letter-spacing: 0.02em; }
     .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
@@ -123,12 +118,12 @@
       transition: transform var(--motion-system), background var(--motion-system), box-shadow var(--motion-system);
     }
 
-    .btn:active, .chip:active, .syn-toggle:active, .depth button:active, .menu-btn:active, .radio-btn:active { transform: scale(0.975); }
+    .btn:active, .chip:active, .syn-toggle:active, .menu-btn:active, .radio-btn:active { transform: scale(0.975); }
 
     .btn-ink { background: var(--ink); color: var(--pearl); }
     .btn-ink:hover { background: #2c2935; }
 
-    /* The one glossy, almost-edible button */
+    /* Explore button */
     .btn-explore {
       color: var(--violet-deep);
       border-color: rgba(118, 87, 255, 0.45);
@@ -153,7 +148,7 @@
       font-family: var(--sans);
       font-weight: 700;
       font-size: 11px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.03em;
       line-height: 1.2;
       color: var(--sports-white);
       background: var(--ink);
@@ -166,12 +161,10 @@
 
     .p-qnt { background: var(--red); }
     .p-ml  { background: var(--violet); }
-    .p-cv  { background: var(--cyan); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-sys { background: var(--ink); }
     .p-lab { background: var(--lilac); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-fin { background: var(--wine); }
     .p-biz { background: var(--pink); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
-    .p-opt { background: #0B6E87; }
     .p-psy { background: var(--lemon); color: var(--ink); outline-color: rgba(23, 21, 29, 0.45); }
     .p-all { background: var(--paper); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); outline-color: transparent; }
 
@@ -253,8 +246,7 @@
       color: var(--graphite);
     }
 
-    .hero-meta .pixel { color: var(--violet); font-size: 12px; text-transform: none; }
-    .hero-meta b { color: var(--ink); font-weight: 500; }
+    .hero-meta .pixel { color: var(--violet); font-size: 12px; }
 
     .hero-grid {
       display: grid;
@@ -282,7 +274,7 @@
       margin: 0 0 28px;
     }
 
-    /* Controlled bad taste: one holographic WordArt word */
+    /* Holo text */
     .holo {
       background: linear-gradient(100deg, var(--lilac) 0%, var(--cyan) 30%, #fff 50%, var(--pink) 72%, var(--lilac) 100%);
       -webkit-background-clip: text;
@@ -291,11 +283,8 @@
       -webkit-text-stroke: 2px var(--ink);
     }
 
-    .support { max-width: 520px; font-size: 19px; color: #3d3a45; margin: 0 0 24px; }
+    .support { max-width: 520px; font-size: 19px; color: #3d3a45; margin: 0 0 36px; }
 
-    .hero-patches { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 36px; }
-    .hero-patches .patch { font-size: 10px; padding: 4px 8px; opacity: 0.72; transition: opacity var(--motion-system); }
-    .hero-patches .patch:hover { opacity: 1; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
     .hero-art { position: relative; height: 480px; }
@@ -310,7 +299,7 @@
       filter: blur(8px);
     }
 
-    /* The one chrome object: a CD */
+    /* CD */
     .cd {
       position: absolute;
       right: 0;
@@ -338,10 +327,11 @@
       box-shadow: 0 0 0 4px #fff, 0 10px 24px -10px rgba(23, 21, 29, 0.5);
       transform: rotate(-7deg);
       z-index: 2;
+      text-decoration: none;
     }
 
     .hero-sticker strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 22px; line-height: 1; }
-    .hero-sticker span { font-family: var(--pixel); font-size: 10px; }
+    .hero-sticker span { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
 
     .me {
       position: absolute;
@@ -365,7 +355,7 @@
       background: var(--paper);
       border: 1px solid var(--ink);
       border-radius: 10px 10px 10px 2px;
-      font-size: 11px;
+      font-size: 12px;
       white-space: nowrap;
       opacity: 0;
       transform: translateY(4px);
@@ -413,20 +403,14 @@
       font-size: 11px;
     }
 
-    .dots { display: flex; gap: 6px; }
-    .dots i { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(23, 21, 29, 0.25); }
-    .dots i:nth-child(1) { background: var(--pink); }
-    .dots i:nth-child(2) { background: var(--lemon); }
-    .dots i:nth-child(3) { background: var(--cyan); }
-    .titlebar .pixel { margin-left: 2px; }
+    .titlebar .pixel { margin-left: 2px; font-size: 12px; }
     .tb-star { width: 14px; height: 14px; color: var(--violet); flex: none; }
 
     .titlebar .close {
       margin-left: auto;
       border: 0;
       background: none;
-      font-family: var(--pixel);
-      font-size: 11px;
+      font: 500 13px var(--sans);
       color: var(--graphite);
       cursor: pointer;
     }
@@ -448,7 +432,7 @@
       border: 1px solid var(--ink);
       border-radius: 6px;
       font-family: var(--pixel);
-      font-size: 11px;
+      font-size: 12px;
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
@@ -458,7 +442,7 @@
     .hot:hover .hot-label, .hot:focus-visible .hot-label { opacity: 1; }
 
     .scene-legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--line); }
-    .scene-legend .hint { font-size: 11px; color: var(--graphite); margin-right: 8px; align-self: center; }
+    .scene-legend .hint { font-size: 12px; color: var(--graphite); margin-right: 8px; align-self: center; }
 
     .chip {
       display: inline-flex;
@@ -474,7 +458,6 @@
       color: var(--ink);
     }
 
-    .chip b { font-family: var(--pixel); font-weight: 400; font-size: 10px; color: var(--violet); }
 
     /* ---------- Sections ---------- */
     section.block { padding: 96px 0; border-top: 1px solid var(--line); }
@@ -491,15 +474,11 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-family: var(--pixel);
-      font-size: 12px;
-      color: var(--violet);
       margin-bottom: 12px;
     }
 
     .px-icon { height: 18px; width: auto; image-rendering: pixelated; }
 
-    h2 { font-size: clamp(40px, 5.6vw, 72px); line-height: 0.95; letter-spacing: -0.04em; font-weight: 700; }
     h2.serif { font-size: clamp(56px, 8vw, 112px); letter-spacing: -0.03em; line-height: 0.9; }
 
     .section-note { color: var(--graphite); margin: 0; }
@@ -515,7 +494,7 @@
 
     .edition:last-child { border-bottom: 1px solid var(--line-strong); }
 
-    .ed-index { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .ed-index { display: flex; flex-direction: column; align-items: flex-start; }
 
     .ed-num {
       font-size: 120px;
@@ -526,10 +505,8 @@
       -webkit-text-stroke: 1.5px var(--ink);
     }
 
-    .ed-serial { color: var(--graphite); font-size: 11px; line-height: 1.5; }
-
     .ed-body { display: flex; flex-direction: column; }
-    .ed-kicker { color: var(--violet); margin-bottom: 12px; }
+    .ed-kicker { color: var(--violet); font-size: 14px; font-weight: 600; margin-bottom: 12px; }
 
     .edition h3 { font-size: clamp(30px, 3.2vw, 42px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; margin-bottom: 12px; }
 
@@ -539,6 +516,7 @@
     .ed-stat { display: flex; align-items: baseline; gap: 14px; margin: 8px 0 18px; flex-wrap: wrap; }
     .ed-stat strong { font-family: var(--mono); font-weight: 500; font-size: 44px; line-height: 1; letter-spacing: -0.03em; }
     .ed-stat span { color: var(--graphite); font-size: 14px; max-width: 220px; line-height: 1.35; }
+    .ed-body .ed-part { color: var(--ink); }
 
     .ed-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: auto; padding-top: 8px; }
     .tools { color: var(--graphite); margin: 0; }
@@ -568,9 +546,10 @@
     .v-mist { background: #F0EEF3; }
     .edition.no-tilt:hover .visual { transform: none; }
 
-    .visual-caption { position: absolute; top: 14px; left: 16px; font-family: var(--pixel); font-size: 10px; color: var(--graphite); }
+    .visual-caption { position: absolute; top: 14px; left: 16px; font-size: 13px; color: var(--graphite); }
+    .visual-caption.pixel { font-size: 12px; }
 
-    /* Playful label sticker, one per edition */
+    /* Label sticker */
     .label {
       position: absolute;
       right: 14px;
@@ -580,19 +559,17 @@
       border: 1px solid var(--ink);
       border-radius: 6px;
       font-family: var(--pixel);
-      font-size: 10px;
+      font-size: 12px;
       transform: rotate(3deg);
       box-shadow: 0 0 0 3px #fff;
     }
 
-    .label.top { top: 12px; bottom: auto; }
-    .label.red { background: var(--red); color: var(--sports-white); border-color: var(--red); }
 
     /* Quant readout */
     .readout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; max-width: 480px; }
     .tile { background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 14px; }
     .tile.wide { grid-column: span 2; display: flex; justify-content: space-between; align-items: end; gap: 16px; }
-    .tile .mono { color: var(--graphite); font-size: 11px; }
+    .tile .small { font-size: 12px; }
     .tile .num { font-family: var(--mono); font-size: 34px; line-height: 1.1; color: var(--violet); margin-top: 6px; }
     .tile .sub { font-size: 13px; color: var(--graphite); }
 
@@ -609,13 +586,13 @@
       text-align: center;
     }
 
-    .node small { display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; color: var(--graphite); text-transform: uppercase; }
+    .node small { display: block; font-size: 12px; font-weight: 400; color: var(--graphite); }
     .node.hl { background: var(--ink); color: var(--pearl); border-color: var(--ink); }
     .node.hl small { color: var(--chrome); }
     .node.out-pink { background: var(--pink); border-color: var(--ink); }
     .node.out-cyan { background: var(--cyan); border-color: var(--ink); }
     .node.out-pink small, .node.out-cyan small { color: var(--ink); }
-    .arrow { font-family: var(--pixel); color: var(--graphite); font-size: 12px; }
+    .arrow { color: var(--graphite); font-size: 14px; }
 
     .birdcam { width: 100%; max-width: 520px; border-radius: var(--radius-sm); border: 1px solid var(--line-strong); image-rendering: pixelated; display: block; }
 
@@ -628,69 +605,11 @@
       border: 1px solid var(--ink);
       background: var(--paper);
       color: var(--ink);
-      font-size: 10px;
+      font-size: 12px;
       cursor: pointer;
     }
 
     .sound-toggle[aria-pressed="true"] { background: var(--pink); }
-
-    /* ---------- Bubble simulator ---------- */
-    .sim {
-      position: relative;
-      width: 100%;
-      max-width: 560px;
-      background: var(--paper);
-      border: 1px solid var(--line-strong);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-    }
-
-    .sim-controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-bottom: 8px; font-size: 13px; }
-    .ctl { display: inline-flex; align-items: center; gap: 8px; }
-    .ctl input[type="range"] { width: 120px; accent-color: var(--violet); }
-    .ctl output { font-family: var(--mono); font-size: 13px; min-width: 2.2em; }
-    .seg { display: inline-flex; align-items: center; gap: 4px; }
-    .seg button { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--paper); color: var(--ink); cursor: pointer; }
-    .seg button[aria-pressed="true"] { background: var(--ink); color: var(--pearl); border-color: var(--ink); }
-    .ctl-check { display: inline-flex; align-items: center; gap: 6px; }
-    .ctl-check input:disabled, .ctl-check input:disabled + span { opacity: 0.4; }
-
-    .sim-chart { display: block; width: 100%; height: auto; touch-action: pan-y; }
-    .sim-chart .tick, .sim-chart .axis { font-family: var(--mono); font-size: 11px; fill: var(--graphite); }
-    .sim-chart .note { font-family: var(--mono); font-size: 11px; fill: var(--ink); }
-
-    .sim-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--graphite); margin: 2px 0 10px; }
-    .sim-legend i, .sim-tip i { display: inline-block; width: 18px; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
-    .key-open { border-color: #FF77B7; border-top-style: dashed !important; }
-    .key-ctrl { border-color: #7657FF; }
-
-    .sim-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .sim-stats div { border-top: 1px solid var(--line); padding-top: 8px; font-size: 12px; color: var(--graphite); line-height: 1.3; }
-    .sim-stats strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 18px; color: var(--ink); margin-bottom: 2px; }
-
-    .sim-tip {
-      position: absolute;
-      transform: translateX(-50%);
-      background: var(--ink);
-      color: var(--pearl);
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
-      line-height: 1.55;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .sim-tip b, .sim-tip span { display: block; font-weight: 500; }
-    .sim-tip .u { color: var(--chrome); }
-
-    .sim details { margin-top: 10px; font-size: 13px; }
-    .sim summary { cursor: pointer; color: var(--graphite); }
-    .sim table { width: 100%; border-collapse: collapse; margin-top: 8px; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
-    .sim th, .sim td { text-align: right; padding: 3px 6px; border-bottom: 1px solid var(--line); font-weight: 400; }
-    .sim th { color: var(--graphite); }
-    .sim th:first-child, .sim td:first-child { text-align: left; }
 
     /* ---------- HIV allocation scatter ---------- */
     .pareto-card {
@@ -754,7 +673,7 @@
     .sticker:nth-child(3n) { transform: rotate(-0.5deg); }
     .sticker:hover { transform: rotate(0) scale(1.04); }
 
-    .sticker strong { display: block; font-family: var(--mono); font-weight: 500; font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .sticker strong { display: block; font-weight: 700; font-size: 24px; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 6px; }
     .sticker span { font-size: 14px; color: var(--graphite); }
 
     .sticker-link { text-decoration: none; color: inherit; background: var(--lemon); border-color: var(--ink); }
@@ -798,7 +717,7 @@
       bottom: 14px;
       width: 4px;
       border-radius: 2px;
-      background: linear-gradient(180deg, var(--violet), var(--pink), var(--cyan));
+      background: var(--lilac);
     }
 
     .stop { position: relative; display: grid; grid-template-columns: 26px minmax(0, 280px) minmax(0, 1fr); gap: 20px; padding: 16px 0; align-items: baseline; }
@@ -818,67 +737,13 @@
     .stop h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
     .stop .role { color: var(--graphite); font-size: 14px; }
     .stop p { margin: 0; color: #3d3a45; }
+    .stop p a { font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--pink); white-space: nowrap; }
 
     /* ---------- About + contact ---------- */
     .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
     .about-col { display: grid; gap: 24px; }
 
-    /* Résumé vending machine */
-    .dispenser {
-      position: relative;
-      max-width: 330px;
-      padding: 16px 18px 14px;
-      border-radius: 18px 18px 10px 10px;
-      background: linear-gradient(180deg, #2a2733 0%, var(--ink) 100%);
-      color: var(--pearl);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 16px 30px -18px rgba(23, 21, 29, 0.6);
-    }
-
-    .disp-head { font-size: 12px; color: var(--lemon); letter-spacing: 0.06em; }
-
-    .disp-window {
-      position: relative;
-      height: 92px;
-      margin: 12px 0;
-      border-radius: 8px;
-      overflow: hidden;
-      background: linear-gradient(135deg, rgba(201, 185, 255, 0.35), rgba(147, 232, 255, 0.25));
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-      display: grid;
-      place-items: center;
-    }
-
-    .disp-item {
-      padding: 14px 12px;
-      background: var(--paper);
-      color: var(--ink);
-      border-radius: 4px;
-      font-size: 11px;
-      box-shadow: 3px 3px 0 var(--pink);
-    }
-
-    .dispenser.thunk .disp-item { animation: drop var(--motion-toy) cubic-bezier(.5, 0, 1, .5) forwards; }
-    @keyframes drop { to { transform: translateY(90px) rotate(8deg); opacity: 0; } }
-
-    .disp-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .disp-row .mono { color: var(--chrome); }
-
-    .disp-btn {
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--red);
-      color: var(--sports-white);
-      font-size: 11px;
-      text-decoration: none;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 3px 0 var(--wine);
-      transition: transform var(--motion-system), box-shadow var(--motion-system);
-    }
-
-    .disp-btn:active { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 var(--wine); }
-    .disp-slot { height: 10px; margin-top: 12px; border-radius: 4px; background: #000; box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8); }
-    .disp-note { margin: 8px 0 0; font-size: 12px; color: var(--chrome); font-family: var(--serif); font-style: italic; }
-
-    /* Purikura panel: the one place allowed to get dense */
+    /* About side panel */
     .purikura {
       position: relative;
       padding: 22px;
@@ -890,34 +755,10 @@
       border: 1px solid var(--line-strong);
     }
 
-    .member-card {
-      position: relative;
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--ink);
-      background: linear-gradient(115deg, #F3EEFF 0%, #E3F8FF 35%, #FFFFFF 50%, #FFE6F2 70%, #EDE8FF 100%);
-      box-shadow: 0 0 0 4px #fff, 0 14px 30px -18px rgba(34, 26, 74, 0.5);
-      transform: rotate(-1.5deg);
-      margin-bottom: 26px;
-    }
-
-    .mc-top { display: flex; justify-content: space-between; font-size: 10px; color: var(--violet-deep); }
-    .mc-name { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin: 14px 0 4px; }
-    .mc-meta { color: #3d3a45; line-height: 1.6; }
-    .mc-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; }
-    .mc-foot .star-ico { width: 26px; height: 26px; color: var(--violet); }
-
-    .barcode {
-      width: 120px;
-      height: 26px;
-      background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 3px, var(--ink) 3px 4px, transparent 4px 7px, var(--ink) 7px 10px, transparent 10px 11px);
-    }
-
     .cur-block { margin-bottom: 18px; }
     .cur-block:last-child { margin-bottom: 0; }
-    .cur-label { display: block; font-size: 10px; color: var(--violet); margin-bottom: 6px; }
+    .cur-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--violet); margin-bottom: 6px; }
     .cur-big { font-family: var(--serif); font-style: italic; font-size: 30px; line-height: 1.05; margin: 0; }
-    .star-bit { font-style: normal; color: var(--pink); }
     .cur-small { margin: 4px 0 0; font-size: 14px; color: var(--graphite); }
 
     .stick-row { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -932,8 +773,6 @@
       font-weight: 500;
     }
 
-    .stk:nth-child(3n+1) { transform: rotate(-1.5deg); }
-    .stk:nth-child(3n+2) { transform: rotate(1deg); }
     .stk em { font-family: var(--serif); font-size: 13px; color: var(--graphite); margin-left: 4px; }
     .stk-lemon { background: var(--lemon); border-color: var(--ink); }
     .stk-lemon em { color: #3d3a45; }
@@ -941,17 +780,23 @@
     .stk-pink { background: var(--pink); border-color: var(--ink); }
     .about-body { padding: 24px; font-size: 18px; }
     .about-body p { margin: 0 0 12px; }
+    .about-body blockquote { margin: 16px 0 0; padding-left: 16px; border-left: 3px solid var(--lilac); font-size: 16px; color: #3d3a45; }
+    .about-body blockquote p { margin: 0 0 10px; }
+    .about-body .src { margin: 0; font-size: 14px; color: var(--graphite); }
+    .about-body .src a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--pink); }
+    .win-h { font-size: 15px; font-weight: 600; padding: 20px 24px 0; }
 
-    .contact-links { list-style: none; margin: 0; padding: 12px 24px 20px; }
-    .contact-links li { padding: 12px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 12px; }
+    .contact-links { list-style: none; margin: 0; padding: 4px 24px 20px; }
+    .contact-links li { padding: 12px 0; border-bottom: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
     .contact-links li:last-child { border-bottom: 0; }
     .contact-links a { font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--pink); }
+    .contact-links .aside { display: block; text-align: right; font-size: 13px; color: var(--graphite); margin-top: 4px; }
 
     /* ---------- Footer ---------- */
     footer { padding: 40px 0 56px; border-top: 1px solid var(--line); }
     footer .wrap { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
     .still-online { font-family: var(--pixel); font-size: 12px; }
-    .still-online span { display: block; color: var(--violet); }
+    .still-online span { color: var(--violet); }
     .foot-links { display: flex; gap: 18px; color: var(--graphite); font-size: 14px; }
     .foot-links a { text-decoration: none; }
     .foot-links a:hover { color: var(--ink); }
@@ -983,33 +828,10 @@
 
     .toast.show { transform: none; }
     .toast .star-ico { color: var(--lemon); width: 20px; height: 20px; }
-    .toast strong { display: block; font-family: var(--pixel); font-weight: 400; font-size: 12px; color: var(--lemon); }
+    .toast strong { display: block; font-size: 13px; font-weight: 700; color: var(--lemon); }
     .toast .msg { font-family: var(--ui); font-size: 14px; }
 
-    /* ---------- Brief / full synopsis ---------- */
-    .head-side { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-    .depth-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-    .depth {
-      display: inline-flex;
-      padding: 3px;
-      border-radius: 999px;
-      background: rgba(23, 21, 29, 0.06);
-    }
-
-    .depth button {
-      border: 0;
-      background: none;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font: 600 13px var(--ui);
-      color: var(--graphite);
-      cursor: pointer;
-      transition: background var(--motion-system), color var(--motion-system), transform var(--motion-system);
-    }
-
-    .depth button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(23, 21, 29, 0.15); }
-
+    /* ---------- Synopsis ---------- */
     .syn-toggle {
       align-self: flex-start;
       margin: 0 0 14px;
@@ -1031,7 +853,6 @@
     .synopsis.open { grid-template-rows: 1fr; opacity: 1; }
     .synopsis > div { overflow: hidden; min-height: 0; }
 
-    body[data-depth="brief"] .row p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
     /* Hand-drawn spiral notes: show what pressing does */
     .scribble { display: flex; align-items: flex-end; gap: 2px; color: var(--ink); pointer-events: none; }
@@ -1040,11 +861,9 @@
     .spiral.flip { transform: scaleX(-1); }
 
     .sc-cd { position: absolute; right: 0; bottom: 70px; z-index: 4; flex-direction: column; align-items: flex-end; text-align: right; }
-    .sc-disp { position: absolute; left: calc(100% + 10px); bottom: 34px; flex-direction: column; align-items: flex-start; }
 
     /* ---------- Passport stamps ---------- */
     .stamp-head { margin: 72px 0 24px; }
-    .stamp-head .section-label { display: flex; margin-bottom: 8px; }
     .stamp-head h3 { font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.03em; font-weight: 700; }
 
     .stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px 18px; }
@@ -1083,9 +902,9 @@
       opacity: 0.8;
     }
 
-    .st-no { font-size: 10px; }
+    .st-no { font-size: 12px; }
     .st-city { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin: 8px 0 4px; text-transform: uppercase; color: var(--ink); }
-    .st-date { font-size: 11px; }
+    .st-date { font-size: 13px; }
     .st-prog { font-size: 14px; font-weight: 600; color: var(--ink); margin: 12px 0 4px; }
     .st-what { font-size: 14px; color: #3d3a45; line-height: 1.45; }
 
@@ -1108,7 +927,7 @@
       border: 1px solid var(--ink);
       background: var(--paper);
       color: var(--ink);
-      font-size: 11px;
+      font-size: 12px;
       cursor: pointer;
       box-shadow: 0 0 0 3px #fff;
     }
@@ -1120,11 +939,11 @@
     .radio { position: fixed; left: 20px; bottom: 20px; z-index: 25; width: 280px; }
     .radio[hidden] { display: none; }
     .radio .titlebar { gap: 6px; }
-    .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 10px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
+    .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 12px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
     .radio .titlebar button:hover { color: var(--ink); }
     .radio-screen { max-height: 152px; overflow: hidden; background: #121212; transition: max-height var(--motion-toy) ease; }
     .radio.collapsed .radio-screen { max-height: 0; }
-    .radio .np { margin-left: auto; font-family: var(--pixel); font-size: 10px; color: var(--graphite); }
+    .radio .np { margin-left: auto; font-family: var(--pixel); font-size: 12px; color: var(--graphite); }
     .radio:not([hidden]) { animation: pop-in var(--motion-toy) cubic-bezier(.2, .9, .3, 1.1); }
     @keyframes pop-in { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
     .radio-screen iframe { display: block; width: 100%; height: 152px; border: 0; }
@@ -1138,7 +957,6 @@
       .hero-grid { grid-template-columns: 1fr; }
       .hero-art { height: 400px; max-width: 520px; }
       .edition { grid-template-columns: 1fr; gap: 20px; }
-      .ed-index { flex-direction: row; align-items: flex-end; flex-wrap: wrap; }
       .ed-num { font-size: 88px; }
       .section-head { grid-template-columns: 1fr; }
       .row { grid-template-columns: 80px minmax(0, 1fr) 100px; }
@@ -1163,8 +981,6 @@
       section.block { padding: 64px 0; }
       .visual { padding: 44px 14px 52px; min-height: 280px; }
       .readout { grid-template-columns: 1fr; }
-      .sim-stats { grid-template-columns: 1fr; }
-      .ctl input[type="range"] { width: 100px; }
       .tile.wide { grid-column: auto; flex-direction: column; align-items: flex-start; }
       .pipeline { flex-direction: column; }
       .arrow { transform: rotate(90deg); }
@@ -1177,8 +993,6 @@
       .topbar { padding: 8px 12px 0; }
       .radio { left: 16px; right: 16px; width: auto; }
       .sc-cd { display: none; }
-      .sc-disp { position: static; margin-top: 10px; }
-      .dispenser { max-width: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1219,7 +1033,7 @@
       <a href="#about">About</a>
       <a href="slides/zhenhao_sng_resume.pdf">Résumé ↗</a>
       <button class="btn btn-explore" type="button" data-mode-toggle aria-pressed="false">
-        <span data-mode-label>Explore</span> <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
+        <span data-mode-label>Explore world</span> <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
       </button>
     </nav>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu>☰</button>
@@ -1244,23 +1058,16 @@
   <!-- HERO -->
   <div class="hero">
     <div class="wrap">
-      <div class="hero-meta mono">
-        <span class="pixel">FROYO SYSTEM / 2026</span>
+      <div class="hero-meta small">
+        <span class="pixel">FROYO</span>
         <span class="hide-sm">SUTD × NTU · Singapore ↔ Taipei</span>
-        <span>Mode: <b data-mode-status>Quick view</b></span>
       </div>
 
       <div class="hero-grid">
         <div>
           <h1>Zhenhao <span class="serif">Sng</span></h1>
           <p class="thesis">Building models<br>for <span class="holo">messy</span><br>decisions.</p>
-          <p class="support">Machine learning, optimisation and financial analysis for problems that don't arrive neatly packaged.</p>
-          <div class="hero-patches" aria-label="Areas">
-            <span class="patch p-qnt">QNT</span>
-            <span class="patch p-ml">ML</span>
-            <span class="patch p-cv">CV</span>
-            <span class="patch p-sys">SYS</span>
-          </div>
+          <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University.</p>
           <div class="hero-actions">
             <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
             <button class="btn btn-explore" type="button" data-enter-world>
@@ -1274,9 +1081,9 @@
           <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
           <span class="scribble sc-cd" aria-hidden="true"><svg class="spiral flip" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>psst, the CD plays my playlist</span></span>
           <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
-          <div class="hero-sticker" aria-label="Top in-sample Sharpe 2.21, WorldQuant IQC Gold tier">
-            <strong>2.21</strong><span>SHARPE · IQC GOLD TIER</span>
-          </div>
+          <a class="hero-sticker" href="#quant" aria-label="Top in-sample Sharpe 2.21, see the quant project">
+            <strong>2.21</strong><span>IN-SAMPLE SHARPE</span>
+          </a>
           <div class="floor-shadow" aria-hidden="true"></div>
           <button class="me" type="button" data-me aria-label="Pixel Zhenhao">
             <span class="me-bubble pixel" aria-hidden="true">HI!</span>
@@ -1293,8 +1100,8 @@
       <div class="window">
         <div class="titlebar">
           <svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg>
-          <span class="pixel">FROYO.OS — DESK.EXE</span>
-          <button class="close" type="button" data-quick-view>✕ QUICK VIEW</button>
+          <span class="pixel">FROYO.OS</span>
+          <button class="close" type="button" data-quick-view>✕ Close</button>
         </div>
         <div class="scene">
           <canvas id="scene" role="img" aria-label="Pixel-art desk: pixel Zhenhao at a desk with a live stock chart and code on two monitors, a Singapore skyline through the window, a bookshelf, posters, a plant and a sleeping cat."></canvas>
@@ -1304,17 +1111,17 @@
           <a class="hot" href="#archive" data-filter="finance" data-id="finance" aria-label="Finance projects" style="left:41.41%;top:10.42%;width:7.03%;height:22.92%"><span class="hot-label">FINANCE →</span></a>
           <a class="hot" href="#archive" data-filter="systems" data-id="systems" aria-label="Systems projects" style="left:72.66%;top:68.75%;width:5.08%;height:20.83%"><span class="hot-label">SYSTEMS →</span></a>
           <a class="hot" href="#about" data-id="me" aria-label="About Zhenhao" style="left:51.56%;top:50.00%;width:4.69%;height:22.92%"><span class="hot-label">HI, I'M ZHENHAO →</span></a>
-          <a class="hot" href="#archive" data-filter="strategy" data-id="ventures" aria-label="Strategy and ventures" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">VENTURES →</span></a>
+          <a class="hot" href="#archive" data-filter="strategy" data-id="ventures" aria-label="Pitches" style="left:82.03%;top:60.42%;width:7.81%;height:29.17%"><span class="hot-label">PITCHES →</span></a>
         </div>
         <div class="scene-legend">
           <span class="hint pixel">TAP AN OBJECT</span>
-          <a class="chip" href="#quant"><b>CHART</b> Quant</a>
-          <a class="chip" href="#archive" data-filter="systems"><b>PC</b> Systems</a>
-          <a class="chip" href="#archive" data-filter="research"><b>SHELF</b> Research</a>
-          <a class="chip" href="#archive" data-filter="finance"><b>POSTER</b> Finance</a>
-          <a class="chip" href="#archive" data-filter="strategy"><b>PLANT</b> Ventures</a>
-          <a class="chip" href="https://github.com/froyosng"><b>CODE</b> GitHub</a>
-          <a class="chip" href="#about"><b>ME</b> About</a>
+          <a class="chip" href="#quant">Quant</a>
+          <a class="chip" href="#archive" data-filter="systems">Systems</a>
+          <a class="chip" href="#archive" data-filter="research">Research</a>
+          <a class="chip" href="#archive" data-filter="finance">Finance</a>
+          <a class="chip" href="#archive" data-filter="strategy">Pitches</a>
+          <a class="chip" href="https://github.com/froyosng">GitHub</a>
+          <a class="chip" href="#about">About</a>
         </div>
       </div>
     </div>
@@ -1325,32 +1132,22 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas>01 / SELECTED WORK</div>
+          <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas></div>
           <h2 class="serif">selected work</h2>
         </div>
-        <div class="head-side">
-          <p class="section-note">Five editions that show how I approach a problem. Everything else is in the archive.</p>
-          <div class="depth-row">
-            <span class="scribble" aria-hidden="true"><span>brief, or the full story?</span><svg class="spiral" aria-hidden="true"><use href="#spiral-arrow"/></svg></span>
-            <div class="depth" role="group" aria-label="How much project detail to show">
-            <button type="button" data-depth-btn="brief" aria-pressed="true">Brief</button>
-            <button type="button" data-depth-btn="full" aria-pressed="false">Full synopsis</button>
-          </div>
-          </div>
-        </div>
+        <p class="section-note">Five projects. The rest are in the archive.</p>
       </div>
 
       <article class="edition reveal" id="hiv">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">01</span>
-          <span class="ed-serial mono">OPT-001<br>Summer 2026</span>
-          <span class="patch p-opt">OPT</span>
         </div>
         <div class="ed-body">
-          <span class="ed-kicker mono">Multi-objective optimisation</span>
+          <span class="ed-kicker">Multi-objective optimisation · Summer 2026</span>
           <h3>$200M, 46 countries, one trade-off</h3>
           <p class="ed-sub">Allocating HIV funding when impact and fairness disagree.</p>
           <div class="ed-stat"><strong>−33%</strong><span>inequity at the knee point, keeping 98.6% of greedy's DALYs averted</span></div>
+          <p class="ed-part">I implemented the NSGA-II pipeline, the benchmark comparison and all plots.</p>
           <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-hiv"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
           <div class="synopsis" id="syn-hiv">
             <div inert>
@@ -1359,18 +1156,15 @@
             surveillance. Maximising DALYs averted and minimising inequity between countries pull in different
             directions, across 184 decision variables in a non-convex model.</p>
               <p>Our team of three compared a greedy heuristic, simulated annealing, NSGA-II and a reduced Gurobi
-            benchmark. I implemented the NSGA-II pipeline (encoding, non-dominated sorting, crowding distance,
-            budget-preserving crossover and mutation, repair, knee-point selection) plus the benchmark comparison
-            and all plots.</p>
+            benchmark.</p>
             </div>
           </div>
           <div class="ed-foot">
-            <p class="tools mono">Python · NSGA-II · Simulated annealing · Gurobi</p>
+            <p class="tools small">Python · NSGA-II · Simulated annealing · Gurobi</p>
             <a class="ed-link" href="work/hiv-allocation/">Explore project <span class="arr">→</span></a>
           </div>
         </div>
         <div class="visual v-violet">
-          <span class="visual-caption">PARETO_FRONT.CSV</span>
           <div class="pareto-card">
             <svg class="pareto" viewBox="0 0 560 330" role="img" aria-labelledby="pareto-title">
 <title id="pareto-title">Nine allocations compared: NSGA-II front points reach high DALYs at low inequity; greedy has high DALYs but higher inequity; simulated annealing runs are dominated.</title>
@@ -1404,8 +1198,7 @@
 <g class="pt"><title>SA λ = 0.75: 4,071,999 DALYs, inequity 125,507</title><circle cx="493.6" cy="66.6" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
 <g class="pt"><title>SA λ = 1: 4,100,415 DALYs, inequity 128,745</title><circle cx="510.1" cy="63.9" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
 <line x1="165.7" y1="56.6" x2="184.7" y2="80.6" stroke="#17151D" stroke-width="1"/>
-<text x="188.7" y="88.6" class="note">NSGA-II knee: 98.6% of greedy’s DALYs,</text>
-<text x="188.7" y="102.6" class="note">33% less inequity</text>
+<text x="188.7" y="88.6" class="note">knee point</text>
 <text x="322.5" y="63.1" class="note">greedy</text>
 <text x="170.7" y="267.2" class="note">SA, equity-weighted</text>
 </svg>
@@ -1432,91 +1225,84 @@
               </table>
             </details>
           </div>
-          <span class="label">PARETO CERTIFIED™</span>
         </div>
       </article>
 
       <article class="edition reveal" id="quant">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">02</span>
-          <span class="ed-serial mono">QNT-002<br>Edition 2026</span>
-          <span class="patch p-qnt">QNT</span>
         </div>
         <div class="ed-body">
-          <span class="ed-kicker mono">Signal research</span>
+          <span class="ed-kicker">Signal research · 2026</span>
           <h3>Signals that survive noise</h3>
           <p class="ed-sub">Alpha research for WorldQuant IQC and AlphaNova.</p>
-          <div class="ed-stat"><strong>2.21</strong><span>top in-sample Sharpe (Fitness 2.30), IQC Gold tier</span></div>
+          <div class="ed-stat"><strong>2.21</strong><span>top in-sample Sharpe</span></div>
+          <p class="ed-part">I caught a silent feature–target misalignment caused by MultiIndex column ordering.</p>
           <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-quant"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
           <div class="synopsis" id="syn-quant">
             <div inert>
               <p>For WorldQuant's IQC, I built (with a partner) market-neutral equity alphas across price, fundamental
-            and sentiment signals, reaching Gold tier and Stage 2 (top 22 in Singapore, #1,376 globally). To search
+            and sentiment signals, reaching Gold tier and Stage 2. To search
             faster I wrote a Python BRAIN API pipeline with an expression canonicaliser, template-based generation
             and SQLite experiment tracking.</p>
               <p>For AlphaNova, I built walk-forward Ridge ranking signals (z-scores, rank velocity) for 20 assets per
             timestamp; two passed the overfitting and originality checks for the prize-eligible Quality set. Of
             6,000+ participants, fewer than 1,000 signals passed initial checks and only 160 survived the overfitting,
-            look-ahead and correlation filters. Along the way I caught a silent feature–target misalignment caused by
-            MultiIndex column ordering.</p>
+            look-ahead and correlation filters.</p>
             </div>
           </div>
           <div class="ed-foot">
-            <p class="tools mono">Python · BRAIN API · SQLite · Ridge</p>
+            <p class="tools small">Python · BRAIN API · SQLite · Ridge</p>
             <a class="ed-link" href="https://www.alphanova.tech/blog/zhenhao-sng">AlphaNova interview <span class="arr">↗</span></a>
           </div>
         </div>
         <div class="visual v-violet">
-          <span class="visual-caption">IQC_2026 / IN-SAMPLE</span>
-          <div class="readout" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe above 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova rank 140 with Q140 quality badge.">
+          <span class="visual-caption">IQC 2026, in-sample</span>
+          <div class="readout" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova Competition 5 #140, 2 of the 160 surviving signals.">
             <div class="tile">
-              <div class="mono">Vol × sentiment · D0</div>
-              <div class="num" data-scramble="2.21+">2.21+</div>
+              <div class="small">Vol × sentiment · D0</div>
+              <div class="num">2.21</div>
               <div class="sub">Sharpe</div>
             </div>
             <div class="tile">
-              <div class="mono">GARP valuation · D1</div>
-              <div class="num" data-scramble="2.00">2.00</div>
+              <div class="small">GARP valuation · D1</div>
+              <div class="num">2.00</div>
               <div class="sub">Sharpe · Fitness 2.30</div>
             </div>
             <div class="tile wide">
               <div>
-                <div class="mono">AlphaNova competition 5</div>
-                <div class="num" data-scramble="#140">#140</div>
+                <div class="small">AlphaNova Competition 5</div>
+                <div class="num">#140</div>
               </div>
-              <div class="sub">2 of the 160 surviving signals · 6,000+ participants</div>
+              <div class="sub">2 of the 160 surviving signals</div>
             </div>
           </div>
-          <span class="label red">SIGNAL DETECTED ✦</span>
         </div>
       </article>
 
       <article class="edition reveal" id="choice">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">03</span>
-          <span class="ed-serial mono">ML-003<br>Edition 2026</span>
-          <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
-          <span class="ed-kicker mono">Predictive modelling</span>
+          <span class="ed-kicker">Predictive modelling · 2026</span>
           <h3>The discrete choice machine</h3>
           <p class="ed-sub">Predicting which car safety-feature bundle people choose.</p>
           <div class="ed-stat"><strong>1.145</strong><span>cross-validated log-loss · public leaderboard 1.202</span></div>
+          <p class="ed-part">I diagnosed a rank-deficient model matrix via QR decomposition and fixed it.</p>
           <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-choice"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
           <div class="synopsis" id="syn-choice">
             <div inert>
               <p>Analytics Edge Data Competition on Kaggle. I modelled the choice with conditional and mixed logit,
-            then added price-factor identification, task-fatigue effects and an XGBoost blend. Along the way I
-            diagnosed a rank-deficient model matrix via QR decomposition and fixed it.</p>
+            then added price-factor identification, task-fatigue effects and an XGBoost blend.</p>
             </div>
           </div>
           <div class="ed-foot">
-            <p class="tools mono">R · Mixed logit · XGBoost</p>
-            <span class="soon mono">Case study · soon</span>
+            <p class="tools small">R · Mixed logit · XGBoost</p>
+            <span class="soon small">Case study · soon</span>
           </div>
         </div>
         <div class="visual v-pink">
-          <span class="visual-caption">MODEL_FLOW.TXT</span>
           <div class="pipeline" role="img" aria-label="Model flow: choice tasks, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
             <div class="node"><small>input</small>Choice tasks</div>
             <span class="arrow">→</span>
@@ -1528,21 +1314,19 @@
             <span class="arrow">→</span>
             <div class="node out-pink"><small>output</small>Choice probabilities</div>
           </div>
-          <span class="label">MAKE A CHOICE</span>
         </div>
       </article>
 
       <article class="edition reveal" id="cbs">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">04</span>
-          <span class="ed-serial mono">ML-004<br>Credit Bureau SG</span>
-          <span class="patch p-ml">ML</span>
         </div>
         <div class="ed-body">
-          <span class="ed-kicker mono">Synthetic data</span>
+          <span class="ed-kicker">Synthetic data · 2026</span>
           <h3>Credit data that isn't real</h3>
           <p class="ed-sub">A synthetic data generator for Credit Bureau Singapore.</p>
           <div class="ed-stat"><strong>80.7</strong><span>/100 best fidelity: Copula, account-balance series</span></div>
+          <p class="ed-part">I led the CTGAN pipeline and designed the dual-view (Customer/Agency) dashboard.</p>
           <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-cbs"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
           <div class="synopsis" id="syn-cbs">
             <div inert>
@@ -1550,17 +1334,15 @@
             client demos, so our team of five built a generator that mimics it.</p>
               <p>The tool clusters banks' time series with K-medoids (k chosen by silhouette score), synthesises each
             cluster with seven methods (ARIMA, Holt-Winters, Prophet, Copula, Beta, Gaussian and CTGAN), scores
-            every method for fidelity and recommends the best. I led the CTGAN pipeline and designed the dual-view
-            (Customer/Agency) dashboard.</p>
+            every method for fidelity and recommends the best.</p>
             </div>
           </div>
           <div class="ed-foot">
-            <p class="tools mono">Python · Streamlit · CTGAN · K-medoids</p>
+            <p class="tools small">Python · Streamlit · CTGAN · K-medoids</p>
             <a class="ed-link" href="work/synthetic-credit/">Explore project <span class="arr">→</span></a>
           </div>
         </div>
         <div class="visual v-mist">
-          <span class="visual-caption">FIDELITY_REPORT.CSV</span>
           <div class="fid" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
             <h4>Fidelity by synthesis method</h4>
             <p>Account-balance series, score out of 100, from the tool's stats summary</p>
@@ -1578,31 +1360,28 @@
       <article class="edition reveal" id="birds">
         <div class="ed-index">
           <span class="ed-num" aria-hidden="true">05</span>
-          <span class="ed-serial mono">CV-005<br>DTI 2025</span>
-          <span class="patch p-cv">CV</span>
         </div>
         <div class="ed-body">
-          <span class="ed-kicker mono">Computer vision</span>
+          <span class="ed-kicker">Hawker Hawk · DTI 2025</span>
           <h3>A camera that scares birds</h3>
           <p class="ed-sub">CV detection wired to a physical deterrent.</p>
+          <p class="ed-part">I integrated the detection logic with the physical actuation.</p>
           <button class="syn-toggle" type="button" aria-expanded="false" aria-controls="syn-birds"><span>Read synopsis</span> <i aria-hidden="true">↓</i></button>
           <div class="synopsis" id="syn-birds">
             <div inert>
-              <p>A computer vision-triggered bird deterrent for the SUTD canteen. When a mynah is detected, a hawk
-            decoy on a ceiling-mounted rail swoops towards it and plays a hawk call to scare it away. I integrated
-            the detection logic with the physical actuation.</p>
+              <p>A computer vision-triggered bird deterrent for the SUTD canteen. When a myna is detected, a hawk
+            decoy on a ceiling-mounted rail swoops towards it and plays a hawk call to scare it away.</p>
             </div>
           </div>
           <div class="ed-foot">
-            <p class="tools mono">Computer vision · Hardware integration</p>
+            <p class="tools small">Computer vision · Hardware integration</p>
             <a class="ed-link" href="work/bird-deterrent/">Explore project <span class="arr">→</span></a>
           </div>
         </div>
         <div class="visual v-lemon">
-          <span class="visual-caption">CAM_01 / CANTEEN</span>
+          <span class="visual-caption pixel">CAM_01 / CANTEEN</span>
           <button class="sound-toggle pixel" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
-          <canvas class="birdcam" id="birdcam" role="img" aria-label="Pixel animation: a camera detects a mynah on a canteen table, and a hawk decoy on a rollercoaster-style ceiling rail swoops down to it and screeches, scaring it away."></canvas>
-          <span class="label">SCAN COMPLETE</span>
+          <canvas class="birdcam" id="birdcam" role="img" aria-label="Pixel animation: a camera detects a myna on a canteen table, and a hawk decoy on a rollercoaster-style ceiling rail swoops down to it and screeches, scaring it away."></canvas>
         </div>
       </article>
     </div>
@@ -1613,17 +1392,15 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-label"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas>02 / SIGNALS</div>
-          <h2>Signals detected</h2>
+          <div class="section-label"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas></div>
+          <h2 class="serif">results</h2>
         </div>
-        <p class="section-note">Results from competitions and challenges.</p>
       </div>
       <div class="stickers">
         <div class="sticker red"><strong>GOLD · TOP 22 SG</strong><span>WorldQuant IQC 2026 · Stage 2 · #1,376 global</span></div>
         <div class="sticker"><strong>TOP 10 SG</strong><span>IMC Prosperity 4 finalist · #474 of 18,000+ teams</span></div>
-        <div class="sticker"><strong>QUALITY SET</strong><span>AlphaNova Competition 5 · 160 of 6,000+ survived</span></div>
+        <div class="sticker"><strong>QUALITY SET</strong><span>AlphaNova Competition 5 · #140 · 2 of 160 surviving signals</span></div>
         <a class="sticker sticker-link" href="https://www.alphanova.tech/blog/zhenhao-sng"><strong>INTERVIEWED ↗</strong><span>AlphaNova · The Minds Behind the Models</span></a>
-        <div class="sticker"><strong>LB 1.202</strong><span>Analytics Edge, Kaggle · CV 1.145</span></div>
         <div class="sticker"><strong>TOP SUBMISSION</strong><span>TalentGeist WSP · Shopee strategy</span></div>
         <a class="sticker sticker-link" href="slides/esd_newsletter_2026.pdf#page=7"><strong>FEATURED ↗</strong><span>ESD Newsletter 2026 · p.7</span></a>
         <div class="sticker"><strong>BEST PROJECT</strong><span>Data Driven World · LLM carbon calculator</span></div>
@@ -1638,118 +1415,100 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas>03 / ARCHIVE</div>
-          <h2>Experiments &amp; archive</h2>
+          <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas></div>
+          <h2 class="serif">archive</h2>
         </div>
-        <div class="head-side">
-          <p class="section-note">Smaller projects, research and pitches. Filter by patch.</p>
-          <div class="depth" role="group" aria-label="How much project detail to show">
-            <button type="button" data-depth-btn="brief" aria-pressed="true">Brief</button>
-            <button type="button" data-depth-btn="full" aria-pressed="false">Full synopsis</button>
-          </div>
-        </div>
+        <p class="section-note">Smaller projects, research and pitches.</p>
       </div>
 
       <div class="filters" role="group" aria-label="Filter archive">
-        <button class="patch p-all" type="button" data-filter-btn="all" aria-pressed="true">ALL</button>
-        <button class="patch p-qnt" type="button" data-filter-btn="quant" aria-pressed="false">QNT</button>
-        <button class="patch p-ml" type="button" data-filter-btn="ml" aria-pressed="false">ML / CV</button>
-        <button class="patch p-sys" type="button" data-filter-btn="systems" aria-pressed="false">SYS</button>
-        <button class="patch p-lab" type="button" data-filter-btn="research" aria-pressed="false">LAB</button>
-        <button class="patch p-fin" type="button" data-filter-btn="finance" aria-pressed="false">FIN</button>
-        <button class="patch p-biz" type="button" data-filter-btn="strategy" aria-pressed="false">BIZ</button>
-        <button class="patch p-psy" type="button" data-filter-btn="psych" aria-pressed="false">PSY</button>
+        <button class="patch p-all" type="button" data-filter-btn="all" aria-pressed="true">All</button>
+        <button class="patch p-qnt" type="button" data-filter-btn="quant" aria-pressed="false">Quant</button>
+        <button class="patch p-ml" type="button" data-filter-btn="ml" aria-pressed="false">ML</button>
+        <button class="patch p-sys" type="button" data-filter-btn="systems" aria-pressed="false">Systems</button>
+        <button class="patch p-lab" type="button" data-filter-btn="research" aria-pressed="false">Research</button>
+        <button class="patch p-fin" type="button" data-filter-btn="finance" aria-pressed="false">Finance</button>
+        <button class="patch p-biz" type="button" data-filter-btn="strategy" aria-pressed="false">Pitches</button>
+        <button class="patch p-psy" type="button" data-filter-btn="psych" aria-pressed="false">Psych</button>
       </div>
 
       <ul class="archive">
         <li class="row" data-cat="quant">
-          <span class="when mono">2026</span>
-          <div><h3>IMC Prosperity 4</h3><p>Market-making, pair-trading and options strategies across a multi-round trading simulation. Top 10 in Singapore, #474 globally.</p></div>
-          <div class="cats"><span class="patch p-qnt">QNT</span></div>
-          <span class="go muted mono">Slides soon</span>
+          <span class="when small">2026</span>
+          <div><h3>IMC Prosperity 4</h3><p>Market-making, pair-trading and options strategies across a multi-round trading simulation.</p></div>
+          <div class="cats"><span class="patch p-qnt">Quant</span></div>
+          <span class="go muted">Slides soon</span>
         </li>
         <li class="row" id="row-mayumaro" data-cat="ml">
-          <span class="when mono">2026</span>
-          <div><h3>Mayumaro — Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team. Built from field observations of crowding, transit confusion and waste disposal around Gion, Nishiki and Arashiyama.</p></div>
+          <span class="when small">2026</span>
+          <div><h3>Mayumaro, Kyoto sustainability trip</h3><p>Sustainable route companion app: a two-sided local/tourist RAG system (“DO YOU 京途?”) on the Claude API and Google Maps, built in Python/Streamlit with a 4-person international team. Built from field observations of crowding, transit confusion and waste disposal around Gion, Nishiki and Arashiyama.</p></div>
           <div class="cats"><span class="patch p-ml">ML</span></div>
           <a class="go" href="slides/do_you_kyoto_mayumaro.pdf">Slides ↗</a>
         </li>
-        <li class="row" data-cat="research ml">
-          <span class="when mono">UROP</span>
-          <div><h3>Neuromorphic computing for artificial vision</h3><p>Research under Prof. Desmond Loke on memristive spiking neural networks for vision, robotic control and biosignal (EEG/ECG/EMG) processing.</p></div>
-          <div class="cats"><span class="patch p-lab">LAB</span><span class="patch p-ml">ML</span></div>
-          <span class="go muted mono">Slides soon</span>
-        </li>
         <li class="row" data-cat="psych research finance">
-          <span class="when mono">Psych</span>
-          <div><h3>Algorithm aversion in financial decisions</h3><p>A 2 × 2 within-subjects study (AI robo-advisor vs. human advisor × stakes of up to 5% vs. 40%) with 42 participants, in a team of five. High stakes cut both willingness to delegate and the advice's influence, but equally for AI and human advisors, with no moderation by experience, task subjectivity or trust. Big stakes make people rely less on advice in general, not on algorithms specifically.</p></div>
-          <div class="cats"><span class="patch p-psy">PSY</span><span class="patch p-fin">FIN</span></div>
+          <span class="when small">Psych</span>
+          <div><h3>Algorithm aversion in financial decisions</h3><p>A 2 × 2 within-subjects study (AI robo-advisor vs. human advisor × stakes of up to 5% vs. 40%) with 42 participants, in a team of five. High stakes cut both willingness to delegate and the advice's influence, but equally for AI and human advisors, with no moderation by experience, task subjectivity or trust.</p></div>
+          <div class="cats"><span class="patch p-psy">Psych</span><span class="patch p-fin">Finance</span></div>
           <a class="go" href="slides/algorithm_aversion_paper.pdf">Paper ↗</a>
         </li>
         <li class="row" data-cat="psych research">
-          <span class="when mono">Psych</span>
+          <span class="when small">Psych</span>
           <div><h3>Sleep-dependent memory</h3><p>A solo presentation on how rest shapes what we remember, reviewing Stickgold (2005), Walker &amp; Stickgold (2004) and Mednick, Nakayama &amp; Stickgold (2003): different sleep stages support different kinds of memory, and a 60–90 minute nap can match a night's sleep for perceptual learning.</p></div>
-          <div class="cats"><span class="patch p-psy">PSY</span></div>
+          <div class="cats"><span class="patch p-psy">Psych</span></div>
           <a class="go" href="slides/sleep_dependent_memory.pdf">Slides ↗</a>
         </li>
         <li class="row" id="row-pandabot" data-cat="ml systems">
-          <span class="when mono">CQU×SUTD</span>
-          <div><h3>AI mobility robotics — “PandaBot”</h3><p>A computer vision-assisted mobility concept for elderly users: detection logic, safety integration and scalable deployment.</p></div>
-          <div class="cats"><span class="patch p-ml">CV</span><span class="patch p-sys">SYS</span></div>
+          <span class="when small">2025</span>
+          <div><h3>PandaBot, AI mobility robotics</h3><p>A computer vision-assisted mobility concept for elderly users.</p></div>
+          <div class="cats"><span class="patch p-ml">ML</span><span class="patch p-sys">Systems</span></div>
           <a class="go" href="slides/cqu_pandabot_ai_mobility.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="ml systems">
-          <span class="when mono">DDW</span>
+          <span class="when small">DDW</span>
           <div><h3>LLM carbon emissions calculator</h3><p>A multi-linear regression model estimating the carbon emissions of LLM training configurations. Selected for further development.</p></div>
-          <div class="cats"><span class="patch p-ml">ML</span><span class="patch p-sys">SYS</span></div>
+          <div class="cats"><span class="patch p-ml">ML</span><span class="patch p-sys">Systems</span></div>
           <a class="go" href="slides/ddw_llm_carbon_calculator.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="systems">
-          <span class="when mono">2026</span>
-          <div><h3>Aster PH43 — aggregate planning</h3><p>Workforce and capacity planning for a pumphouse at Aster's Pulau Bukom refinery: a 12-month cost-minimising LP over headcount, overtime, contractors, pre-build and backlog. Our hybrid plan kept a stable 24-person crew and came within 0.95% of the LP optimum. I owned the workforce-planning Solver model, linearising IF() constraints for Simplex. Scored 18.9/20.</p></div>
-          <div class="cats"><span class="patch p-sys">SYS</span></div>
+          <span class="when small">2026</span>
+          <div><h3>Aster PH43, aggregate planning</h3><p>Workforce and capacity planning for a pumphouse at Aster's Pulau Bukom refinery: a 12-month cost-minimising LP over headcount, overtime, contractors, pre-build and backlog. Our hybrid plan kept a stable 24-person crew and came within 0.95% of the LP optimum. I owned the workforce-planning Solver model, linearising IF() constraints for Simplex. Scored 18.9/20.</p></div>
+          <div class="cats"><span class="patch p-sys">Systems</span></div>
           <a class="go" href="slides/aster_ph43_aggregate_planning.pdf">Slides ↗</a>
         </li>
         <li class="row" id="row-threadahead" data-cat="systems">
-          <span class="when mono">PCU</span>
-          <div><h3>ThreadAhead — logistics &amp; workflow</h3><p>Forecasting-informed workflow optimisation for a cooperative in Indonesia, addressing demand volatility and operational bottlenecks.</p></div>
-          <div class="cats"><span class="patch p-sys">SYS</span></div>
+          <span class="when small">2026</span>
+          <div><h3>ThreadAhead, logistics &amp; workflow</h3><p>Forecasting-informed workflow optimisation for a cooperative in Indonesia, addressing demand volatility and operational bottlenecks.</p></div>
+          <div class="cats"><span class="patch p-sys">Systems</span></div>
           <a class="go" href="slides/pcu_threadahead_logistics.pdf">Slides ↗</a>
         </li>
-        <li class="row" id="row-molardata" data-cat="ml">
-          <span class="when mono">Intern</span>
-          <div><h3>MolarData — computer vision internship (Hangzhou)</h3><p>Dataset annotation and preparation for object-identification models, as part of a 10-person team.</p></div>
-          <div class="cats"><span class="patch p-ml">CV</span></div>
-          <a class="go" href="slides/molarData_china_cv_internship.pdf">Slides ↗</a>
-        </li>
         <li class="row" data-cat="finance">
-          <span class="when mono">2025</span>
+          <span class="when small">2025</span>
           <div><h3>Nanyang Capital stock pitch (NTU)</h3><p>An investment thesis covering valuation, catalysts and risk analysis.</p></div>
-          <div class="cats"><span class="patch p-fin">FIN</span></div>
+          <div class="cats"><span class="patch p-fin">Finance</span></div>
           <a class="go" href="slides/ntu_stock_pitch_2025.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="finance">
-          <span class="when mono">2024</span>
-          <div><h3>CFA Research Challenge — internal selection</h3><p>Equity research, valuation modelling and investment thesis development.</p></div>
-          <div class="cats"><span class="patch p-fin">FIN</span></div>
+          <span class="when small">2024</span>
+          <div><h3>CFA Research Challenge, internal selection</h3><p>Equity research, valuation modelling and investment thesis development.</p></div>
+          <div class="cats"><span class="patch p-fin">Finance</span></div>
           <a class="go" href="slides/cfa_research_challenge_internal_2024.pdf">Slides ↗</a>
         </li>
         <li class="row" id="row-vinuni" data-cat="strategy">
-          <span class="when mono">VinUni</span>
+          <span class="when small">2025</span>
           <div><h3>Workforce SaaS platform</h3><p>A workforce “sandbox” platform addressing skills mismatch, with revenue model and market expansion strategy.</p></div>
-          <div class="cats"><span class="patch p-biz">BIZ</span></div>
+          <div class="cats"><span class="patch p-biz">Pitches</span></div>
           <a class="go" href="slides/vinuni_workforce_saas_pitch.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="strategy">
-          <span class="when mono">WSP</span>
-          <div><h3>Shopee Pickup Points — Thailand go-to-market</h3><p>A five-year, US$10M go-to-market strategy for NYC × TalentGeist's Work Simulation Programme: a six-market Southeast Asia screen to pick Thailand, then a “Surface–Subsidise–Socialise” adoption plan projected to lift pickup-point adoption from about 10% to 35% by year 5, for a projected 4–6× ROI. Recognised as a top-performing submission.</p></div>
-          <div class="cats"><span class="patch p-biz">BIZ</span></div>
+          <span class="when small">WSP</span>
+          <div><h3>Shopee Pickup Points, Thailand go-to-market</h3><p>A five-year, US$10M go-to-market strategy for TalentGeist's Work Simulation Programme: a six-market Southeast Asia screen to pick Thailand, then an adoption plan projected to lift pickup-point adoption from about 10% to 35% by year 5, for a projected 4–6× ROI.</p></div>
+          <div class="cats"><span class="patch p-biz">Pitches</span></div>
           <a class="go" href="slides/talentgeist_shopee_pickup_strategy.pdf">Slides ↗</a>
         </li>
         <li class="row" data-cat="strategy">
-          <span class="when mono">Pitch</span>
-          <div><h3>MakanPrint — Baby Shark Fund pitch</h3><p>3D-printed, IDDSI Level 4–5 dysphagia meals that are Asian and halal, so elderly patients actually want to finish them. The plan uses Bayesian optimisation to cut ink-formulation runs and computer vision to automate IDDSI fork-pressure grading. I was optimisation lead and ran outreach in a team of six.</p></div>
-          <div class="cats"><span class="patch p-biz">BIZ</span><span class="patch p-ml">ML</span></div>
+          <span class="when small">Pitch</span>
+          <div><h3>MakanPrint, Baby Shark Fund pitch</h3><p>3D-printed, IDDSI Level 4–5 dysphagia meals that are Asian and halal, so elderly patients actually want to finish them. The plan uses Bayesian optimisation to cut ink-formulation runs and computer vision to automate IDDSI fork-pressure grading. I was optimisation lead and ran outreach in a team of six.</p></div>
+          <div class="cats"><span class="patch p-biz">Pitches</span><span class="patch p-ml">ML</span></div>
           <a class="go" href="slides/makanprint_babyshark_pitch.pdf">Slides ↗</a>
         </li>
       </ul>
@@ -1761,32 +1520,30 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-label"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas>04 / EXPERIENCE</div>
-          <h2>Experience</h2>
+          <div class="section-label"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas></div>
+          <h2 class="serif">experience</h2>
         </div>
       </div>
       <ol class="transit">
-        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Aug 2026 – Jan 2027</span></div><p>A term in Taipei taking algorithms, machine learning, econometric theory, causal ML, game theory and stochastic calculus for finance. Also a course on edible insects.</p></li>
-        <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · synthetic data lead</span></div><p>Led the CTGAN synthetic data pipeline and designed the fidelity-scoring dashboard.</p></li>
+        <li class="stop"><div><h3>National Taiwan University</h3><span class="role">GEXP exchange · CSIE, College of EECS · Aug 2026 – Jan 2027</span></div></li>
+        <li class="stop"><div><h3>Credit Bureau Singapore</h3><span class="role">Industry project · CTGAN pipeline lead</span></div><p><a href="#cbs">More in Selected work</a></p></li>
         <li class="stop"><div><h3>Institute of Mental Health</h3><span class="role">Volunteer · BRAVE study</span></div><p>Recruited participants for BRAVE, a nationwide study of mental health in children and adolescents, explaining the study to families and young people.</p></li>
         <li class="stop"><div><h3>SUTD MarketWatch Club</h3><span class="role">Treasurer · Feb 2025 – Mar 2026</span></div><p>Managed S$10,000+ in club funds (budgeting, claims, event allocation) for fortnightly trading and macro workshops.</p></li>
-        <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for artificial vision, under Prof. Desmond Loke.</p></li>
-        <li class="stop"><div><h3>Kyoto sustainability trip</h3><span class="role">International team · RAG app</span></div><p>Built Mayumaro, a sustainable route companion. Final showcase July 2026.</p></li>
-        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Computer vision intern · via SUTD DGIT at Zhejiang University · Oct – Dec 2025</span></div><p>Annotated and classified 2,000+ images in a 10-person team, producing training datasets for in-house CNN models.</p></li>
+        <li class="stop"><div><h3>SUTD UROP</h3><span class="role">Research · neuromorphic computing</span></div><p>Memristive spiking neural networks for vision, robotic control and biosignal (EEG/ECG/EMG) processing, under Prof. Desmond Loke.</p></li>
+        <li class="stop"><div><h3>MolarData, Hangzhou</h3><span class="role">Computer vision intern · via SUTD DGIT at Zhejiang University · Oct – Dec 2025</span></div><p>Annotated and classified 2,000+ images in a 10-person team, producing training datasets for in-house CNN models. <a href="slides/molarData_china_cv_internship.pdf">Slides ↗</a></p></li>
       </ol>
 
       <div class="stamp-head">
-        <span class="section-label">STAMP_LOG.DAT</span>
-        <h3>Seven school trips, one passport</h3>
+        <h3>Seven school trips so far</h3>
       </div>
       <div class="stamps">
-        <div class="stamp" style="--r:-2deg"><span class="st-no pixel">01 · VIETNAM</span><span class="st-city">HCMC</span><span class="st-date mono">Jan 2025</span><span class="st-prog">EntreConference (Reactor School)</span><span class="st-what">Exposure trip: pitching, networking, city tours. No build, just a stamp.</span></div>
-        <a class="stamp" href="#row-pandabot" data-filter="all" style="--r:1.5deg"><span class="st-no pixel">02 · CHINA</span><span class="st-city">Chongqing</span><span class="st-date mono">Aug 2025</span><span class="st-prog">Design AI × CQU</span><span class="st-what">→ PandaBot: CV-assisted mobility for elderly users</span></a>
-        <a class="stamp" href="#row-vinuni" data-filter="all" style="--r:-1deg"><span class="st-no pixel">03 · VIETNAM</span><span class="st-city">Hanoi</span><span class="st-date mono">Sep 2025</span><span class="st-prog">GEO Experiential Learning × VinUni</span><span class="st-what">→ Workforce SaaS: a “sandbox” for skills mismatch</span></a>
-        <a class="stamp" href="#row-molardata" data-filter="all" style="--r:2deg"><span class="st-no pixel">04 · CHINA</span><span class="st-city">Hangzhou</span><span class="st-date mono">Sep 2025 – Jan 2026</span><span class="st-prog">DGIT (formerly TIIDE) × Zhejiang University</span><span class="st-what">→ MolarData: object-ID dataset annotation</span></a>
-        <a class="stamp" href="#row-threadahead" data-filter="all" style="--r:-1.5deg"><span class="st-no pixel">05 · INDONESIA</span><span class="st-city">Surabaya</span><span class="st-date mono">Jan 2026</span><span class="st-prog">Design AI × PCU</span><span class="st-what">→ ThreadAhead: forecasting-informed workflow optimisation</span></a>
-        <a class="stamp" href="#row-mayumaro" data-filter="all" style="--r:1deg"><span class="st-no pixel">06 · JAPAN</span><span class="st-city">Kyoto</span><span class="st-date mono">May 2026</span><span class="st-prog">Kyoto sustainability trip</span><span class="st-what">→ Mayumaro: sustainable route companion, “DO YOU 京途?”</span></a>
-        <a class="stamp" href="#about" style="--r:-0.5deg"><span class="st-no pixel">07 · TAIWAN</span><span class="st-city">Taipei</span><span class="st-date mono">Aug 2026 – Jan 2027</span><span class="st-prog">NTU exchange (GEXP)</span><span class="st-what">→ Now: algorithms, ML, econometrics, causal ML, game theory, stochastic calculus, and edible insects</span></a>
+        <div class="stamp" style="--r:-2deg"><span class="st-no pixel">01 · VIETNAM</span><span class="st-city">HCMC</span><span class="st-date">Jan 2025</span><span class="st-prog">EntreConference (Reactor School)</span><span class="st-what">Exposure trip: pitching, networking, city tours. No build, just a stamp.</span></div>
+        <a class="stamp" href="#row-pandabot" data-filter="all" style="--r:1.5deg"><span class="st-no pixel">02 · CHINA</span><span class="st-city">Chongqing</span><span class="st-date">Aug 2025</span><span class="st-prog">Design AI × CQU</span><span class="st-what">→ PandaBot</span></a>
+        <a class="stamp" href="#row-vinuni" data-filter="all" style="--r:-1deg"><span class="st-no pixel">03 · VIETNAM</span><span class="st-city">Hanoi</span><span class="st-date">Sep 2025</span><span class="st-prog">GEO Experiential Learning × VinUni</span><span class="st-what">→ Workforce SaaS</span></a>
+        <a class="stamp" href="#experience" style="--r:2deg"><span class="st-no pixel">04 · CHINA</span><span class="st-city">Hangzhou</span><span class="st-date">Sep 2025 – Jan 2026</span><span class="st-prog">DGIT (formerly TIIDE) × Zhejiang University</span><span class="st-what">→ MolarData</span></a>
+        <a class="stamp" href="#row-threadahead" data-filter="all" style="--r:-1.5deg"><span class="st-no pixel">05 · INDONESIA</span><span class="st-city">Surabaya</span><span class="st-date">Jan 2026</span><span class="st-prog">Design AI × PCU</span><span class="st-what">→ ThreadAhead</span></a>
+        <a class="stamp" href="#row-mayumaro" data-filter="all" style="--r:1deg"><span class="st-no pixel">06 · JAPAN</span><span class="st-city">Kyoto</span><span class="st-date">May 2026</span><span class="st-prog">Kyoto sustainability trip</span><span class="st-what">→ Mayumaro</span></a>
+        <a class="stamp" href="#about" style="--r:-0.5deg"><span class="st-no pixel">07 · TAIWAN</span><span class="st-city">Taipei</span><span class="st-date">Aug 2026 – Jan 2027</span><span class="st-prog">NTU exchange (GEXP)</span><span class="st-what">→ Now</span></a>
       </div>
     </div>
   </section>
@@ -1796,66 +1553,46 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-label"><canvas class="px-icon" data-icon="heart" aria-hidden="true"></canvas>05 / ABOUT</div>
-          <h2 class="serif">about &amp; contact</h2>
+          <div class="section-label"><canvas class="px-icon" data-icon="heart" aria-hidden="true"></canvas></div>
+          <h2 class="serif">about</h2>
         </div>
       </div>
       <div class="about-grid">
         <div class="about-col">
           <div class="window">
-            <div class="titlebar"><svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg><span class="pixel">README.TXT</span></div>
             <div class="about-body">
-              <p>I study Engineering Systems &amp; Design at SUTD, and I'm spending Aug 2026 – Jan 2027 on exchange at
-                National Taiwan University in Taipei. Most of my work sits where quantitative finance, data analysis
-                and software engineering meet.</p>
-              <p>GPA 4.16/5.00, specialising in Financial Services and Business Analytics &amp; Operations Research.
-                CFA Level I candidate (May 2027).</p>
-              <p>I like problems that don't come with clean inputs: noisy markets, messy operations, and decisions
-                that need a model before they need an opinion.</p>
+              <p>At SUTD I specialise in Financial Services and Business Analytics
+                &amp; Operations Research. GPA 4.16/5.00. CFA Level I candidate (May 2027).</p>
+              <blockquote>
+                <p>"Quite a few of my early models turned out to be overfit."</p>
+                <p>"A model can look impressive on one split and completely disappear when tested across different
+                  periods or against shuffled labels, so robust validation has become just as important to me as the
+                  model itself."</p>
+              </blockquote>
+              <p class="src">From my <a href="https://www.alphanova.tech/blog/zhenhao-sng">AlphaNova interview ↗</a></p>
             </div>
           </div>
           <div class="window" id="contact">
-            <div class="titlebar"><svg class="star-ico tb-star" aria-hidden="true"><use href="#signal-star"/></svg><span class="pixel">CONTACT.EXE</span></div>
+            <h3 class="win-h">Contact</h3>
             <ul class="contact-links">
-              <li><span class="mono">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
-              <li><span class="mono">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
-              <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
-              <li><span class="mono">Résumé</span><a href="slides/zhenhao_sng_resume.pdf">zhenhao_sng_resume.pdf ↗</a></li>
+              <li><span class="small">Email</span><a href="mailto:froyosng@gmail.com">froyosng@gmail.com</a></li>
+              <li><span class="small">GitHub</span><a href="https://github.com/froyosng">github.com/froyosng ↗</a></li>
+              <li><span class="small">LinkedIn</span><a href="https://www.linkedin.com/in/sngzhenhao">in/sngzhenhao ↗</a></li>
+              <li><span class="small">Résumé</span><span><a href="slides/zhenhao_sng_resume.pdf">zhenhao_sng_resume.pdf ↗</a><span class="aside">still one page, somehow</span></span></li>
             </ul>
           </div>
 
-          <div class="dispenser" aria-label="Career dispenser">
-            <div class="disp-head pixel">CAREER DISPENSER™</div>
-            <div class="disp-window"><span class="disp-item pixel">CV.PDF</span></div>
-            <div class="disp-row">
-              <span class="mono">Price $0.00</span>
-              <a class="disp-btn pixel" href="slides/zhenhao_sng_resume.pdf" target="_blank" rel="noopener" data-dispense>DISPENSE</a>
-            </div>
-            <div class="disp-slot" aria-hidden="true"></div>
-            <p class="disp-note">cv.pdf, still one page, somehow</p>
-            <span class="scribble sc-disp" aria-hidden="true"><svg class="spiral flip" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>press it, the CV is free</span></span>
-          </div>
         </div>
 
         <div class="purikura">
-          <div class="member-card">
-            <div class="mc-top pixel"><span>FROYO SIGNAL CLUB</span><span>MEMBER 001</span></div>
-            <div class="mc-name">Zhenhao Sng</div>
-            <div class="mc-meta mono">Singapore ↔ Taipei<br>Systems + data + markets</div>
-            <div class="mc-foot">
-              <span class="barcode" aria-hidden="true"></span>
-              <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
-            </div>
-          </div>
-
           <div class="currently">
             <div class="cur-block">
-              <span class="cur-label pixel">CURRENTLY</span>
-              <p class="cur-big">taipei <span class="star-bit">✦</span> exchange mode</p>
+              <span class="cur-label">CURRENTLY</span>
+              <p class="cur-big">in taipei until january</p>
               <p class="cur-small">National Taiwan University · CSIE · 27 Aug 2026 – 4 Jan 2027</p>
             </div>
             <div class="cur-block">
-              <span class="cur-label pixel">TAKING</span>
+              <span class="cur-label">TAKING</span>
               <div class="stick-row">
                 <span class="stk">Algorithms</span>
                 <span class="stk">Machine learning</span>
@@ -1868,7 +1605,7 @@
               </div>
             </div>
             <div class="cur-block">
-              <span class="cur-label pixel">SPEAKS</span>
+              <span class="cur-label">SPEAKS</span>
               <div class="stick-row">
                 <span class="stk">English</span>
                 <span class="stk">Mandarin</span>
@@ -1877,7 +1614,7 @@
               </div>
             </div>
             <div class="cur-block">
-              <span class="cur-label pixel">CLUBS</span>
+              <span class="cur-label">CLUBS</span>
               <div class="stick-row">
                 <span class="stk stk-ink">Fencing</span>
                 <span class="stk stk-pink">Cocktail club</span>
@@ -1894,7 +1631,7 @@
 
 <footer>
   <div class="wrap">
-    <div class="still-online">FROYO SYSTEM<span>still online ✦</span></div>
+    <div class="still-online">FROYO, <span>still online ✦</span></div>
     <div class="foot-links">
       <a href="mailto:froyosng@gmail.com">Email</a>
       <a href="https://github.com/froyosng">GitHub</a>
@@ -1920,38 +1657,14 @@
 
 <div class="toast" role="status" aria-live="polite">
   <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
-  <div><strong>SIGNAL DETECTED</strong><span class="msg">You found the desk. Click around.</span></div>
+  <div><strong></strong><span class="msg"></span></div>
 </div>
 
 <script>
   (function () {
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var glyphs = '0123456789#%&$@!?/<>';
 
-    // Decode effect: random characters resolve into the real value
-    function scramble(el) {
-      var target = el.getAttribute('data-scramble');
-      if (reduced || el._running) { el.textContent = target; return; }
-      el._running = true;
-      var frame = 0, total = 18;
-      var timer = setInterval(function () {
-        var out = '';
-        for (var i = 0; i < target.length; i++) {
-          out += frame > total * (i + 1) / target.length
-            ? target[i]
-            : glyphs[Math.floor(Math.random() * glyphs.length)];
-        }
-        el.textContent = out;
-        if (++frame > total) { clearInterval(timer); el.textContent = target; el._running = false; }
-      }, 40);
-    }
-
-    document.querySelectorAll('[data-scramble]').forEach(function (el) {
-      scramble(el);
-      el.parentElement.addEventListener('mouseenter', function () { scramble(el); });
-    });
-
-    // ----- Toasts (shared with pixel.js) -----
+    // ----- Toast (frog) -----
     var toast = document.querySelector('.toast');
     var toastTimer = null;
     window.froyoToast = function (title, msg) {
@@ -1964,7 +1677,6 @@
 
     // ----- Quick View / Explore World -----
     var world = document.getElementById('world');
-    var toastShown = false;
 
     function store(v) { try { localStorage.setItem('froyo-mode', v); } catch (e) {} }
     function stored() { try { return localStorage.getItem('froyo-mode'); } catch (e) { return null; } }
@@ -1972,14 +1684,9 @@
     function setMode(explore, scroll) {
       world.hidden = !explore;
       document.querySelectorAll('[data-mode-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', explore); });
-      document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = explore ? 'Quick view' : 'Explore'; });
-      document.querySelectorAll('[data-mode-status]').forEach(function (l) { l.textContent = explore ? 'Explore world' : 'Quick view'; });
+      document.querySelectorAll('[data-mode-label]').forEach(function (l) { l.textContent = explore ? 'Close world' : 'Explore world'; });
       store(explore ? 'explore' : 'quick');
       if (explore && scroll) world.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-      if (explore && scroll && !toastShown) {
-        toastShown = true;
-        window.froyoToast('SIGNAL DETECTED', 'You found the desk. Click around.');
-      }
     }
 
     document.querySelectorAll('[data-enter-world]').forEach(function (b) {
@@ -2025,7 +1732,7 @@
       collapseBtn.setAttribute('aria-expanded', !collapsed);
       collapseBtn.setAttribute('aria-label', collapsed ? 'Expand player' : 'Collapse player');
     });
-    var controller = null, playing = false, loading = false, radioToast = false;
+    var controller = null, playing = false, loading = false;
 
     function setPlaying(on) {
       playing = on;
@@ -2060,10 +1767,6 @@
           c.addListener('ready', function () { c.play(); });
         });
       });
-      if (!radioToast) {
-        radioToast = true;
-        window.froyoToast('♫ FROYO RADIO', 'Tuning in. Pause or close it any time.');
-      }
     }
 
     document.querySelectorAll('[data-radio-toggle]').forEach(function (b) {
@@ -2079,19 +1782,6 @@
       if (controller) controller.pause();
       radio.hidden = true;
       setPlaying(false);
-    });
-
-    // ----- Career dispenser: the PDF opens normally; the drop is just for show -----
-    var dispensed = false;
-    document.querySelectorAll('[data-dispense]').forEach(function (a) {
-      a.addEventListener('click', function () {
-        var box = a.closest('.dispenser');
-        box.classList.remove('thunk');
-        void box.offsetWidth;
-        box.classList.add('thunk');
-        setTimeout(function () { box.classList.remove('thunk'); }, 1200);
-        if (!dispensed) { dispensed = true; window.froyoToast('+1 SIGNAL', 'Career dispensed. Price: $0.00.'); }
-      });
     });
 
     // ----- Nav: slightly tighter once scrolled -----
@@ -2118,7 +1808,7 @@
       if (e.key === 'Escape' && !sheet.hidden) { setMenu(false); menuBtn.focus(); }
     });
 
-    // ----- Brief / full synopsis -----
+    // ----- Synopsis -----
     function setSynopsis(btn, open) {
       var box = document.getElementById(btn.getAttribute('aria-controls'));
       btn.setAttribute('aria-expanded', open);
@@ -2126,27 +1816,15 @@
       box.classList.toggle('open', open);
       box.firstElementChild.inert = !open;
     }
-    function setDepth(d, save) {
-      document.body.setAttribute('data-depth', d);
-      document.querySelectorAll('[data-depth-btn]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-depth-btn') === d); });
-      document.querySelectorAll('.syn-toggle').forEach(function (b) { setSynopsis(b, d === 'full'); });
-      if (save) { try { localStorage.setItem('froyo-depth', d); } catch (e) {} }
-    }
     document.querySelectorAll('.syn-toggle').forEach(function (b) {
       b.addEventListener('click', function () { setSynopsis(b, b.getAttribute('aria-expanded') !== 'true'); });
     });
-    document.querySelectorAll('[data-depth-btn]').forEach(function (b) {
-      b.addEventListener('click', function () { setDepth(b.getAttribute('data-depth-btn'), true); });
-    });
-    var savedDepth = null;
-    try { savedDepth = localStorage.getItem('froyo-depth'); } catch (e) {}
-    setDepth(savedDepth === 'full' ? 'full' : 'brief', false);
 
     // ----- Frog: five clicks is too many -----
     var frogClicks = 0;
     document.querySelectorAll('[data-frog]').forEach(function (f) {
       f.addEventListener('click', function () {
-        if (++frogClicks === 5) window.froyoToast('? AMPHIBIAN EVENT', 'You clicked the frog too many times.');
+        if (++frogClicks === 5) window.froyoToast('FROG', 'You clicked the frog too many times.');
       });
     });
 
@@ -2164,7 +1842,7 @@
     cards.forEach(function (c) { io.observe(c); });
   })();
 </script>
-<script src="pixel.js?v=5"></script>
+<script src="pixel.js?v=6"></script>
 
 </body>
 </html>
