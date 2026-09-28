@@ -9,10 +9,8 @@
       d.classList.add('js');
       try {
         if (!CSS.supports('animation-timeline: view()')) d.classList.add('no-sda');
-        if (!sessionStorage.getItem('froyo-intro') && !location.hash &&
-            matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        if (!location.hash && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
           d.classList.add('intro');
-          sessionStorage.setItem('froyo-intro', '1');
           if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         }
       } catch (e) {}
@@ -275,9 +273,11 @@
       text-transform: uppercase;
       text-align: center;
       white-space: nowrap;
-      margin: 0 0 30px;
+      margin: 0;
     }
-    .kname .l { display: inline-block; }
+    .kmove { margin: 0 0 30px; }
+    .kscale { position: relative; }
+    .kmask { display: none; }
 
     .thesis {
       font-size: clamp(22px, 3.2vw, 42px);
@@ -1020,16 +1020,31 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      /* 1. Kirk intro: the name fills in small, travels to centre, then lands big */
+      /* 1. Kirk loader: small name follows the mouse while a mask slides off it, then springs home at full size */
       .intro { overflow: hidden; }
       .intro .topbar, .intro .hero-meta, .intro .thesis, .intro .support, .intro .hero-actions, .intro .htile { opacity: 0; }
-      .intro:not(.go) .kname { opacity: 0; }
-      .intro .kname .l { opacity: 0.15; }
-      .intro.go .kname .l { animation: lfill 220ms linear forwards; animation-delay: calc(var(--i) * 85ms + 120ms); }
+      .intro .kmove, .intro .kscale { will-change: transform; }
+      .intro .kscale { transform: scale(0.2); }
+      .intro .kmask {
+        display: block;
+        position: absolute;
+        left: -1.5%;
+        top: -10%;
+        width: 103%;
+        height: 120%;
+        z-index: 1;
+        background: var(--pearl);
+        opacity: 0.9;
+        pointer-events: none;
+        transition: transform 1100ms var(--ease-out), opacity 500ms var(--ease-out);
+      }
+      .intro .kmask[data-step="2"] { transform: translateX(58%); }
+      .intro .kmask[data-step="3"] { transform: translateX(118%); }
+      .intro .kmask[data-step="4"] { transform: translateX(118%); opacity: 0; }
+      @media (hover: none) { .intro .kscale { transform: scale(0.8); } }
       .intro-out .topbar, .intro-out .hero-meta, .intro-out .thesis, .intro-out .support, .intro-out .hero-actions { animation: fade-up 600ms var(--ease-out) both; }
       .intro-out .htile { animation: tile-in 800ms var(--ease-out) both; animation-delay: calc(var(--k, 0) * 90ms + 120ms); }
       .intro-out .thesis .holo { animation: holo-sweep 900ms var(--ease-out) 200ms both; }
-      @keyframes lfill { to { opacity: 1; } }
       @keyframes fade-up { from { opacity: 0; translate: 0 8px; } }
       @keyframes tile-in { from { opacity: 0; translate: 0 48px; } }
       @keyframes holo-sweep { from { background-size: 300% 100%; background-position: 100% 0; } to { background-size: 100% 100%; background-position: 0 0; } }
@@ -1185,7 +1200,12 @@
         <span class="hide-sm">SUTD × NTU · Singapore ↔ Taipei</span>
       </div>
 
-      <h1 class="kname" aria-label="Zhenhao Sng"><span class="l" style="--i:0">Z</span><span class="l" style="--i:1">H</span><span class="l" style="--i:2">E</span><span class="l" style="--i:3">N</span><span class="l" style="--i:4">H</span><span class="l" style="--i:5">A</span><span class="l" style="--i:6">O</span><span class="l" style="--i:7">&nbsp;</span><span class="l" style="--i:8">S</span><span class="l" style="--i:9">N</span><span class="l" style="--i:10">G</span></h1>
+      <div class="kmove">
+        <div class="kscale">
+          <h1 class="kname">Zhenhao Sng</h1>
+          <span class="kmask" aria-hidden="true"></span>
+        </div>
+      </div>
       <p class="thesis">Building models for <span class="holo">messy</span> decisions.</p>
       <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
       <div class="hero-actions">
@@ -2023,44 +2043,66 @@
     });
 
 
-    // ----- Kirk intro: name fills in small, travels to centre, lands big -----
+    // ----- Kirk loader -----
+    // Small name follows the pointer on a spring while a mask slides off it in steps,
+    // then springs back to its place at full size and the rest of the page fades in.
     (function () {
       var root = document.documentElement;
       if (!root.classList.contains('intro')) return;
-      var name = document.querySelector('.kname');
-      var anim = null, done = false, skips = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+      var move = document.querySelector('.kmove'), scaler = document.querySelector('.kscale'), mask = document.querySelector('.kmask');
+      var touch = window.matchMedia('(hover: none)').matches;
       window.scrollTo(0, 0);
-      function reveal() {
-        if (done) return;
-        done = true;
-        skips.forEach(function (e) { window.removeEventListener(e, skip); });
-        root.classList.remove('intro', 'go');
-        root.classList.add('intro-out');
-        setTimeout(function () { root.classList.remove('intro-out'); }, 1400);
+      var r = move.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+
+      function spring(x) { return { x: x, v: 0, t: x }; }
+      var sx = spring(0), sy = spring(touch ? window.innerHeight / 2 - cy : 0), ss = spring(touch ? 0.8 : 0.2);
+      var springs = [sx, sy, ss], K = 120, C = 30, raf = 0, last = 0, tracking = !touch, finished = false, timers = [];
+
+      function paint() {
+        move.style.transform = 'translate3d(' + sx.x.toFixed(2) + 'px,' + sy.x.toFixed(2) + 'px,0)';
+        scaler.style.transform = 'scale(' + ss.x.toFixed(4) + ')';
       }
-      function skip() { if (anim) anim.finish(); reveal(); }
-      skips.forEach(function (e) { window.addEventListener(e, skip, { passive: true }); });
-      function start() {
-        if (done) return;
-        if (typeof name.animate !== 'function') return reveal();
-        var r = name.getBoundingClientRect();
-        var cy = r.top + r.height / 2;
-        var dx = window.innerWidth / 2 - (r.left + r.width / 2);
-        var s0 = Math.max(0.2, Math.min(0.5, 220 / r.width));
-        var topY = 64 + r.height * s0 / 2 - cy, midY = window.innerHeight / 2 - cy;
-        var n = name.querySelectorAll('.l').length;
-        var fill = 120 + n * 85 + 220, travel = 600, grow = 800, T = fill + travel + grow;
-        root.classList.add('go');
-        anim = name.animate([
-          { transform: 'translate(' + dx + 'px,' + topY + 'px) scale(' + s0 + ')', offset: 0 },
-          { transform: 'translate(' + dx + 'px,' + topY + 'px) scale(' + s0 + ')', offset: fill / T, easing: 'cubic-bezier(.65, 0, .35, 1)' },
-          { transform: 'translate(' + dx + 'px,' + midY + 'px) scale(' + s0 + ')', offset: (fill + travel) / T, easing: 'cubic-bezier(.16, 1, .3, 1)' },
-          { transform: 'none', offset: 1 }
-        ], { duration: T });
-        setTimeout(reveal, T - 250);
+      function tick(now) {
+        var dt = Math.min(0.05, (now - last) / 1000), steps = Math.ceil(dt / 0.004), h = dt / steps;
+        last = now;
+        for (var i = 0; i < steps; i++) springs.forEach(function (s) { s.v += (-K * (s.x - s.t) - C * s.v) * h; s.x += s.v * h; });
+        paint();
+        var still = springs.every(function (s) { return Math.abs(s.x - s.t) < 0.001 && Math.abs(s.v) < 0.01; });
+        if (!still) { raf = requestAnimationFrame(tick); return; }
+        raf = 0;
+        if (finished) { move.style.transform = ''; scaler.style.transform = ''; move.style.willChange = scaler.style.willChange = ''; }
       }
-      var fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-      Promise.race([fonts, new Promise(function (r) { setTimeout(r, 700); })]).then(start);
+      function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+      function onMove(e) { if (!tracking) return; sx.t = e.clientX - cx; sy.t = e.clientY - cy; kick(); }
+
+      function step(n) {
+        mask.setAttribute('data-step', n);
+        if (touch) { ss.t = n === 2 ? 0.9 : 0.95; kick(); }
+      }
+      function final() {
+        if (finished) return;
+        finished = true;
+        timers.forEach(clearTimeout);
+        tracking = false;
+        window.removeEventListener('mousemove', onMove);
+        ['wheel', 'touchmove', 'keydown'].forEach(function (e) { window.removeEventListener(e, final); });
+        mask.setAttribute('data-step', 4);
+        sx.t = 0; sy.t = 0; ss.t = 1;
+        kick();
+        setTimeout(function () {
+          root.classList.remove('intro');
+          root.classList.add('intro-out');
+          setTimeout(function () { root.classList.remove('intro-out'); }, 1400);
+        }, 450);
+      }
+
+      paint();
+      window.addEventListener('mousemove', onMove, { passive: true });
+      ['wheel', 'touchmove', 'keydown'].forEach(function (e) { window.addEventListener(e, final, { passive: true }); });
+      timers.push(setTimeout(function () { step(2); }, 700));
+      timers.push(setTimeout(function () { step(3); }, 1900));
+      timers.push(setTimeout(final, 3000));
     })();
 
     // ----- One observer: chapter rise, stamps, photo, settle fallback -----
