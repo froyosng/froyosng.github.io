@@ -273,6 +273,7 @@ table.data.text th, table.data.text td { text-align: left; }
 .fig { margin: 8px 0 26px; }
 .fig img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--paper); }
 .fig figcaption { margin-top: 8px; font-size: 13px; color: var(--graphite); line-height: 1.45; }
+.video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
 .fig-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 
 /* ---------- Segmented toggle ---------- */
