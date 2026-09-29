@@ -663,6 +663,19 @@
     .pareto .pt { cursor: default; }
     .pareto .pt circle { transition: transform var(--motion-system); transform-box: fill-box; transform-origin: center; }
     .pareto .pt:hover circle { transform: scale(1.5); }
+    .pareto .pt circle, .pareto .pt { transition: transform 250ms var(--ease-out), opacity 250ms var(--ease-out); }
+    .pareto.picking .pt { opacity: 0.3; }
+    .pareto.picking .pt.on { opacity: 1; }
+    .pareto .pt.on circle { transform: scale(1.8); stroke: var(--ink); stroke-width: 1.5px; }
+
+    /* Pick the trade-off */
+    .tradeoff { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 4px 10px; }
+    .to-q { font-size: 13px; font-weight: 600; }
+    .to-seg { display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(23, 21, 29, 0.06); }
+    .to-seg button { border: 0; background: none; padding: 5px 12px; border-radius: 999px; font: 600 13px var(--sans); color: var(--graphite); cursor: pointer; transition: background var(--motion-system), color var(--motion-system); }
+    .to-seg button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(23, 21, 29, 0.15); }
+    .to-out { flex-basis: 100%; margin: 0; min-height: 1.4em; font-size: 13px; color: #3d3a45; }
+    .to-out b { font-family: var(--mono); font-weight: 500; }
 
     .pareto-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--graphite); margin: 6px 4px 8px; }
     .pareto-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
@@ -1326,6 +1339,15 @@
           <div class="tags" aria-hidden="true"><span>Optimisation</span><span>NSGA-II</span></div>
           <a class="v-pill" href="work/hiv-allocation/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <div class="pareto-card settle">
+            <div class="tradeoff" role="group" aria-label="Pick the trade-off">
+              <span class="to-q">You're the funder. What matters more?</span>
+              <div class="to-seg">
+                <button type="button" data-pick="impact" aria-pressed="false">Impact</button>
+                <button type="button" data-pick="balance" aria-pressed="false">Balance</button>
+                <button type="button" data-pick="fairness" aria-pressed="false">Fairness</button>
+              </div>
+              <p class="to-out" aria-live="polite"></p>
+            </div>
             <svg class="pareto" viewBox="0 0 560 330" role="img" aria-labelledby="pareto-title">
 <title id="pareto-title">Nine allocations compared: NSGA-II front points reach high DALYs at low inequity; greedy has high DALYs but higher inequity; simulated annealing runs are dominated.</title>
 <line x1="58" x2="542" y1="263.0" y2="263.0" stroke="#E7E4EA"/>
@@ -1348,9 +1370,9 @@
 <text x="542" y="324" text-anchor="end" class="axis">inequity: std of per-capita impact →</text>
 <text x="58" y="16" class="axis">net DALYs averted (millions)</text>
 <text x="66" y="40" class="axis">↖ better</text>
-<g class="pt"><title>NSGA-II best-DALYs endpoint: 4,313,203 DALYs, inequity 100,700</title><circle cx="367.3" cy="43.7" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
-<g class="pt"><title>NSGA-II knee point: 4,240,734 DALYs, inequity 60,159</title><circle cx="160.7" cy="50.6" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
-<g class="pt"><title>NSGA-II best-equity endpoint: 3,956,995 DALYs, inequity 47,634</title><circle cx="96.9" cy="77.5" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt" data-pt="impact"><title>NSGA-II best-DALYs endpoint: 4,313,203 DALYs, inequity 100,700</title><circle cx="367.3" cy="43.7" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt" data-pt="balance"><title>NSGA-II knee point: 4,240,734 DALYs, inequity 60,159</title><circle cx="160.7" cy="50.6" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
+<g class="pt" data-pt="fairness"><title>NSGA-II best-equity endpoint: 3,956,995 DALYs, inequity 47,634</title><circle cx="96.9" cy="77.5" r="5" fill="#7657FF" stroke="#FFFDFC" stroke-width="2"/></g>
 <g class="pt"><title>Greedy marginal-DALY baseline: 4,298,745 DALYs, inequity 89,949</title><circle cx="312.5" cy="45.1" r="5" fill="#69666F" stroke="#FFFDFC" stroke-width="2"/></g>
 <g class="pt"><title>SA λ = 0: 1,998,629 DALYs, inequity 60,164</title><circle cx="160.7" cy="263.2" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
 <g class="pt"><title>SA λ = 0.25: 2,362,897 DALYs, inequity 64,941</title><circle cx="185.1" cy="228.6" r="5" fill="#FF77B7" stroke="#FFFDFC" stroke-width="2"/></g>
@@ -1839,6 +1861,27 @@
 <script>
   (function () {
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ----- HIV chart: pick the trade-off -----
+    (function () {
+      var chart = document.querySelector('.pareto');
+      var out = document.querySelector('.to-out');
+      if (!chart || !out) return;
+      var picks = {
+        impact: 'Most impact: <b>4,313,203</b> DALYs averted, but inequity rises to <b>100,700</b>, about two-thirds above the knee.',
+        balance: 'The knee point: <b>4,240,734</b> DALYs averted, 98.6% of greedy\u2019s, with inequity at <b>60,159</b>, a third below greedy\u2019s.',
+        fairness: 'Fairest split: inequity drops to <b>47,634</b>, for <b>3,956,995</b> DALYs averted, about 7% fewer than the knee.'
+      };
+      document.querySelectorAll('[data-pick]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var k = b.getAttribute('data-pick');
+          document.querySelectorAll('[data-pick]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+          chart.classList.add('picking');
+          chart.querySelectorAll('.pt').forEach(function (g) { g.classList.toggle('on', g.getAttribute('data-pt') === k); });
+          out.innerHTML = picks[k];
+        });
+      });
+    })();
 
     // ----- Toast (frog) -----
     var toast = document.querySelector('.toast');
