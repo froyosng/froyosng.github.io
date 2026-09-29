@@ -325,7 +325,7 @@
     // the reader (their bottom edge widens), and scroll speed adds a little extra bend.
     var lenis = null;
     if (!reduced && typeof window.Lenis === 'function') {
-      lenis = new window.Lenis({ lerp: 0.09, anchors: true, autoRaf: false });
+      lenis = new window.Lenis({ lerp: 0.16, wheelMultiplier: 1.15, anchors: true, autoRaf: false });
       window.__lenis = lenis;
       if (document.documentElement.classList.contains('intro')) lenis.stop();
     }
@@ -349,7 +349,7 @@
         var y = window.scrollY, v = y - lastY;
         lastY = y;
         vs += (v - vs) * 0.12;
-        var boost = Math.max(-6, Math.min(6, vs * 0.25));
+        var boost = Math.max(-4, Math.min(4, vs * 0.15));
         for (var i = 0; i < els.length; i++) {
           var p = pos[i];
           if (!p.h) continue;
