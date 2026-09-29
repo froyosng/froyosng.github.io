@@ -332,9 +332,10 @@
     (function () {
       if (reduced) return;
       var els = [].slice.call(document.querySelectorAll('.fig, .cam-card, .chart-box'));
-      var pos = [], vh = window.innerHeight, lastY = window.scrollY, vs = 0;
+      var pos = [], vh = window.innerHeight, lastY = window.scrollY, vs = 0, k = 1;
       function measure() {
         vh = window.innerHeight;
+        k = window.innerWidth < 760 ? 0.5 : 1;
         pos = els.map(function (el) {
           var y = 0, n = el;
           while (n) { y += n.offsetTop; n = n.offsetParent; }
@@ -356,7 +357,7 @@
           var c = (p.top + p.h / 2 - y) / vh;
           if (c < -0.7 || c > 1.9) continue;
           var b = Math.min(1, Math.max(0, (c - 0.5) / 0.8));
-          var a = b * b * 16 + boost * (0.4 + b), w = 1 + b * b * 0.08 + Math.abs(boost) * 0.004;
+          var a = (b * b * 16 + boost * (0.4 + b)) * k, w = 1 + (b * b * 0.08 + Math.abs(boost) * 0.004) * k;
           var str = Math.abs(a) < 0.05 ? '' : 'perspective(1400px) rotateX(' + a.toFixed(2) + 'deg) scale(' + w.toFixed(4) + ', 1)';
           if (str !== p.last) { els[i].style.transform = str; p.last = str; }
         }

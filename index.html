@@ -10,7 +10,12 @@
       try {
         if (!CSS.supports('animation-timeline: view()')) d.classList.add('no-sda');
         if (!location.hash && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-          d.classList.add('intro');
+          if (sessionStorage.getItem('froyo-seen')) {
+            d.classList.add('intro-out');
+          } else {
+            d.classList.add('intro');
+            sessionStorage.setItem('froyo-seen', '1');
+          }
           if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
         }
       } catch (e) {}
@@ -132,7 +137,6 @@
       transition: transform var(--motion-system), background var(--motion-system), box-shadow var(--motion-system);
     }
 
-    .btn:active, .chip:active, .syn-toggle:active, .menu-btn:active, .radio-btn:active { transform: scale(0.975); }
 
     .btn-ink { background: var(--ink); color: var(--pearl); }
     .btn-ink:hover { background: #2c2935; }
@@ -405,16 +409,9 @@
       filter: blur(3px);
     }
 
-    /* Kirk-style tags: shown on hover */
-    .tags { position: absolute; top: 14px; left: 14px; z-index: 4; display: flex; flex-wrap: wrap; gap: 6px; opacity: 0; translate: 0 -4px; transition: opacity 250ms var(--ease-out), translate 250ms var(--ease-out); pointer-events: none; }
-    .tags span { padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255, 255, 255, 0.85); color: var(--ink); }
-    .tags span + span { background: rgba(23, 21, 29, 0.42); color: #fff; }
     @media (hover: hover) {
       .htile:hover { border-radius: 26px; scale: 0.99; }
-      .htile:hover .tags { opacity: 1; translate: 0 0; }
     }
-    .htile:focus-within .tags { opacity: 1; translate: 0 0; }
-    @media (hover: none) { .htile .tags { opacity: 1; translate: 0 0; } }
 
     /* ---------- Explore world ---------- */
     .world { padding: 0 0 96px; }
@@ -498,7 +495,7 @@
 
 
     /* ---------- Sections ---------- */
-    section.block { padding: 96px 0; border-top: 1px solid var(--line); }
+    section.block { padding: 104px 0; }
 
     .section-head {
       display: grid;
@@ -526,11 +523,8 @@
       display: grid;
       grid-template-columns: 150px minmax(0, 5fr) minmax(0, 6fr);
       gap: 36px;
-      padding: 48px 0;
-      border-top: 1px solid var(--line-strong);
+      padding: 56px 0;
     }
-
-    .edition:last-child { border-bottom: 1px solid var(--line-strong); }
 
     .ed-index { display: flex; flex-direction: column; align-items: flex-start; }
 
@@ -969,6 +963,10 @@
     /* ---------- FROYO RADIO ---------- */
     .cd { border: 0; padding: 0; cursor: pointer; }
     .cd:focus-visible { outline-offset: 6px; }
+    .cd::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid var(--violet); opacity: 0; pointer-events: none; }
+    .mline { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.08em 0.04em 0.14em; margin: -0.08em -0.04em -0.14em; }
+    .mline > span { display: inline-block; }
+    .radio.flip { animation: none; transform-origin: 50% 50%; }
     .cd:active { box-shadow: inset 0 0 0 1px rgba(23, 21, 29, 0.25), inset 0 0 70px rgba(255, 255, 255, 0.95), 0 24px 44px -26px rgba(34, 26, 74, 0.55); }
 
     .radio-btn {
@@ -993,7 +991,8 @@
     .cd:disabled { cursor: default; }
     .radio-btn[aria-pressed="true"] { background: var(--ink); color: var(--pearl); }
 
-    .radio { position: fixed; left: 20px; bottom: 20px; z-index: 25; width: 280px; }
+    .radio { position: fixed; left: 20px; bottom: 20px; z-index: 25; width: 340px; }
+    .radio .titlebar { white-space: nowrap; }
     .radio[hidden] { display: none; }
     .radio .titlebar { gap: 6px; }
     .radio .titlebar button { border: 0; background: none; font-family: var(--pixel); font-size: 12px; color: var(--graphite); cursor: pointer; padding: 2px 4px; }
@@ -1028,15 +1027,11 @@
       transition: opacity 250ms var(--ease-out), translate 250ms var(--ease-out);
       translate: 0 4px;
     }
-    .visual .visual-caption { transition: opacity 250ms var(--ease-out); }
     @media (hover: hover) {
       .visual:hover { border-radius: 26px; scale: 0.99; }
       .visual:hover .v-pill { opacity: 1; translate: 0 0; pointer-events: auto; }
-      .visual:hover .tags { opacity: 1; translate: 0 0; }
-      .visual:hover .visual-caption { opacity: 0; }
     }
-    .visual:focus-within .tags, .visual:focus-within .v-pill { opacity: 1; translate: 0 0; }
-    .visual:focus-within .visual-caption { opacity: 0; }
+    .visual:focus-within .v-pill { opacity: 1; translate: 0 0; }
     @media (hover: none) { .visual .v-pill { opacity: 1; translate: 0 0; pointer-events: auto; } }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -1062,11 +1057,26 @@
       .intro .kmask[data-step="3"] { transform: translateX(118%); }
       .intro .kmask[data-step="4"] { transform: translateX(118%); opacity: 0; }
       @media (hover: none) { .intro .kscale { transform: scale(0.8); } }
-      .intro-out .topbar, .intro-out .hero-meta, .intro-out .thesis, .intro-out .support, .intro-out .hero-actions { animation: fade-up 600ms var(--ease-out) both; }
-      .intro-out .htile { animation: tile-in 800ms var(--ease-out) both; animation-delay: calc(var(--k, 0) * 90ms + 120ms); }
-      .intro-out .thesis .holo { animation: holo-sweep 900ms var(--ease-out) 200ms both; }
+      /* Hero sequence: headline, then the line, then the artwork as one piece, then the controls */
+      .intro-out .hero-meta { animation: fade-up 500ms var(--ease-out) both; }
+      .intro-out .thesis .mline > span { animation: rise-in 850ms var(--ease-out) 60ms both; }
+      .intro-out .thesis .holo { animation: holo-sweep 900ms var(--ease-out) 450ms both; }
+      .intro-out .support { animation: fade-up 600ms var(--ease-out) 260ms both; }
+      .intro-out .htiles { animation: tile-in 950ms var(--ease-out) 380ms both; }
+      .intro-out .cd { animation: cd-in 1200ms var(--ease-out) 420ms both; }
+      .intro-out .me { animation: sprite-hop 420ms steps(1, jump-end) 950ms both; }
+      .intro-out .hero-sticker { animation: slap 260ms var(--ease-io) 1150ms both; }
+      .intro-out .hero-actions, .intro-out .topbar { animation: fade-up 500ms var(--ease-out) 1050ms both; }
       @keyframes fade-up { from { opacity: 0; translate: 0 8px; } }
       @keyframes tile-in { from { opacity: 0; translate: 0 48px; } }
+      @keyframes rise-in { from { transform: translateY(110%); } }
+      @keyframes cd-in { from { rotate: -140deg; scale: 0.92; } }
+      @keyframes sprite-hop { 0% { opacity: 0; translate: 0 -14px; } 34% { opacity: 1; translate: 0 -14px; } 67% { opacity: 1; translate: 0 -5px; } 100% { opacity: 1; translate: 0 0; } }
+      @keyframes slap { from { opacity: 0; scale: 1.3; } }
+
+      /* CD ping when the radio starts */
+      .cd.ping::after { animation: ping 700ms var(--ease-out); }
+      @keyframes ping { from { opacity: 0.8; scale: 0.92; } to { opacity: 0; scale: 1.2; } }
       @keyframes holo-sweep { from { background-size: 300% 100%; background-position: 100% 0; } to { background-size: 100% 100%; background-position: 0 0; } }
 
       /* Hero tiles zoom inside their frames as you scroll away */
@@ -1076,8 +1086,23 @@
       @keyframes hdrift { from { scale: 1; } to { scale: 1.08; } }
 
       /* 2. Chapter rise */
-      .js [data-rise] { transition: opacity 600ms var(--ease-out), translate 600ms var(--ease-out); }
-      .js [data-rise]:not(.in) { opacity: 0; translate: 0 24px; }
+      /* Type rises out of a mask: section heads and project titles share one move */
+      .js .section-head h2, .js .edition h3 {
+        clip-path: inset(-0.25em -0.25em -0.4em -0.25em);
+        transition: clip-path 900ms var(--ease-out), translate 900ms var(--ease-out);
+      }
+      .js .section-head:not(.in) h2, .js .edition:not(.in) h3 { clip-path: inset(-0.25em -0.25em 100% -0.25em); translate: 0 0.45em; }
+      .js .section-head:not(.in) .px-icon { opacity: 0; }
+      .js .section-head.in .px-icon { animation: pix-pop 360ms steps(1, jump-end) 120ms both; }
+      @keyframes pix-pop { 0% { opacity: 1; scale: 0.5; } 33% { scale: 1.4; } 66% { scale: 0.85; } 100% { scale: 1; } }
+
+      /* Project numbers drift slower than the page, for depth (desktop only) */
+      @supports (animation-timeline: view()) {
+        @media (min-width: 981px) {
+          .ed-num { animation: num-drift linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+        }
+      }
+      @keyframes num-drift { from { translate: 0 -48px; } to { translate: 0 48px; } }
       .js .stamps .stamp {
         transition: opacity 240ms var(--ease-io) calc(var(--i, 0) * 35ms), scale 240ms var(--ease-io) calc(var(--i, 0) * 35ms),
           transform var(--motion-toy) cubic-bezier(.2, .9, .3, 1.2);
@@ -1096,6 +1121,19 @@
       @keyframes settle { from { scale: 1.14; } to { scale: 1; } }
       @keyframes drift { from { scale: 1; } to { scale: 1.06; } }
     }
+
+    /* Tactile controls: press in fast, spring back with a little overshoot */
+    .btn, .chip, .syn-toggle, .menu-btn, .radio-btn, .to-seg button, .filters .patch {
+      transition-property: transform, background, box-shadow, color, opacity;
+      transition-duration: 300ms;
+      transition-timing-function: cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .btn:active, .chip:active, .syn-toggle:active, .menu-btn:active, .radio-btn:active, .to-seg button:active, .filters .patch:active {
+      transform: scale(0.96);
+      transition-duration: 70ms;
+      transition-timing-function: ease-out;
+    }
+    @media (hover: hover) { .btn:hover { transform: translateY(-1px); } }
 
     /* Scrollbar: a little holo pill */
     @supports not selector(::-webkit-scrollbar) {
@@ -1230,7 +1268,7 @@
           <span class="kmask" aria-hidden="true"></span>
         </div>
       </div>
-      <p class="thesis">Building models for <span class="holo">messy</span> decisions.</p>
+      <p class="thesis"><span class="mline"><span>Building models for <span class="holo">messy</span> decisions.</span></span></p>
       <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
       <div class="hero-actions">
         <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
@@ -1244,7 +1282,6 @@
           <div class="htile-in">
             <button class="cd" type="button" data-radio-toggle aria-label="Play FROYO RADIO"></button>
           </div>
-          <div class="tags" aria-hidden="true"><span>FROYO RADIO</span><span>Tap the CD</span></div>
           <span class="scribble sc-cd" aria-hidden="true"><svg class="spiral" aria-hidden="true"><use href="#spiral-arrow"/></svg><span>psst, the CD plays my playlist</span></span>
           <button class="radio-btn pixel" type="button" data-radio-toggle aria-pressed="false">♫ FROYO RADIO · <span data-radio-state>PLAY</span></button>
         </div>
@@ -1256,7 +1293,6 @@
               <canvas aria-hidden="true"></canvas>
             </button>
           </div>
-          <div class="tags" aria-hidden="true"><span>Pixel Zhenhao</span><span>Click me</span></div>
           <a class="hero-sticker" href="#quant" aria-label="Top in-sample Sharpe 2.21, see the quant project">
             <strong>2.21</strong><span>IN-SAMPLE SHARPE</span>
           </a>
@@ -1304,7 +1340,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="star" aria-hidden="true"></canvas></div>
-          <h2 class="serif" data-rise>selected work</h2>
+          <h2 class="serif">selected work</h2>
         </div>
         <p class="section-note">Five projects. The rest are in the archive.</p>
       </div>
@@ -1336,7 +1372,6 @@
           </div>
         </div>
         <div class="visual v-violet">
-          <div class="tags" aria-hidden="true"><span>Optimisation</span><span>NSGA-II</span></div>
           <a class="v-pill" href="work/hiv-allocation/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <div class="pareto-card settle">
             <div class="tradeoff" role="group" aria-label="Pick the trade-off">
@@ -1439,7 +1474,6 @@
           </div>
         </div>
         <div class="visual v-violet">
-          <div class="tags" aria-hidden="true"><span>Quant</span><span>WorldQuant · AlphaNova</span></div>
           <a class="v-pill" href="https://www.alphanova.tech/blog/zhenhao-sng" tabindex="-1" aria-hidden="true">AlphaNova interview ↗</a>
           <span class="visual-caption">IQC 2026, in-sample</span>
           <div class="readout settle" role="img" aria-label="IQC results: volume-sentiment alpha Sharpe 2.21; GARP valuation alpha Sharpe 2.00, Fitness 2.30; AlphaNova Competition 5 #140, 2 of the 160 surviving signals.">
@@ -1487,7 +1521,6 @@
           </div>
         </div>
         <div class="visual v-pink">
-          <div class="tags" aria-hidden="true"><span>ML</span><span>Kaggle</span></div>
           <span class="v-pill" aria-hidden="true">Case study soon</span>
           <div class="pipeline settle" role="img" aria-label="Model flow: choice tasks, conditional logit, mixed logit, XGBoost blend, output choice probabilities scored at CV 1.145 and leaderboard 1.202.">
             <div class="node"><small>input</small>Choice tasks</div>
@@ -1529,7 +1562,6 @@
           </div>
         </div>
         <div class="visual v-mist">
-          <div class="tags" aria-hidden="true"><span>Synthetic data</span><span>Credit Bureau SG</span></div>
           <a class="v-pill" href="work/synthetic-credit/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <div class="fid settle" role="img" aria-label="Fidelity score out of 100 by synthesis method on the account-balance series: Copula 80.7, Gaussian 71.7, Holt-Winters 63.7, Prophet 61.0, ARIMA 53.5, CTGAN 17.6.">
             <h4>Fidelity by synthesis method</h4>
@@ -1567,7 +1599,6 @@
           </div>
         </div>
         <div class="visual v-lemon">
-          <div class="tags" aria-hidden="true"><span>Computer vision</span><span>DTI 2025</span></div>
           <a class="v-pill" href="work/bird-deterrent/" tabindex="-1" aria-hidden="true">Explore project →</a>
           <span class="visual-caption pixel">CAM_01 / CANTEEN</span>
           <button class="sound-toggle pixel" type="button" data-hawk-sound aria-pressed="false">SOUND: OFF</button>
@@ -1583,7 +1614,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="chart" aria-hidden="true"></canvas></div>
-          <h2 class="serif" data-rise>results</h2>
+          <h2 class="serif">results</h2>
         </div>
       </div>
       <div class="stickers">
@@ -1606,7 +1637,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="flask" aria-hidden="true"></canvas></div>
-          <h2 class="serif" data-rise>archive</h2>
+          <h2 class="serif">archive</h2>
         </div>
         <p class="section-note">Smaller projects, research and pitches.</p>
       </div>
@@ -1711,7 +1742,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="chip" aria-hidden="true"></canvas></div>
-          <h2 class="serif" data-rise>experience</h2>
+          <h2 class="serif">experience</h2>
         </div>
       </div>
       <ol class="transit">
@@ -1744,7 +1775,7 @@
       <div class="section-head">
         <div>
           <div class="section-label"><canvas class="px-icon" data-icon="heart" aria-hidden="true"></canvas></div>
-          <h2 class="serif" data-rise>about</h2>
+          <h2 class="serif">about</h2>
         </div>
       </div>
       <div class="about-grid">
@@ -1916,6 +1947,14 @@
             { clipPath: 'inset(0 round 12px)', transform: 'none', opacity: 1 }
           ], { duration: window.innerWidth < 640 ? 450 : 600, easing: EASE });
           win.querySelector('.scene-legend').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 200, easing: EASE, fill: 'backwards' });
+          // The pixel scene switches on like an old CRT: a line, then the picture, in stepped frames
+          win.querySelector('.scene').animate([
+            { clipPath: 'inset(50% 0 50% 0)' },
+            { clipPath: 'inset(49% 0 49% 0)', offset: 0.35 },
+            { clipPath: 'inset(0 0 0 0)' }
+          ], { duration: 480, delay: 260, easing: 'steps(6, jump-end)', fill: 'backwards' });
+          var hint = win.querySelector('.scene-legend .hint');
+          if (hint) hint.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }], { duration: 360, delay: 800, iterations: 3, easing: 'steps(2, jump-none)' });
         }
         if (scroll && wasHidden) {
           invoker = document.activeElement;
@@ -2034,8 +2073,28 @@
       document.head.appendChild(s);
     }
 
+    function cdOnScreen() {
+      var a = cd.getBoundingClientRect();
+      return a.bottom > 0 && a.top < window.innerHeight ? a : null;
+    }
+    function toCD(a) {
+      var b = radio.getBoundingClientRect();
+      return 'translate(' + ((a.left + a.width / 2) - (b.left + b.width / 2)).toFixed(1) + 'px,' +
+        ((a.top + a.height / 2) - (b.top + b.height / 2)).toFixed(1) + 'px) scale(0.35)';
+    }
     function startRadio() {
+      var opening = radio.hidden;
+      cd.classList.remove('ping'); void cd.offsetWidth; cd.classList.add('ping');
       radio.hidden = false;
+      var a = opening && !reduced && typeof radio.animate === 'function' && cdOnScreen();
+      if (a) {
+        radio.classList.add('flip');
+        radio.animate([
+          { transform: toCD(a), opacity: 0, borderRadius: '50%' },
+          { opacity: 1, borderRadius: '24px', offset: 0.5 },
+          { transform: 'none', opacity: 1, borderRadius: '12px' }
+        ], { duration: 650, easing: 'cubic-bezier(.16, 1, .3, 1)' }).onfinish = function () { radio.classList.remove('flip'); };
+      }
       if (controller) { controller.resume(); return; }
       if (loading) return;
       loading = true;
@@ -2062,8 +2121,12 @@
       if (controller) controller.pause();
       setPlaying(false);
       if (reduced || typeof radio.animate !== 'function') { radio.hidden = true; return; }
-      radio.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(8px)' }],
-        { duration: 200, easing: 'cubic-bezier(.65, 0, .35, 1)' }).onfinish = function () { radio.hidden = true; };
+      var a = cdOnScreen();
+      radio.classList.add('flip');
+      radio.animate(a
+        ? [{ opacity: 1, transform: 'none', borderRadius: '12px' }, { opacity: 0, transform: toCD(a), borderRadius: '50%' }]
+        : [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(8px)' }],
+        { duration: a ? 420 : 200, easing: 'cubic-bezier(.65, 0, .35, 1)' }).onfinish = function () { radio.hidden = true; radio.classList.remove('flip'); };
     });
 
     // ----- Nav: slightly tighter once scrolled -----
@@ -2116,6 +2179,11 @@
     // then springs back to its place at full size and the rest of the page fades in.
     (function () {
       var root = document.documentElement;
+      if (root.classList.contains('intro-out')) {
+        window.scrollTo(0, 0);
+        setTimeout(function () { root.classList.remove('intro-out'); }, 2000);
+        return;
+      }
       if (!root.classList.contains('intro')) return;
       var move = document.querySelector('.kmove'), scaler = document.querySelector('.kscale'), mask = document.querySelector('.kmask');
       var touch = window.matchMedia('(hover: none)').matches;
@@ -2166,7 +2234,7 @@
           if (window.__lenis) window.__lenis.start();
           if (window.__wake) window.__wake();
           root.classList.add('intro-out');
-          setTimeout(function () { root.classList.remove('intro-out'); }, 1400);
+          setTimeout(function () { root.classList.remove('intro-out'); }, 2000);
         }, 250);
       }
 
@@ -2190,9 +2258,10 @@
     (function () {
       if (reduced) return;
       var els = [].slice.call(document.querySelectorAll('.htile, .visual'));
-      var pos = [], vh = window.innerHeight, lastY = window.scrollY, vs = 0;
+      var pos = [], vh = window.innerHeight, lastY = window.scrollY, vs = 0, k = 1;
       function measure() {
         vh = window.innerHeight;
+        k = window.innerWidth < 760 ? 0.5 : 1;
         pos = els.map(function (el) {
           var y = 0, n = el;
           while (n) { y += n.offsetTop; n = n.offsetParent; }
@@ -2214,7 +2283,7 @@
           var c = (p.top + p.h / 2 - y) / vh;
           if (c < -0.7 || c > 1.9) continue;
           var b = Math.min(1, Math.max(0, (c - 0.5) / 0.8));
-          var a = b * b * 16 + boost * (0.4 + b), w = 1 + b * b * 0.08 + Math.abs(boost) * 0.004;
+          var a = (b * b * 16 + boost * (0.4 + b)) * k, w = 1 + (b * b * 0.08 + Math.abs(boost) * 0.004) * k;
           var str = Math.abs(a) < 0.05 ? '' : 'perspective(1400px) rotateX(' + a.toFixed(2) + 'deg) scale(' + w.toFixed(4) + ', 1)';
           if (str !== p.last) { els[i].style.transform = str; p.last = str; }
         }
@@ -2233,7 +2302,7 @@
 
     // ----- One observer: chapter rise, stamps, photo, settle fallback -----
     document.querySelectorAll('.stamps .stamp').forEach(function (s, i) { s.style.setProperty('--i', i); });
-    var risers = document.querySelectorAll('[data-rise], .stamps, .photo, .no-sda .settle');
+    var risers = document.querySelectorAll('.section-head, .edition, .stamps, .photo, .no-sda .settle');
     if (reduced || !('IntersectionObserver' in window)) {
       risers.forEach(function (c) { c.classList.add('in'); });
       return;
