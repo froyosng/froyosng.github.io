@@ -360,9 +360,17 @@
           var str = Math.abs(a) < 0.05 ? '' : 'perspective(1400px) rotateX(' + a.toFixed(2) + 'deg) scale(' + w.toFixed(4) + ', 1)';
           if (str !== p.last) { els[i].style.transform = str; p.last = str; }
         }
+        // Sleep when nothing is moving; any input or scroll wakes the loop again
+        var busy = Math.abs(v) > 0.1 || Math.abs(vs) > 0.02 || (lenis && lenis.isScrolling);
+        idle = busy ? 0 : idle + 1;
+        if (idle > 30) { running = false; return; }
         requestAnimationFrame(frame);
       }
-      requestAnimationFrame(frame);
+      var running = false, idle = 0;
+      function wake() { idle = 0; if (!running) { running = true; lastY = window.scrollY; requestAnimationFrame(frame); } }
+      ['wheel', 'scroll', 'touchstart', 'keydown', 'pointerdown', 'resize'].forEach(function (e) { window.addEventListener(e, wake, { passive: true }); });
+      window.__wake = wake;
+      wake();
     })();
   })();
 </script>
