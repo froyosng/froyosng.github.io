@@ -1271,7 +1271,7 @@
       <p class="thesis"><span class="mline"><span>Building models for <span class="holo">messy</span> decisions.</span></span></p>
       <p class="support">I study Engineering Systems &amp; Design at SUTD and I'm on exchange at National Taiwan University. Currently looking for 2027 internships where I can work on markets, data, modelling, or hard decision problems.</p>
       <div class="hero-actions">
-        <a class="btn btn-ink" href="#work" data-quick-view>View work ↓</a>
+        <a class="btn btn-ink" href="#work">View work ↓</a>
         <button class="btn btn-explore" type="button" data-enter-world>
           Explore world <svg class="star-ico" aria-hidden="true"><use href="#signal-star"/></svg>
         </button>
@@ -1935,6 +1935,18 @@
     var win = world.querySelector('.window');
     var closing = null, invoker = null;
 
+    // The pixel scene switches on like an old CRT: a line, then the picture, in stepped frames
+    function powerOn(delay) {
+      if (reduced || typeof win.animate !== 'function') return;
+      win.querySelector('.scene').animate([
+        { clipPath: 'inset(50% 0 50% 0)' },
+        { clipPath: 'inset(49% 0 49% 0)', offset: 0.35 },
+        { clipPath: 'inset(0 0 0 0)' }
+      ], { duration: 480, delay: delay, easing: 'steps(6, jump-end)', fill: 'backwards' });
+      var hint = win.querySelector('.scene-legend .hint');
+      if (hint) hint.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }], { duration: 360, delay: delay + 540, iterations: 3, easing: 'steps(2, jump-none)' });
+    }
+
     function setMode(explore, scroll) {
       var animate = scroll && !reduced && typeof win.animate === 'function';
       if (closing) { closing.cancel(); closing = null; }
@@ -1947,14 +1959,7 @@
             { clipPath: 'inset(0 round 12px)', transform: 'none', opacity: 1 }
           ], { duration: window.innerWidth < 640 ? 450 : 600, easing: EASE });
           win.querySelector('.scene-legend').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 200, easing: EASE, fill: 'backwards' });
-          // The pixel scene switches on like an old CRT: a line, then the picture, in stepped frames
-          win.querySelector('.scene').animate([
-            { clipPath: 'inset(50% 0 50% 0)' },
-            { clipPath: 'inset(49% 0 49% 0)', offset: 0.35 },
-            { clipPath: 'inset(0 0 0 0)' }
-          ], { duration: 480, delay: 260, easing: 'steps(6, jump-end)', fill: 'backwards' });
-          var hint = win.querySelector('.scene-legend .hint');
-          if (hint) hint.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }], { duration: 360, delay: 800, iterations: 3, easing: 'steps(2, jump-none)' });
+          powerOn(260);
         }
         if (scroll && wasHidden) {
           invoker = document.activeElement;
@@ -1997,7 +2002,18 @@
       // The close button animates; "View work" jumps, so it must hide at once
       b.addEventListener('click', function () { setMode(false, b.tagName === 'BUTTON'); });
     });
-    if (stored() === 'explore') setMode(true, false);
+    // The world is on by default; it stays closed only for people who closed it
+    if (stored() !== 'quick') {
+      setMode(true, false);
+      if (!reduced && 'IntersectionObserver' in window) {
+        var tv = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting) return;
+          tv.disconnect();
+          powerOn(0);
+        }, { threshold: 0.35 });
+        tv.observe(win.querySelector('.scene'));
+      }
+    }
 
     // ----- Archive filters -----
     var rows = document.querySelectorAll('.archive .row');
